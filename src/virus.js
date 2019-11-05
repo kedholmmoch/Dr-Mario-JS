@@ -36,8 +36,8 @@ export default class Virus {
 
   getPosition() {
     let coords = this.coordinates;
-    let xCoord = coords[0];
-    let yCoord = coords[1];
+    let xCoord = coords[1];
+    let yCoord = coords[0];
 
     let xPos = 1 + (xCoord * (this.width + 1));
     let yPos = 1 + (yCoord * (this.height + 1));

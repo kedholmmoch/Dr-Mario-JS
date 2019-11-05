@@ -14,28 +14,38 @@ export default class Game {
     this.spritesheet = spritesheet;
     this.level = level ? level : 0;
 
+    this.board = new Board(this);
+    console.log(this.board);
+
     // will need these later/soon ..
-    this.viruses = [];
-    this.board = [];
+
+    // this.viruses = [];
+
     this.currentPill = {};
   }
 
   start() {
+
+    
     this.virus1 = new Virus({
       color: "red",
       position: { x: 101, y: 111 },
       game: this
     });
+    
 
     this.pill1 = new Pill({
       colors: ["red", "yellow"],
       game: this
     });
 
-    this.gameObjects = [
-      this.virus1,
-      this.pill1
-    ];
+    // this.gameObjects = [
+    //   this.virus1,
+    //   this.pill1
+    //   // ...this.board.viruses
+    // ];
+
+    this.gameObjects = this.board.viruses.concat(this.pill1);
 
     new InputHandler(this.pill1);
   }

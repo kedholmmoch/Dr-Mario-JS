@@ -11,6 +11,7 @@ export default class Board {
     this.numberViruses = 4 * (this.level + 1);
 
     this.grid = this.createEmptyGrid();
+    this.viruses = [];
     this.populateViruses();
   }
 
@@ -36,11 +37,14 @@ export default class Board {
       let color = COLORS[Math.floor(Math.random() * 3)];
 
       if (this.grid[row][column] === null) {
-        this.grid[row][column] = new Virus({
+        let newVirus = new Virus({
           game: this.game,
           color: color,
           coordinates: [row, column]
         });
+        
+        this.grid[row][column] = newVirus;
+        this.viruses.push(newVirus);
         added += 1;
       }
     }

@@ -23,12 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
       SQR_WIDTH, 
       SQR_HEIGHT, 
       spritesheet,
-      2
+      3
     );
     game.start();
 
-    let board = new Board(game);
-    console.log(board);
+    // let board = new Board(game);
+    // console.log(board);
 
     function gameLoop(timestamp) {
       ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
