@@ -37,40 +37,80 @@ const COLOR_SPRITES = {
 }
 
 export default class Pill {
-  constructor(colors, spritesheet, width, height) {
-    this.c0 = colors[0];
-    this.c1 = colors[1];
-    this.width = width;
-    this.height = height;
-    this.spritesheet = spritesheet;
+  constructor(options) {
+    this.c0 = options.colors[0];
+    this.c1 = options.colors[1];
+    this.width = options.width;
+    this.height = options.height;
+    this.spritesheet = options.spritesheet;
 
     this.position = {x: 76, y: 23}
+    this.stationary = false;
     this.rotation = 0;
     this.connected = true;
-
+    this.orientation = this.getOrientation();
 
   }
 
-  getSprites() {
-    if (this.rotation = 0) {
-      let c0 = this.c0;
-      let c1 = this.c1;
-      let left = COLOR_SPRITES.left.c0;
-      let right = COLOR_SPRITES.right.c1;
-      return {left: left, right: right};
+  getOrientation() {
+    switch (this.rotation) {
+      case 0:
+        return "horizontal";
+      case 90:
+        return "vertical";
+      case 180:
+        return "horizontal";
+      case 270:
+        return "vertical";
+      default:
+        return "horizontal";
     }
   }
 
-  draw(ctx) {
-    let sprites = getSprites();
+  getSprites() {
+    let c0 = this.c0;
+    let c1 = this.c1;
+    if (this.rotation === 0) {
+      let left = COLOR_SPRITES.left[c0];
+      let right = COLOR_SPRITES.right[c1];
+      return {left: left, right: right};
+    } else if (this.rotation === 180) {
+      let left = COLOR_SPRITES.left[c1];
+      let right = COLOR_SPRITES.right[c0];
+      return {left: left, right: right}
+    }
+  }
+
+  drawHorizontal(ctx) {
+    let sprites = this.getSprites();
     ctx.drawImage(
       spritesheet,
+      sprites.left[0],
+      sprites.left[1],
+      sprites.left[2],
+      sprites.left[3],
       this.position.x,
       this.position.y,
       this.width,
-      this.height,
-      
-    )
+      this.height
+    );
+    ctx.drawImage(
+      spritesheet,
+      sprites.right[0],
+      sprites.right[1],
+      sprites.right[2],
+      sprites.right[3],
+      this.position.x + 25,
+      this.position.y,
+      this.width,
+      this.height
+    );
+  }
+
+  draw(ctx) {
+    if (this.orientation === "horizontal") {
+      this.drawHorizontal(ctx);
+    }
   }
 
 }
