@@ -1,0 +1,13 @@
+body {
+  background-color: blanchedalmond;
+  display: flex;
+}
+
+#gameScreen {
+  background-color: black;
+  margin: 0 px auto;
+}
+
+img {
+  display: none;
+}

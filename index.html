@@ -5,9 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Dr. Mario JS</title>
+
   <script src="bundle.js"></script>
+  <link rel="stylesheet" href="./assets/stylesheets/style.css">
 </head>
 <body>
   <h1>This is the index.js file</h1>
+
+  <!-- like original dr mario, blocks wider than tall:
+    each square is 36 wide x 32 tall, giving canvas of 288 x 512 -->
+  <img id="spritesheet" src="./assets/images/dr-mario-sprites.png">
+  <canvas id="gameScreen" width="192" height="336"></canvas> 
 </body>
 </html>
