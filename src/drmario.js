@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // );
       
       virus1.update(timestamp);
+      pill1.update(timestamp);
       virus1.draw(ctx);
       pill1.draw(ctx);
 

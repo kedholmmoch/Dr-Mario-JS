@@ -49,11 +49,11 @@ export default class Pill {
     this.position = {x: 76, y: 23};
     this.rotation = 0;
     this.orientation = this.getOrientation();
+    this.lastDrop = null;
     this.dropSpeed = 1;
 
     this.stationary = false;
     this.connected = true;
-
   }
 
   getOrientation() {
@@ -96,6 +96,16 @@ export default class Pill {
     // will have to adjust later so that orientation does NOT change if things in the way
     this.rotation = (this.rotation + 90) % 360;
     this.orientation = this.getOrientation();
+  }
+
+  drop() {
+    /// will have to adjust to also stop if there is something in the way
+    console.log('drop function');
+    console.log(this.position.y);
+    
+    if (this.position.y < 331) {
+      this.position.y += 22;
+    }
   }
 
   slowDrop() {
@@ -194,7 +204,16 @@ export default class Pill {
   }
 
   update(timestamp) {
+    if (!this.lastDrop) this.lastDrop = timestamp;
 
+    let dropInterval = 1100 - (100 * this.dropSpeed);
+
+    // console.log(timestamp - this.lastDrop);
+
+    if ((timestamp - this.lastDrop) > dropInterval) {
+      this.drop();
+      this.lastDrop = timestamp;
+    }
   }
 
 }
