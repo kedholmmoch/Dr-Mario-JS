@@ -22,15 +22,27 @@ const VIRUS_SPRITES = {
 export default class Virus {
   constructor(options) {
     this.color = options.color;
-    this.position = options.position;
+    this.coordinates = options.coordinates;
+    this.spritesheet = options.game.spritesheet;
+    this.width = options.game.squareWidth;
+    this.height = options.game.squareHeight;
+
+    this.position = options.position || this.getPosition();
 
     this.frame = 0;
     this.lastUpdated = null;
     this.frameLength = 250;
+  }
 
-    this.spritesheet = options.game.spritesheet;
-    this.width = options.game.squareWidth;
-    this.height = options.game.squareHeight;
+  getPosition() {
+    let coords = this.coordinates;
+    let xCoord = coords[0];
+    let yCoord = coords[1];
+
+    let xPos = 1 + (xCoord * (this.width + 1));
+    let yPos = 1 + (yCoord * (this.height + 1));
+
+    return { x: xPos, y: yPos };
   }
 
   getSprite() {

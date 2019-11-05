@@ -1,4 +1,5 @@
 import Game from './game';
+import Board from './board';
 
 const GAME_WIDTH = 201;
 const GAME_HEIGHT = 353;
@@ -21,9 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
       GAME_HEIGHT, 
       SQR_WIDTH, 
       SQR_HEIGHT, 
-      spritesheet
+      spritesheet,
+      2
     );
     game.start();
+
+    let board = new Board(game);
+    console.log(board);
 
     function gameLoop(timestamp) {
       ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);

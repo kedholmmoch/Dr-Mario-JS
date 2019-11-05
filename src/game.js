@@ -1,15 +1,18 @@
 import InputHandler from './input';
+import Board from './board';
 import Virus from './virus';
 import Pill from './pill';
 
 export default class Game {
 
-  constructor(gameWidth, gameHeight, squareWidth, squareHeight, spritesheet) {
+  constructor(gameWidth, gameHeight, squareWidth, squareHeight, 
+      spritesheet, level) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
     this.squareWidth = squareWidth;
     this.squareHeight = squareHeight;
     this.spritesheet = spritesheet;
+    this.level = level ? level : 0;
 
     // will need these later/soon ..
     this.viruses = [];
