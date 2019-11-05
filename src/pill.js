@@ -37,8 +37,40 @@ const COLOR_SPRITES = {
 }
 
 export default class Pill {
-  constructor(colors) {
+  constructor(colors, spritesheet, width, height) {
     this.c0 = colors[0];
     this.c1 = colors[1];
+    this.width = width;
+    this.height = height;
+    this.spritesheet = spritesheet;
+
+    this.position = {x: 76, y: 23}
+    this.rotation = 0;
+    this.connected = true;
+
+
   }
+
+  getSprites() {
+    if (this.rotation = 0) {
+      let c0 = this.c0;
+      let c1 = this.c1;
+      let left = COLOR_SPRITES.left.c0;
+      let right = COLOR_SPRITES.right.c1;
+      return {left: left, right: right};
+    }
+  }
+
+  draw(ctx) {
+    let sprites = getSprites();
+    ctx.drawImage(
+      spritesheet,
+      this.position.x,
+      this.position.y,
+      this.width,
+      this.height,
+      
+    )
+  }
+
 }

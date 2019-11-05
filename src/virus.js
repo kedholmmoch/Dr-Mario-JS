@@ -1,6 +1,3 @@
-const VIRUS_WIDTH = 24;
-const VIRUS_HEIGHT = 21;
-
 const VIRUS_SPRITES = {
   red: {
     0: [0, 88, 7, 7],
@@ -32,8 +29,8 @@ export default class Virus {
     this.frameLength = 250;
 
     this.spritesheet = options.spritesheet;
-    this.width = VIRUS_WIDTH;
-    this.height = VIRUS_HEIGHT;
+    this.width = options.width;
+    this.height = options.height;
   }
 
   getSprite() {
@@ -63,7 +60,6 @@ export default class Virus {
 
   draw(ctx){
     const sprite = this.getSprite();
-    // console.log(this.lastUpdated);
     ctx.drawImage(
       this.spritesheet,
       sprite[0],

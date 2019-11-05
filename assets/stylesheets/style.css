@@ -6,6 +6,7 @@ body {
 #gameScreen {
   background-color: black;
   margin: 0 px auto;
+  border: 1px solid darkslateblue;
 }
 
 img {

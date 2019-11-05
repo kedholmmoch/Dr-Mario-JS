@@ -1,7 +1,10 @@
 import Virus from './virus';
 
-const GAME_WIDTH = 192;
-const GAME_HEIGHT = 336;
+const GAME_WIDTH = 201;
+const GAME_HEIGHT = 353;
+
+const SQR_WIDTH = 24;
+const SQR_HEIGHT = 21;
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById("gameScreen");
@@ -12,11 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let spritesheet = document.getElementById("spritesheet");
 
   spritesheet.addEventListener("load", () => {
-    
-    
     let virus1 = new Virus({
-      color: "blue",
-      position: { x: 100, y: 100 },
+      color: "yellow",
+      position: { x: 101, y: 111 },
+      width: SQR_WIDTH,
+      height: SQR_HEIGHT,
       spritesheet
     });
 
