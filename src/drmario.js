@@ -1,6 +1,4 @@
-import InputHandler from './input';
-import Virus from './virus';
-import Pill from './pill';
+import Game from './game';
 
 const GAME_WIDTH = 201;
 const GAME_HEIGHT = 353;
@@ -17,41 +15,25 @@ document.addEventListener('DOMContentLoaded', () => {
   let spritesheet = document.getElementById("spritesheet");
 
   spritesheet.addEventListener("load", () => {
-    let virus1 = new Virus({
-      color: "red",
-      position: { x: 101, y: 111 },
-      width: SQR_WIDTH,
-      height: SQR_HEIGHT,
+    
+    let game = new Game(
+      GAME_WIDTH, 
+      GAME_HEIGHT, 
+      SQR_WIDTH, 
+      SQR_HEIGHT, 
       spritesheet
-    });
-
-    let pill1 = new Pill({
-      spritesheet: spritesheet,
-      width: SQR_WIDTH,
-      height: SQR_HEIGHT,
-      colors: ["red", "yellow"]
-    })
-
-    new InputHandler(pill1);
+    );
+    game.start();
 
     function gameLoop(timestamp) {
       ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-      
-      // ctx.drawImage(
-      //   spritesheet,
-      //   0, 48, 7, 7,
-      //   75, 200, 24, 21
-      // );
-      
-      virus1.update(timestamp);
-      pill1.update(timestamp);
-      virus1.draw(ctx);
-      pill1.draw(ctx);
+
+      game.update(timestamp);
+      game.draw(ctx);
 
       requestAnimationFrame(gameLoop);
     }
     
-    gameLoop();
-
+    requestAnimationFrame(gameLoop);
   });
 });

@@ -1,4 +1,5 @@
-//* sq_width = 24px (25); sq_height = 21px (22); *//
+/* game_width = 201 (8sq.);   game_height = 353 (16sq.); */
+/* sq_width = 24px (25);      sq_height = 21px (22); */
 
 const COLOR_SPRITES = {
   top: {
@@ -42,19 +43,21 @@ export default class Pill {
   constructor(options) {
     this.c0 = options.colors[0];
     this.c1 = options.colors[1];
-    this.width = options.width;
-    this.height = options.height;
-    this.spritesheet = options.spritesheet;
+    this.width = options.game.squareWidth;
+    this.height = options.game.squareHeight;
+    this.spritesheet = options.game.spritesheet;
 
     this.position = {x: 76, y: 23};
     this.rotation = 0;
     this.orientation = this.getOrientation();
     this.lastDrop = null;
-    this.dropSpeed = 1;
+    this.dropSpeed = 3;
 
     this.stationary = false;
     this.connected = true;
   }
+
+  // methods involved in changing pill's instance variables/own state
 
   getOrientation() {
     switch (this.rotation) {
@@ -72,14 +75,17 @@ export default class Pill {
   }
 
   moveLeft() {
-    if (this.position.x >= 25) {
+    if (!this.stationary && this.position.x >= 25) {
       this.position.x -= 25;
     }
   }
 
   moveRight() {
-    if (this.position.x < 151) {
-      this.position.x += 25;
+    if (!this.stationary) {
+      if ((this.orientation === "horizontal" && this.position.x < 151) ||
+      (this.orientation === "vertical" && this.position.x < 176)) {
+        this.position.x += 25;
+      }
     }
   }
 
@@ -90,12 +96,22 @@ export default class Pill {
       newRotation : 
       (((this.rotation - 90) % 360) + 360) % 360;
     this.orientation = this.getOrientation();
+
+    // don't allow pill to "flip" outside canvas area
+    if ((this.orientation === "horizontal") && (this.position.x > 151)) {
+      this.position.x = 151;
+    }
   }
 
   flipRight() {
     // will have to adjust later so that orientation does NOT change if things in the way
     this.rotation = (this.rotation + 90) % 360;
     this.orientation = this.getOrientation();
+
+    // don't allow pill to "flip" outside canvas area
+    if ((this.orientation === "horizontal") && (this.position.x > 151)) {
+      this.position.x = 151;
+    }
   }
 
   drop() {
@@ -105,6 +121,8 @@ export default class Pill {
     
     if (this.position.y < 331) {
       this.position.y += 22;
+    } else {
+      this.stationary = true;
     }
   }
 
@@ -206,14 +224,14 @@ export default class Pill {
   update(timestamp) {
     if (!this.lastDrop) this.lastDrop = timestamp;
 
-    let dropInterval = 1100 - (100 * this.dropSpeed);
-
-    // console.log(timestamp - this.lastDrop);
-
-    if ((timestamp - this.lastDrop) > dropInterval) {
-      this.drop();
-      this.lastDrop = timestamp;
+    if (!this.stationary) {
+      let dropInterval = 1200 - (200 * this.dropSpeed);
+  
+      if ((timestamp - this.lastDrop) > dropInterval) {
+        this.drop();
+        this.lastDrop = timestamp;
+      }
     }
-  }
 
+  }
 }

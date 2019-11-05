@@ -28,9 +28,9 @@ export default class Virus {
     this.lastUpdated = null;
     this.frameLength = 250;
 
-    this.spritesheet = options.spritesheet;
-    this.width = options.width;
-    this.height = options.height;
+    this.spritesheet = options.game.spritesheet;
+    this.width = options.game.squareWidth;
+    this.height = options.game.squareHeight;
   }
 
   getSprite() {
@@ -49,8 +49,6 @@ export default class Virus {
 
   update(timestamp) {
     if (!this.lastUpdated) this.lastUpdated = timestamp;
-
-    // console.log(timestamp);
 
     if ((timestamp - this.lastUpdated) > this.frameLength) {
       this.frame = (this.frame + 1) % 2;
