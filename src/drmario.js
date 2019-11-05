@@ -1,3 +1,4 @@
+import InputHandler from './input';
 import Virus from './virus';
 import Pill from './pill';
 
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   spritesheet.addEventListener("load", () => {
     let virus1 = new Virus({
-      color: "yellow",
+      color: "red",
       position: { x: 101, y: 111 },
       width: SQR_WIDTH,
       height: SQR_HEIGHT,
@@ -28,8 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
       spritesheet: spritesheet,
       width: SQR_WIDTH,
       height: SQR_HEIGHT,
-      colors: ["blue", "blue"]
+      colors: ["red", "yellow"]
     })
+
+    new InputHandler(pill1);
 
     function gameLoop(timestamp) {
       ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);

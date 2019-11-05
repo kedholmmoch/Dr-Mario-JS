@@ -1,3 +1,5 @@
+//* sq_width = 24px (25); sq_height = 21px (22); *//
+
 const COLOR_SPRITES = {
   top: {
     red: [0, 8, 7, 7],
@@ -44,11 +46,13 @@ export default class Pill {
     this.height = options.height;
     this.spritesheet = options.spritesheet;
 
-    this.position = {x: 76, y: 23}
-    this.stationary = false;
+    this.position = {x: 76, y: 23};
     this.rotation = 0;
-    this.connected = true;
     this.orientation = this.getOrientation();
+    this.dropSpeed = 1;
+
+    this.stationary = false;
+    this.connected = true;
 
   }
 
@@ -67,17 +71,65 @@ export default class Pill {
     }
   }
 
+  moveLeft() {
+    if (this.position.x >= 25) {
+      this.position.x -= 25;
+    }
+  }
+
+  moveRight() {
+    if (this.position.x < 151) {
+      this.position.x += 25;
+    }
+  }
+
+  flipLeft() {
+    // will have to adjust later so that orientation does NOT change if things in the way
+    let newRotation = this.rotation - 90;
+    this.rotation = (newRotation >= 0) ? 
+      newRotation : 
+      (((this.rotation - 90) % 360) + 360) % 360;
+    this.orientation = this.getOrientation();
+  }
+
+  flipRight() {
+    // will have to adjust later so that orientation does NOT change if things in the way
+    this.rotation = (this.rotation + 90) % 360;
+    this.orientation = this.getOrientation();
+  }
+
+  slowDrop() {
+
+  }
+
+  speedDrop() {
+
+  }
+
+
+  // methods involved in displaying/drawing the pills
+
   getSprites() {
+    let left, right, top, bottom;
     let c0 = this.c0;
     let c1 = this.c1;
+
     if (this.rotation === 0) {
-      let left = COLOR_SPRITES.left[c0];
-      let right = COLOR_SPRITES.right[c1];
-      return {left: left, right: right};
+      left = COLOR_SPRITES.left[c0];
+      right = COLOR_SPRITES.right[c1];
+      return { left: left, right: right };
     } else if (this.rotation === 180) {
-      let left = COLOR_SPRITES.left[c1];
-      let right = COLOR_SPRITES.right[c0];
-      return {left: left, right: right}
+      left = COLOR_SPRITES.left[c1];
+      right = COLOR_SPRITES.right[c0];
+      return { left: left, right: right };
+    } else if (this.rotation === 90) {
+      top = COLOR_SPRITES.top[c0];
+      bottom = COLOR_SPRITES.bottom[c1];
+      return { top: top, bottom: bottom };
+    } else if (this.rotation === 270) {
+      top = COLOR_SPRITES.top[c1];
+      bottom = COLOR_SPRITES.bottom[c0];
+      return { top: top, bottom: bottom};
     }
   }
 
@@ -107,10 +159,42 @@ export default class Pill {
     );
   }
 
+  drawVertical(ctx) {
+    let sprites = this.getSprites();
+    ctx.drawImage(
+      spritesheet,
+      sprites.top[0],
+      sprites.top[1],
+      sprites.top[2],
+      sprites.top[3],
+      this.position.x,
+      this.position.y - 22,
+      this.width,
+      this.height
+    );
+    ctx.drawImage(
+      spritesheet,
+      sprites.bottom[0],
+      sprites.bottom[1],
+      sprites.bottom[2],
+      sprites.bottom[3],
+      this.position.x,
+      this.position.y,
+      this.width,
+      this.height
+    );
+  }
+
   draw(ctx) {
     if (this.orientation === "horizontal") {
       this.drawHorizontal(ctx);
+    } else if (this.orientation === "vertical") {
+      this.drawVertical(ctx);
     }
+  }
+
+  update(timestamp) {
+
   }
 
 }
