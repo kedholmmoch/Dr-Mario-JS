@@ -68,6 +68,9 @@ export default class Board {
   isEmpty(coords) {   // coords is an array in form of [row, column]
     let [row, column] = coords;
 
+    if (column < 0 || column > 7) return false;   // outside of board
+    if (row > 15) return false;                   // outside of board
+
     if (this.grid[row][column] === null) {
       return true;
     } else {

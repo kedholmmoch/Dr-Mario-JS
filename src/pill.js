@@ -54,13 +54,13 @@ export default class Pill {
     this.c0 = options.colors[0];
     this.c1 = options.colors[1];
 
-    this.coordinates = [1, 3];   // coordinates[0] = y, coordinates[1] = x
+    this.coordinates = [1, 3];  // coordinates[0] = y/row, coordinates[1] = x/col
     this.position = this.board.getPosition(this.coordinates);
 
     this.rotation = 0;
     this.orientation = this.getOrientation();
     this.lastDrop = null;
-    this.dropSpeed = 3;
+    this.dropSpeed = 1;
 
     this.stationary = false;
     this.connected = true;
@@ -175,11 +175,41 @@ export default class Pill {
 
   }
 
+  canDrop() {
+    let [currRow, currCol] = this.coordinates;
+    let nextRow = currRow + 1;
+    let nextCol = currCol + 1;
+
+    if (this.orientation === "horizontal") {
+      if (this.board.isEmpty([nextRow, currCol]) && 
+        this.board.isEmpty([nextRow, nextCol])) {
+          return true;
+        } else {
+          return false;
+        }
+    } else if (this.orientation === "vertical") {
+      if (this.board.isEmpty([nextRow, currCol])) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
   drop() {
     /// will have to adjust to also stop if there is something in the way
     console.log('drop function');
+    console.log(this.canDrop());
     console.log(this.position.y);
 
+    if (this.canDrop()) {
+      this.coordinates[0] += 1;
+      this.position = this.board.getPosition(this.coordinates);
+    } else {
+      this.stationary = true;
+    }
+
+    /*
     if (this.coordinates[0] < 15) {
       this.coordinates[0] += 1;
       this.position = this.board.getPosition(this.coordinates);
@@ -187,7 +217,6 @@ export default class Pill {
       this.stationary = true;
     }
     
-    /*
     if (this.position.y < (this.gameHeight - this.totalHeight)) {
       this.position.y += this.totalHeight;
     } else {
