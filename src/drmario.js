@@ -1,11 +1,12 @@
 import Game from './game';
 import Board from './board';
 
-const GAME_WIDTH = 201;
-const GAME_HEIGHT = 353;
+const GAME_WIDTH = 203;
+const GAME_HEIGHT = 355;
+const MARGIN = 3;
 
-const SQR_WIDTH = 24;
-const SQR_HEIGHT = 21;
+const SQR_WIDTH = 25 - MARGIN;
+const SQR_HEIGHT = 22 - MARGIN;
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById("gameScreen");
@@ -19,16 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let game = new Game(
       GAME_WIDTH, 
-      GAME_HEIGHT, 
+      GAME_HEIGHT,
+      MARGIN, 
       SQR_WIDTH, 
       SQR_HEIGHT, 
       spritesheet,
-      3
+      20
     );
     game.start();
-
-    // let board = new Board(game);
-    // console.log(board);
 
     function gameLoop(timestamp) {
       ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);

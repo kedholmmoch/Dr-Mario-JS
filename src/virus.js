@@ -26,6 +26,7 @@ export default class Virus {
     this.spritesheet = options.game.spritesheet;
     this.width = options.game.squareWidth;
     this.height = options.game.squareHeight;
+    this.margin = options.game.margin;
 
     this.position = options.position || this.getPosition();
 
@@ -36,11 +37,13 @@ export default class Virus {
 
   getPosition() {
     let coords = this.coordinates;
+    let margin = this.margin;
+
     let xCoord = coords[1];
     let yCoord = coords[0];
 
-    let xPos = 1 + (xCoord * (this.width + 1));
-    let yPos = 1 + (yCoord * (this.height + 1));
+    let xPos = margin + (xCoord * (this.width + margin));
+    let yPos = margin + (yCoord * (this.height + margin));
 
     return { x: xPos, y: yPos };
   }

@@ -1,5 +1,5 @@
-/* game_width = 201 (8sq.);   game_height = 353 (16sq.); */
-/* sq_width = 24px (25);      sq_height = 21px (22); */
+/* game_width = 202 (8sq.);   game_height = 354 (16sq.); */
+/* sq_width = 23px (25);      sq_height = 20px (22); */
 
 const COLOR_SPRITES = {
   top: {
@@ -41,13 +41,22 @@ const COLOR_SPRITES = {
 
 export default class Pill {
   constructor(options) {
-    this.c0 = options.colors[0];
-    this.c1 = options.colors[1];
+    this.gameWidth = options.game.gameWidth;
+    this.gameHeight = options.game.gameHeight;
     this.width = options.game.squareWidth;
     this.height = options.game.squareHeight;
+    this.margin = options.game.margin;
+    this.totalWidth = this.width + this.margin;
+    this.totalHeight = this.height + this.margin;
     this.spritesheet = options.game.spritesheet;
 
-    this.position = {x: 76, y: 23};
+    this.c0 = options.colors[0];
+    this.c1 = options.colors[1];
+
+    this.position = {
+      x: this.margin + (3 * this.totalWidth),
+      y: this.margin + (1 * this.totalHeight)
+    };
     this.rotation = 0;
     this.orientation = this.getOrientation();
     this.lastDrop = null;
@@ -75,43 +84,59 @@ export default class Pill {
   }
 
   moveLeft() {
-    if (!this.stationary && this.position.x >= 25) {
-      this.position.x -= 25;
+    if (!this.stationary && this.position.x >= this.totalWidth) {
+      this.position.x -= this.totalWidth;
     }
   }
 
   moveRight() {
+    let oneFromRight = this.gameWidth - (1 * (this.width + this.margin));
+    let twoFromRight = this.gameWidth - (2 * (this.width + this.margin));
+
     if (!this.stationary) {
-      if ((this.orientation === "horizontal" && this.position.x < 151) ||
-      (this.orientation === "vertical" && this.position.x < 176)) {
-        this.position.x += 25;
+      if ((this.orientation === "horizontal" && this.position.x < twoFromRight) ||
+      (this.orientation === "vertical" && this.position.x < oneFromRight)) {
+        this.position.x += this.totalWidth;
       }
     }
   }
 
   flipLeft() {
-    // will have to adjust later so that orientation does NOT change if things in the way
-    let newRotation = this.rotation - 90;
-    this.rotation = (newRotation >= 0) ? 
-      newRotation : 
-      (((this.rotation - 90) % 360) + 360) % 360;
-    this.orientation = this.getOrientation();
 
-    // don't allow pill to "flip" outside canvas area
-    if ((this.orientation === "horizontal") && (this.position.x > 151)) {
-      this.position.x = 151;
+    if (!this.stationary) {
+
+      // will have to adjust later so that orientation does NOT change if things in the way
+      let newRotation = this.rotation - 90;
+      this.rotation = (newRotation >= 0) ? 
+        newRotation : 
+        (((this.rotation - 90) % 360) + 360) % 360;
+      this.orientation = this.getOrientation();
+  
+      // don't allow pill to "flip" outside canvas area
+      let twoFromRight = this.gameWidth - (2 * (this.width + this.margin));
+      if ((this.orientation === "horizontal") && (this.position.x > twoFromRight)) {
+        this.position.x = twoFromRight;
+      }
+
     }
+
   }
 
   flipRight() {
-    // will have to adjust later so that orientation does NOT change if things in the way
-    this.rotation = (this.rotation + 90) % 360;
-    this.orientation = this.getOrientation();
 
-    // don't allow pill to "flip" outside canvas area
-    if ((this.orientation === "horizontal") && (this.position.x > 151)) {
-      this.position.x = 151;
+    if (!this.stationary) {
+
+      // will have to adjust later so that orientation does NOT change if things in the way
+      this.rotation = (this.rotation + 90) % 360;
+      this.orientation = this.getOrientation();
+  
+      // don't allow pill to "flip" outside canvas area
+      let twoFromRight = this.gameWidth - (2 * (this.width + this.margin));
+      if ((this.orientation === "horizontal") && (this.position.x > twoFromRight)) {
+        this.position.x = twoFromRight;
+      }
     }
+
   }
 
   drop() {
@@ -119,8 +144,8 @@ export default class Pill {
     console.log('drop function');
     console.log(this.position.y);
     
-    if (this.position.y < 331) {
-      this.position.y += 22;
+    if (this.position.y < (this.gameHeight - this.totalHeight)) {
+      this.position.y += this.totalHeight;
     } else {
       this.stationary = true;
     }

@@ -26,6 +26,7 @@ export default class Board {
     let total = this.numberViruses;
     let added = 0;
 
+    // only want to add viruses to uppermost rows if the level is very high
     let rowAdjustment = 4 - Math.floor(this.level / 5);
 
     let lowestRow = 3 + rowAdjustment;
@@ -42,13 +43,13 @@ export default class Board {
           color: color,
           coordinates: [row, column]
         });
-        
+
         this.grid[row][column] = newVirus;
         this.viruses.push(newVirus);
         added += 1;
       }
     }
-
+    
     return this.grid;
   }
 

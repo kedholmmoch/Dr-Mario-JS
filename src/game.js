@@ -5,10 +5,11 @@ import Pill from './pill';
 
 export default class Game {
 
-  constructor(gameWidth, gameHeight, squareWidth, squareHeight, 
+  constructor(gameWidth, gameHeight, margin, squareWidth, squareHeight, 
       spritesheet, level) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
+    this.margin = margin;
     this.squareWidth = squareWidth;
     this.squareHeight = squareHeight;
     this.spritesheet = spritesheet;
@@ -19,23 +20,20 @@ export default class Game {
 
     // will need these later/soon ..
 
-    // this.viruses = [];
-
     this.currentPill = {};
   }
 
   start() {
-
-    
+    /*
     this.virus1 = new Virus({
       color: "red",
       position: { x: 101, y: 111 },
       game: this
     });
-    
+    */
 
     this.pill1 = new Pill({
-      colors: ["red", "yellow"],
+      colors: ["blue", "blue"],
       game: this
     });
 
@@ -57,5 +55,4 @@ export default class Game {
   draw(ctx) {
     this.gameObjects.forEach(object => object.draw(ctx));
   }
-
 }
