@@ -78,46 +78,69 @@ export default class Pill {
         return "horizontal";
       case 270:
         return "vertical";
-      default:
-        return "horizontal";
     }
   }
 
-
   // Need to change all these so they rely on the COORDS, but also update POSITION
 
+  canMoveLeft() {
+    let [currRow, currCol] = this.coordinates;
+    let prevRow = currRow - 1;
+    let prevCol = currCol - 1;
+
+    if (this.orientation === "horizontal") {
+      if (this.board.isEmpty([currRow, prevCol])) {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (this.orientation === "vertical") {
+      if (this.board.isEmpty([currRow, prevCol]) && 
+        this.board.isEmpty([prevRow, prevCol])) {
+          return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  canMoveRight() {
+    let [currRow, currCol] = this.coordinates;
+    let prevRow = currRow - 1;
+    let nextCol = currCol + 1;
+
+    if (this.orientation === "horizontal") {
+      if (this.board.isEmpty([currRow, nextCol]) &&
+        this.board.isEmpty([currRow, nextCol + 1])) {
+          return true;
+      } else {
+        return false;
+      }
+    } else if (this.orientation === "vertical") {
+      if (this.board.isEmpty([currRow, nextCol]) &&
+        this.board.isEmpty([prevRow, nextCol])) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
   moveLeft() {
-    if (!this.stationary && this.coordinates[1] > 0) {
-    // if (!this.stationary && this.position.x >= this.totalWidth) {
+    if (!this.stationary && this.canMoveLeft()) {
       this.coordinates[1] -= 1;
       this.position = this.board.getPosition(this.coordinates);
-      // this.position.x -= this.totalWidth;
     }
   }
 
   moveRight() {
-    
-    if (!this.stationary) {
+    if (!this.stationary && this.canMoveRight()) {
       if ((this.orientation === "horizontal" && this.coordinates[1] < 6) ||
         (this.orientation === "vertical" && this.coordinates[1] < 7)) {
         this.coordinates[1] += 1;
         this.position = this.board.getPosition(this.coordinates);
       }
     }
-
-    /*
-
-    let oneFromRight = this.gameWidth - (1 * (this.width + this.margin));
-    let twoFromRight = this.gameWidth - (2 * (this.width + this.margin));
-
-    if (!this.stationary) {
-      if ((this.orientation === "horizontal" && this.position.x < twoFromRight) ||
-      (this.orientation === "vertical" && this.position.x < oneFromRight)) {
-        this.position.x += this.totalWidth;
-      }
-    }
-
-    */
   }
 
   flipLeft() {
@@ -137,16 +160,7 @@ export default class Pill {
         this.position = this.board.getPosition(this.coordinates);
       }
 
-      /*
-
-      let twoFromRight = this.gameWidth - (2 * (this.width + this.margin));
-      if ((this.orientation === "horizontal") && (this.position.x > twoFromRight)) {
-        this.position.x = twoFromRight;
-      }
-
-      */
     }
-
   }
 
   flipRight() {
@@ -163,16 +177,7 @@ export default class Pill {
         this.position = this.board.getPosition(this.coordinates);
       }
 
-      /* 
-
-      let twoFromRight = this.gameWidth - (2 * (this.width + this.margin));
-      if ((this.orientation === "horizontal") && (this.position.x > twoFromRight)) {
-        this.position.x = twoFromRight;
-      }
-
-      */
     }
-
   }
 
   canDrop() {
