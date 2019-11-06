@@ -54,16 +54,8 @@ export default class Pill {
     this.c0 = options.colors[0];
     this.c1 = options.colors[1];
 
-    this.coordinates = [1, 3];
-
+    this.coordinates = [1, 3];   // coordinates[0] = y, coordinates[1] = x
     this.position = this.board.getPosition(this.coordinates);
-
-    /*
-    this.position = {
-      x: this.margin + (3 * this.totalWidth),
-      y: this.margin + (1 * this.totalHeight)
-    };
-    */
 
     this.rotation = 0;
     this.orientation = this.getOrientation();
@@ -95,12 +87,26 @@ export default class Pill {
   // Need to change all these so they rely on the COORDS, but also update POSITION
 
   moveLeft() {
-    if (!this.stationary && this.position.x >= this.totalWidth) {
-      this.position.x -= this.totalWidth;
+    if (!this.stationary && this.coordinates[1] > 0) {
+    // if (!this.stationary && this.position.x >= this.totalWidth) {
+      this.coordinates[1] -= 1;
+      this.position = this.board.getPosition(this.coordinates);
+      // this.position.x -= this.totalWidth;
     }
   }
 
   moveRight() {
+    
+    if (!this.stationary) {
+      if ((this.orientation === "horizontal" && this.coordinates[1] < 6) ||
+        (this.orientation === "vertical" && this.coordinates[1] < 7)) {
+        this.coordinates[1] += 1;
+        this.position = this.board.getPosition(this.coordinates);
+      }
+    }
+
+    /*
+
     let oneFromRight = this.gameWidth - (1 * (this.width + this.margin));
     let twoFromRight = this.gameWidth - (2 * (this.width + this.margin));
 
@@ -110,6 +116,8 @@ export default class Pill {
         this.position.x += this.totalWidth;
       }
     }
+
+    */
   }
 
   flipLeft() {
@@ -120,15 +128,23 @@ export default class Pill {
       let newRotation = this.rotation - 90;
       this.rotation = (newRotation >= 0) ? 
         newRotation : 
-        (((this.rotation - 90) % 360) + 360) % 360;
+        (((this.rotation - 90) % 360) + 360) % 360; // funkiness of % with negs
       this.orientation = this.getOrientation();
   
       // don't allow pill to "flip" outside canvas area
+      if ((this.orientation === "horizontal") && (this.coordinates[1] > 6)) {
+        this.coordinates[1] = 6;
+        this.position = this.board.getPosition(this.coordinates);
+      }
+
+      /*
+
       let twoFromRight = this.gameWidth - (2 * (this.width + this.margin));
       if ((this.orientation === "horizontal") && (this.position.x > twoFromRight)) {
         this.position.x = twoFromRight;
       }
 
+      */
     }
 
   }
@@ -142,10 +158,19 @@ export default class Pill {
       this.orientation = this.getOrientation();
   
       // don't allow pill to "flip" outside canvas area
+      if ((this.orientation === "horizontal") && (this.coordinates[1] > 6)) {
+        this.coordinates[1] = 6;
+        this.position = this.board.getPosition(this.coordinates);
+      }
+
+      /* 
+
       let twoFromRight = this.gameWidth - (2 * (this.width + this.margin));
       if ((this.orientation === "horizontal") && (this.position.x > twoFromRight)) {
         this.position.x = twoFromRight;
       }
+
+      */
     }
 
   }
@@ -154,12 +179,21 @@ export default class Pill {
     /// will have to adjust to also stop if there is something in the way
     console.log('drop function');
     console.log(this.position.y);
+
+    if (this.coordinates[0] < 15) {
+      this.coordinates[0] += 1;
+      this.position = this.board.getPosition(this.coordinates);
+    } else {
+      this.stationary = true;
+    }
     
+    /*
     if (this.position.y < (this.gameHeight - this.totalHeight)) {
       this.position.y += this.totalHeight;
     } else {
       this.stationary = true;
     }
+    */
   }
 
   slowDrop() {
