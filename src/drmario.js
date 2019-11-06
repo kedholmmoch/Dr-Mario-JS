@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       SQR_WIDTH, 
       SQR_HEIGHT, 
       spritesheet,
-      20
+      3
     );
     game.start();
 

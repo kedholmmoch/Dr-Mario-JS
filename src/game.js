@@ -1,7 +1,7 @@
 import InputHandler from './input';
 import Board from './board';
-import Virus from './virus';
 import Pill from './pill';
+// import Virus from './virus';   // may not need, since board takes care of it
 
 export default class Game {
 
@@ -18,34 +18,25 @@ export default class Game {
     this.board = new Board(this);
     console.log(this.board);
 
-    // will need these later/soon ..
-
-    this.currentPill = {};
-  }
-
-  start() {
-    /*
-    this.virus1 = new Virus({
-      color: "red",
-      position: { x: 101, y: 111 },
-      game: this
-    });
-    */
-
+    // still a placeholder for a new Pill
     this.pill1 = new Pill({
       colors: ["blue", "blue"],
       game: this
     });
 
-    // this.gameObjects = [
-    //   this.virus1,
-    //   this.pill1
-    //   // ...this.board.viruses
-    // ];
+    // will need these later/soon ..
 
-    this.gameObjects = this.board.viruses.concat(this.pill1);
+    this.currentPill = this.pill1;
+  }
 
-    new InputHandler(this.pill1);
+  start() {
+
+    this.gameObjects = [
+      ...this.board.viruses,
+      this.currentPill
+    ];
+
+    new InputHandler(this.currentPill);
   }
 
   update(timestamp) {
