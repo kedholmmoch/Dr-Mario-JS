@@ -16,6 +16,7 @@ export default class Game {
     this.level = level ? level : 0;
 
     this.board = new Board(this);
+    this.board.populateViruses();
     console.log(this.board);
 
     // still a placeholder for a new Pill

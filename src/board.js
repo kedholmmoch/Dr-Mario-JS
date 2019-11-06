@@ -7,12 +7,14 @@ export default class Board {
     this.width = 8;
     this.height = 16;
     this.game = game;
+    this.margin = game.margin;
+    this.squareWidth = game.squareWidth;
+    this.squareHeight = game.squareHeight;
     this.level = game.level;  // we'll do levels 0 through 10
     this.numberViruses = 4 * (this.level + 1);
 
     this.grid = this.createEmptyGrid();
     this.viruses = [];
-    this.populateViruses();
   }
 
   createEmptyGrid() {
@@ -49,8 +51,28 @@ export default class Board {
         added += 1;
       }
     }
-    
+
     return this.grid;
+  }
+
+  getPosition(coords) {
+    let margin = this.margin;
+    let [yCoord, xCoord] = coords;
+
+    let xPos = margin + (xCoord * (this.squareWidth + margin));
+    let yPos = margin + (yCoord * (this.squareHeight + margin));
+
+    return { x: xPos, y: yPos };
+  }
+
+  isEmpty(coords) {   // coords is an array in form of [row, column]
+    let [row, column] = coords;
+
+    if (this.grid[row][column] === null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

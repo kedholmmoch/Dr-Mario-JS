@@ -49,14 +49,22 @@ export default class Pill {
     this.totalWidth = this.width + this.margin;
     this.totalHeight = this.height + this.margin;
     this.spritesheet = options.game.spritesheet;
+    this.board = options.game.board;
 
     this.c0 = options.colors[0];
     this.c1 = options.colors[1];
 
+    this.coordinates = [1, 3];
+
+    this.position = this.board.getPosition(this.coordinates);
+
+    /*
     this.position = {
       x: this.margin + (3 * this.totalWidth),
       y: this.margin + (1 * this.totalHeight)
     };
+    */
+
     this.rotation = 0;
     this.orientation = this.getOrientation();
     this.lastDrop = null;
@@ -82,6 +90,9 @@ export default class Pill {
         return "horizontal";
     }
   }
+
+
+  // Need to change all these so they rely on the COORDS, but also update POSITION
 
   moveLeft() {
     if (!this.stationary && this.position.x >= this.totalWidth) {

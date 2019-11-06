@@ -27,14 +27,16 @@ export default class Virus {
     this.width = options.game.squareWidth;
     this.height = options.game.squareHeight;
     this.margin = options.game.margin;
+    this.board = options.game.board;
 
-    this.position = options.position || this.getPosition();
+    this.position = this.board.getPosition(this.coordinates);
 
     this.frame = 0;
     this.lastUpdated = null;
     this.frameLength = 250;
   }
 
+  /*
   getPosition() {
     let coords = this.coordinates;
     let margin = this.margin;
@@ -47,6 +49,7 @@ export default class Virus {
 
     return { x: xPos, y: yPos };
   }
+  */
 
   getSprite() {
     const frame = this.frame;
