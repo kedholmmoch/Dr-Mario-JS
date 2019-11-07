@@ -154,5 +154,25 @@ export default class Board {
       }
     }
   }
-  
+
+  checkFourDown(coords) {
+    let [row, column] = coords;
+
+    let count = 1;
+    let squares = [coords];
+    let color = this.grid[row][column];
+
+    
+  }
+
+  checkFourAcross(coords) {
+
+  }
+
+  findFour() {
+    let fours = [];
+
+
+  }
+
 }
