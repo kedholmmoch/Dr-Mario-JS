@@ -50,11 +50,12 @@ export default class Pill {
     this.totalHeight = this.height + this.margin;
     this.spritesheet = options.game.spritesheet;
     this.board = options.game.board;
+    this.game = options.game;
 
     this.c0 = options.colors[0];
     this.c1 = options.colors[1];
 
-    this.coordinates = [1, 3];  // coordinates[0] = y/row, coordinates[1] = x/col
+    this.coordinates = [1, 3];  // coordinates[0]= y/row, coordinates[1]= x/col
     this.position = this.board.getPosition(this.coordinates);
 
     this.rotation = 0;
@@ -259,7 +260,8 @@ export default class Pill {
       this.coordinates[0] += 1;
       this.position = this.board.getPosition(this.coordinates);
     } else {
-      this.stationary = true;
+      // this.stationary = true;
+      this.freeze();
     }
   }
 
@@ -267,15 +269,13 @@ export default class Pill {
     this.drop();
   }
 
-  /*
-  slowDrop() {
-    this.dropSpeed -= 0.4;
+  freeze() {
+    this.stationary = true;
+    this.game.loadNextPill();
+    console.log(this.game.currentPill);
+    console.log(this.game.fallenPills);
+    console.log('----------');
   }
-
-  originalSpeed() {
-    this.dropSpeed += 0.4;
-  }
-  */
 
 
   // methods involved in displaying/drawing the pills

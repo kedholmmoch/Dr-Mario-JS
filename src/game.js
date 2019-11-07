@@ -21,30 +21,21 @@ export default class Game {
     this.board.populateViruses();
     console.log(this.board);
 
-    // still a placeholder for a new Pill
-
-    /* 
-
-    this.pill1 = new Pill({
-      colors: ["blue", "blue"],
-      game: this
-    });
-
-    */
-
-    // will need these later/soon ..
+    this.fallenPills = [];
+    // this.generatePill = this.generatePill.bind(this);
 
     this.currentPill = this.generatePill();
+    this.nextPill = this.generatePill();
   }
 
   start() {
-
     this.gameObjects = [
       ...this.board.viruses,
+      ...this.fallenPills,
       this.currentPill
     ];
 
-    new InputHandler(this.currentPill);
+    this.currentHandler = new InputHandler(this.currentPill);
   }
 
   generatePill() {
@@ -57,6 +48,21 @@ export default class Game {
     });
 
     return newPill;
+  }
+
+  loadNextPill() {
+    this.fallenPills.push(this.currentPill);
+    this.currentHandler.removeListener();
+
+    const that = this;
+
+    window.setTimeout(function(){
+      that.currentPill = that.nextPill;
+      that.gameObjects.push(that.currentPill);
+      that.currentHandler = new InputHandler(that.currentPill);
+
+      that.nextPill = that.generatePill();
+    }, 500);
   }
 
   update(timestamp) {
