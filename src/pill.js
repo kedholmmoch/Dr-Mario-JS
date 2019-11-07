@@ -271,10 +271,10 @@ export default class Pill {
 
   freeze() {
     this.stationary = true;
+    this.board.recordPill(this);
     this.game.loadNextPill();
-    console.log(this.game.currentPill);
-    console.log(this.game.fallenPills);
-    console.log('----------');
+
+    console.log(this.board);
   }
 
 

@@ -1,4 +1,6 @@
 import Virus from './virus';
+import Pill from './pill';
+import Dose from './dose';
 
 const COLORS = ["red", "yellow", "blue"];
 
@@ -78,4 +80,79 @@ export default class Board {
     }
   }
 
+  recordPill(pill) {
+    let [row, column] = pill.coordinates;
+    let rotation = pill.rotation;
+    let orientation = pill.orientation;
+
+    let c0 = pill.c0;
+    let c1 = pill.c1;
+
+    if (orientation === "horizontal") {
+      let leftCoord = [row, column];
+      let rightCoord = [row, column + 1];
+
+      if (rotation === 0) {
+        this.grid[row][column] = new Dose({
+          color: c0,
+          coordinates: leftCoord,
+          game: this.game,
+          pill: pill
+        });
+        this.grid[row][column + 1] = new Dose({
+          color: c1,
+          coordinates: rightCoord,
+          game: this.game,
+          pill: pill
+        });
+
+      } else if (rotation === 180) {
+        this.grid[row][column] = new Dose({
+          color: c1,
+          coordinates: leftCoord,
+          game: this.game,
+          pill: pill
+        });
+        this.grid[row][column + 1] = new Dose({
+          color: c0,
+          coordinates: rightCoord,
+          game: this.game,
+          pill: pill
+        });
+      }
+    } else if (orientation === "vertical") {
+      let topCoord = [row - 1, column];
+      let bottomCoord = [row, column];
+
+      if (rotation === 90) {
+        this.grid[row -1][column] = new Dose({
+          color: c0,
+          coordinates: topCoord,
+          game: this.game,
+          pill: pill
+        });
+        this.grid[row][column] = new Dose({
+          color: c1,
+          coordinates: bottomCoord,
+          game: this.game,
+          pill: pill
+        });
+
+      } else if (rotation === 270) {
+        this.grid[row - 1][column] = new Dose({
+          color: c1,
+          coordinates: topCoord,
+          game: this.game,
+          pill: pill
+        });
+        this.grid[row][column] = new Dose({
+          color: c0,
+          coordinates: bottomCoord,
+          game: this.game,
+          pill: pill
+        });
+      }
+    }
+  }
+  
 }
