@@ -97,13 +97,15 @@ export default class Board {
           color: c0,
           coordinates: leftCoord,
           game: this.game,
-          pill: pill
+          pill: pill,
+          otherHalf: rightCoord
         });
         this.grid[row][column + 1] = new Dose({
           color: c1,
           coordinates: rightCoord,
           game: this.game,
-          pill: pill
+          pill: pill,
+          otherHalf: leftCoord
         });
 
       } else if (rotation === 180) {
@@ -111,13 +113,15 @@ export default class Board {
           color: c1,
           coordinates: leftCoord,
           game: this.game,
-          pill: pill
+          pill: pill,
+          otherHalf: rightCoord
         });
         this.grid[row][column + 1] = new Dose({
           color: c0,
           coordinates: rightCoord,
           game: this.game,
-          pill: pill
+          pill: pill,
+          otherHalf: leftCoord
         });
       }
     } else if (orientation === "vertical") {
@@ -129,13 +133,15 @@ export default class Board {
           color: c0,
           coordinates: topCoord,
           game: this.game,
-          pill: pill
+          pill: pill,
+          otherHalf: bottomCoord
         });
         this.grid[row][column] = new Dose({
           color: c1,
           coordinates: bottomCoord,
           game: this.game,
-          pill: pill
+          pill: pill,
+          otherHalf: topCoord
         });
 
       } else if (rotation === 270) {
@@ -143,13 +149,15 @@ export default class Board {
           color: c1,
           coordinates: topCoord,
           game: this.game,
-          pill: pill
+          pill: pill,
+          otherHalf: bottomCoord
         });
         this.grid[row][column] = new Dose({
           color: c0,
           coordinates: bottomCoord,
           game: this.game,
-          pill: pill
+          pill: pill,
+          otherHalf: topCoord
         });
       }
     }
@@ -228,6 +236,10 @@ export default class Board {
     }
   }
 
+  coordInArray(coord, array) {
+    return array.some(ele => ele[0] === coord[0] && ele[1] === coord[1]);
+  }
+
   findFours() {
     let fours = [];
     
@@ -252,12 +264,28 @@ export default class Board {
     let result = [];   // need to eliminate duplicate coordinates from result
 
     fours.forEach(coord => {
-      if (!result.some(ele => ele[0] === coord[0] && ele[1] === coord[1])) {
+      if (!this.coordInArray(coord, result)) {
         result.push(coord);
       }
     });
 
     return result;
+  }
+
+  deleteFromBoard(coordArray) {
+
+    coordArray.forEach(coord => {
+      let [row, column] = coord;
+      let item = this.grid[row][column];
+
+      if (item instanceof Dose && item.pill && 
+        !this.coordInArray(item.otherHalf, coordArray)) {
+          let pill = item.pill;
+          let otherHalfCoord = item.otherHalf;
+
+
+      }
+    })
   }
 
   clearFours() {

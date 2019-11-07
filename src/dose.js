@@ -4,5 +4,14 @@ export default class Dose {
     this.coordinates = options.coordinates;
     this.game = options.game;
     this.pill = options.pill || null;
+    this.otherHalf = options.otherHalf || null;
   }
+
+  // deleteFromBoard(coordArray) {
+  //   let [row, column] = this.coordinates;
+
+  //   coordArray.forEach(coord => {
+      
+  //   })
+  // }
 }
