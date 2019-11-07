@@ -10,11 +10,9 @@ export default class InputHandler {
           // alert("move right");
           pill.moveRight();
           break;
-        case 73:
-          alert("slow drop");
-          break;
         case 75:
-          alert("speed drop");
+          // alert("speed drop");
+          pill.speedDrop();
           break;
         case 83:
           // alert("flip left");
@@ -25,6 +23,7 @@ export default class InputHandler {
           pill.flipRight();
           break;
       }
-    })
+    });
+    
   }
 }

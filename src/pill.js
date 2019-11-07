@@ -81,8 +81,6 @@ export default class Pill {
     }
   }
 
-  // Need to change all these so they rely on the COORDS, but also update POSITION
-
   canMoveLeft() {
     let [currRow, currCol] = this.coordinates;
     let prevRow = currRow - 1;
@@ -143,40 +141,92 @@ export default class Pill {
     }
   }
 
+  canFlip() {
+    let [currRow, currCol] = this.coordinates;
+    let prevRow = currRow - 1;
+    let prevCol = currCol - 1;
+    let nextRow = currRow + 1;
+    let nextCol = currCol + 1;
+
+    if (this.orientation === "horizontal") {
+      if (!this.board.isEmpty([prevRow, currCol]) &&
+        !this.board.isEmpty([prevRow, nextCol]) &&
+        !this.board.isEmpty([nextRow, currCol]) &&
+        !this.board.isEmpty([nextRow, nextCol])) {
+          return false;
+        } else {
+          return true;
+        }
+    } else if (this.orientation === "vertical") {
+      if (!this.board.isEmpty([prevRow, prevCol]) &&
+        !this.board.isEmpty([currRow, prevCol]) &&
+        !this.board.isEmpty([prevRow, nextCol]) &&
+        !this.board.isEmpty([currRow, nextCol])) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
+  adjustFlip() {
+    let [currRow, currCol] = this.coordinates;
+    let prevRow = currRow - 1;
+    let prevCol = currCol - 1;
+    let nextRow = currRow + 1;
+    let nextCol = currCol + 1;
+
+    if (this.orientation === "vertical") {
+      if (!this.board.isEmpty([prevRow, currCol])) {
+        if (!this.board.isEmpty([nextRow, currCol])) {
+          if (!this.board.isEmpty([prevRow, nextCol])) {
+            this.coordinates = [nextRow, nextCol];
+            this.position = this.board.getPosition(this.coordinates);
+          } else {
+            this.coordinates = [currRow, nextCol];
+            this.position = this.board.getPosition(this.coordinates);
+          }
+        } else {
+          this.coordinates = [nextRow, currCol];
+          this.position = this.board.getPosition(this.coordinates);
+        }
+      } 
+    } else if (this.orientation === "horizontal") {
+      if (!this.board.isEmpty([currRow, nextCol])) {
+        if (!this.board.isEmpty([currRow, prevCol])) {
+          if (!this.board.isEmpty([prevRow, nextCol])) {
+            this.coordinates = [prevRow, prevCol];
+            this.position = this.board.getPosition(this.coordinates);
+          } else {
+            this.coordinates = [prevRow, currCol];
+            this.position = this.board.getPosition(this.coordinates);
+          }
+        } else {
+          this.coordinates = [currRow, prevCol];
+          this.position = this.board.getPosition(this.coordinates);
+        }
+      } 
+    }
+  }
+
   flipLeft() {
-
-    if (!this.stationary) {
-
-      // will have to adjust later so that orientation does NOT change if things in the way
+    if (!this.stationary && this.canFlip()) {
       let newRotation = this.rotation - 90;
       this.rotation = (newRotation >= 0) ? 
         newRotation : 
         (((this.rotation - 90) % 360) + 360) % 360; // funkiness of % with negs
       this.orientation = this.getOrientation();
-  
-      // don't allow pill to "flip" outside canvas area
-      if ((this.orientation === "horizontal") && (this.coordinates[1] > 6)) {
-        this.coordinates[1] = 6;
-        this.position = this.board.getPosition(this.coordinates);
-      }
 
+      this.adjustFlip();
     }
   }
 
   flipRight() {
-
-    if (!this.stationary) {
-
-      // will have to adjust later so that orientation does NOT change if things in the way
+    if (!this.stationary && this.canFlip()) {
       this.rotation = (this.rotation + 90) % 360;
       this.orientation = this.getOrientation();
-  
-      // don't allow pill to "flip" outside canvas area
-      if ((this.orientation === "horizontal") && (this.coordinates[1] > 6)) {
-        this.coordinates[1] = 6;
-        this.position = this.board.getPosition(this.coordinates);
-      }
 
+      this.adjustFlip();
     }
   }
 
@@ -202,10 +252,8 @@ export default class Pill {
   }
 
   drop() {
-    /// will have to adjust to also stop if there is something in the way
-    console.log('drop function');
-    console.log(this.canDrop());
-    console.log(this.position.y);
+    // console.log('drop function');
+    // console.log(this.position.y);
 
     if (this.canDrop()) {
       this.coordinates[0] += 1;
@@ -213,30 +261,21 @@ export default class Pill {
     } else {
       this.stationary = true;
     }
-
-    /*
-    if (this.coordinates[0] < 15) {
-      this.coordinates[0] += 1;
-      this.position = this.board.getPosition(this.coordinates);
-    } else {
-      this.stationary = true;
-    }
-    
-    if (this.position.y < (this.gameHeight - this.totalHeight)) {
-      this.position.y += this.totalHeight;
-    } else {
-      this.stationary = true;
-    }
-    */
-  }
-
-  slowDrop() {
-
   }
 
   speedDrop() {
-
+    this.drop();
   }
+
+  /*
+  slowDrop() {
+    this.dropSpeed -= 0.4;
+  }
+
+  originalSpeed() {
+    this.dropSpeed += 0.4;
+  }
+  */
 
 
   // methods involved in displaying/drawing the pills
