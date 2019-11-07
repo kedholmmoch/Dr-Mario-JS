@@ -1,7 +1,9 @@
 import InputHandler from './input';
 import Board from './board';
 import Pill from './pill';
-// import Virus from './virus';   // may not need, since board takes care of it
+
+
+const COLORS = ["red", "yellow", "blue"];
 
 export default class Game {
 
@@ -20,14 +22,19 @@ export default class Game {
     console.log(this.board);
 
     // still a placeholder for a new Pill
+
+    /* 
+
     this.pill1 = new Pill({
       colors: ["blue", "blue"],
       game: this
     });
 
+    */
+
     // will need these later/soon ..
 
-    this.currentPill = this.pill1;
+    this.currentPill = this.generatePill();
   }
 
   start() {
@@ -38,6 +45,18 @@ export default class Game {
     ];
 
     new InputHandler(this.currentPill);
+  }
+
+  generatePill() {
+    let c0 = COLORS[Math.floor(Math.random() * 3)];
+    let c1 = COLORS[Math.floor(Math.random() * 3)];
+
+    let newPill = new Pill({
+      colors: [c0, c1],
+      game: this
+    });
+
+    return newPill;
   }
 
   update(timestamp) {
