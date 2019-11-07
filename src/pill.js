@@ -253,16 +253,13 @@ export default class Pill {
   }
 
   drop() {
-    // console.log('drop function');
-    // console.log(this.position.y);
-
     if (this.canDrop()) {
       this.coordinates[0] += 1;
       this.position = this.board.getPosition(this.coordinates);
     } else {
-      // this.stationary = true;
       this.freeze();
     }
+
   }
 
   speedDrop() {

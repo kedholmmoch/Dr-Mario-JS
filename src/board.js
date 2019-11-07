@@ -153,26 +153,119 @@ export default class Board {
         });
       }
     }
+
+    console.log(this.findFours());
   }
 
   checkFourDown(coords) {
     let [row, column] = coords;
 
-    let count = 1;
+    let sqNumber = 1;
     let squares = [coords];
-    let color = this.grid[row][column];
+    let color = this.grid[row][column].color;
 
-    
+    let currRow = row;
+    let sameColor = true;
+
+    while (sameColor && currRow <= 14) {
+      currRow += 1;
+      let currSquare = this.grid[currRow][column];
+
+      if (currSquare) {
+        let currColor = this.grid[currRow][column].color;
+  
+        if (currColor === color) {
+          sqNumber += 1;
+          squares.push([currRow, column]);
+        } else {
+          sameColor = false;
+        }
+      } else {
+        sameColor = false;
+      }
+    }
+
+    if (sqNumber >= 4) {
+      return squares;
+    } else {
+      return false;
+    }
+
   }
 
   checkFourAcross(coords) {
+    let [row, column] = coords;
 
+    let sqNumber = 1;
+    let squares = [coords];
+    let color = this.grid[row][column].color;
+
+    let currCol = column;
+    let sameColor = true;
+
+    while (sameColor && currCol <= 6) {
+      currCol += 1;
+      let currSquare = this.grid[row][currCol];
+
+      if (currSquare) {
+        let currColor = this.grid[row][currCol].color;
+
+        if (currColor === color) {
+          sqNumber += 1;
+          squares.push([row, currCol]);
+        } else {
+          sameColor = false;
+        }
+      } else {
+        sameColor = false;
+      }
+    }
+
+    if (sqNumber >= 4) {
+      return squares;
+    } else {
+      return false;
+    }
   }
 
-  findFour() {
+  findFours() {
     let fours = [];
+    
+    for (let row = 0; row <= 15; row++) {
+      for (let col = 0; col <= 7; col++) {
+        let coords = [row, col];
 
+        if (!this.isEmpty(coords)) {
+          let downResult = this.checkFourDown(coords);
+          let acrossResult = this.checkFourAcross(coords);
 
+          if (downResult) {
+            fours = fours.concat(downResult);
+          }
+          if (acrossResult) {
+            fours = fours.concat(acrossResult);
+          }
+        }
+      }   
+    }
+
+    let result = [];   // need to eliminate duplicate coordinates from result
+
+    fours.forEach(coord => {
+      if (!result.some(ele => ele[0] === coord[0] && ele[1] === coord[1])) {
+        result.push(coord);
+      }
+    });
+
+    return result;
+  }
+
+  clearFours() {
+    let toClear = this.findFours();
+
+    if (toClear) {
+      console.log('cleared!');
+    }
   }
 
 }
