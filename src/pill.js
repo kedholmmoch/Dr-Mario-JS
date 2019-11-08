@@ -55,7 +55,7 @@ export default class Pill {
     this.c0 = options.colors[0];
     this.c1 = options.colors[1];
 
-    this.coordinates = [1, 3];  // coordinates[0]= y/row, coordinates[1]= x/col
+    this.coordinates = [0, 3];  // coordinates[0]= y/row, coordinates[1]= x/col
     this.position = this.board.getPosition(this.coordinates);
 
     this.rotation = 0;
@@ -268,10 +268,37 @@ export default class Pill {
 
   freeze() {
     this.stationary = true;
-    this.board.recordPill(this);
-    this.game.loadNextPill();
+    this.game.fallenPills.push(this);
+    this.game.currentHandler.removeListener();
 
-    console.log(this.board);
+    this.board.recordPill(this);
+
+    if (!this.board.boardFull()) {
+      this.game.loadNextPill();
+      console.log(this.board);
+    } else {
+      alert('game over');
+    }
+  }
+
+  deleteFromGame() {
+    // let that = this;
+    // let currPills = this.game.fallenPills;
+
+    let fallenPillsIndex = this.game.fallenPills.indexOf(this);
+    let gameObjectsIndex = this.game.gameObjects.indexOf(this);
+
+    this.game.fallenPills.splice(fallenPillsIndex, 1);
+    this.game.gameObjects.splice(gameObjectsIndex, 1);
+
+    // currPills.forEach((pill, idx) => {
+    //   if (pill = that) {
+    //     that.game.fallenPills.splice(idx, 1);
+    //   }
+    // });
+
+    console.log(fallenPillsIndex);
+    console.log(gameObjectsIndex);
   }
 
 

@@ -16,8 +16,10 @@ export default class Board {
     this.numberViruses = 4 * (this.level + 1);
 
     this.grid = this.createEmptyGrid();
-    this.viruses = [];
+    this.viruses = [];  // this will only be updated once; game keeps track of viruses
   }
+
+  // methods for populating board at beginning of game
 
   createEmptyGrid() {
     const grid = [...Array(this.height)]
@@ -54,8 +56,10 @@ export default class Board {
       }
     }
 
-    return this.grid;
+    return this.viruses;
   }
+
+  // methods for determining position, finding empty postns, saving pill to board
 
   getPosition(coords) {
     let margin = this.margin;
@@ -71,13 +75,18 @@ export default class Board {
     let [row, column] = coords;
 
     if (column < 0 || column > 7) return false;   // outside of board
-    if (row > 15) return false;                   // outside of board
+    if (row < 0 || row > 15) return false;        // outside of board
 
     if (this.grid[row][column] === null) {
       return true;
     } else {
       return false;
     }
+  }
+
+  boardFull() {
+    if (this.grid[0][3] && this.grid[0][4]) return true;
+    return false;
   }
 
   recordPill(pill) {
@@ -162,8 +171,10 @@ export default class Board {
       }
     }
 
-    console.log(this.findFours());
+    this.clearFours();
   }
+
+  // methods for detecting 4+ of one color in a row (vert. or horiz.)
 
   checkFourDown(coords) {
     let [row, column] = coords;
@@ -261,6 +272,8 @@ export default class Board {
       }   
     }
 
+    if (fours.length === 0) return null;
+
     let result = [];   // need to eliminate duplicate coordinates from result
 
     fours.forEach(coord => {
@@ -273,26 +286,56 @@ export default class Board {
   }
 
   deleteFromBoard(coordArray) {
+    let that = this;
 
     coordArray.forEach(coord => {
       let [row, column] = coord;
-      let item = this.grid[row][column];
+      let item = that.grid[row][column];
 
-      if (item instanceof Dose && item.pill && 
-        !this.coordInArray(item.otherHalf, coordArray)) {
+      if (item instanceof Dose && item.pill /* && 
+        !that.coordInArray(item.otherHalf, coordArray) */) {
           let pill = item.pill;
           let otherHalfCoord = item.otherHalf;
 
+          let [doseRow, doseCol] = otherHalfCoord;
+          let dose = that.grid[doseRow][doseCol];
 
+          // delete pill
+          pill.deleteFromGame();
+          dose.pill = null;
+          dose.otherHalf = null;
+
+          // add dose to game to display
+          dose.single = true;
+          dose.addToGame();
+      } else if (item instanceof Virus) {
+        item.deleteFromGame();
+      } else if (item instanceof Dose && item.single === true) {
+        item.deleteFromGame();
+      } else {
+        // item.deleteFromGame();
       }
-    })
+
+      that.grid[row][column] = null;
+    });
+
+    console.log('Success!');
+    console.log(coordArray);
   }
 
   clearFours() {
     let toClear = this.findFours();
 
     if (toClear) {
+      // console.log(toClear);
+
+      console.log(this.deleteFromBoard(toClear));
+
+      // this.deleteFromBoard(toClear);
+
       console.log('cleared!');
+    } else {
+      console.log('nothing to clear!');
     }
   }
 

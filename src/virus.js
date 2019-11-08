@@ -28,12 +28,27 @@ export default class Virus {
     this.height = options.game.squareHeight;
     this.margin = options.game.margin;
     this.board = options.game.board;
+    this.game = options.game;
 
     this.position = this.board.getPosition(this.coordinates);
 
     this.frame = 0;
     this.lastUpdated = null;
     this.frameLength = 250;
+  }
+
+  deleteFromGame() {
+    // let that = this;
+    // let currViruses = this.game.viruses;
+
+    let gameVirusesIndex = this.game.viruses.indexOf(this);
+    let gameObjectsIndex = this.game.gameObjects.indexOf(this);
+
+    this.game.viruses.splice(gameVirusesIndex, 1);
+    this.game.gameObjects.splice(gameObjectsIndex, 1);
+
+    console.log(gameVirusesIndex);
+    console.log(gameObjectsIndex);
   }
 
   /*

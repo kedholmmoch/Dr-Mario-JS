@@ -18,11 +18,11 @@ export default class Game {
     this.level = level ? level : 0;
 
     this.board = new Board(this);
-    this.board.populateViruses();
+    this.viruses = this.board.populateViruses();
     console.log(this.board);
 
     this.fallenPills = [];
-    // this.generatePill = this.generatePill.bind(this);
+    this.singleDoses = [];
 
     this.currentPill = this.generatePill();
     this.nextPill = this.generatePill();
@@ -30,8 +30,9 @@ export default class Game {
 
   start() {
     this.gameObjects = [
-      ...this.board.viruses,
+      ...this.viruses,
       ...this.fallenPills,
+      ...this.singleDoses,
       this.currentPill
     ];
 
@@ -51,8 +52,8 @@ export default class Game {
   }
 
   loadNextPill() {
-    this.fallenPills.push(this.currentPill);
-    this.currentHandler.removeListener();
+    // this.fallenPills.push(this.currentPill);
+    // this.currentHandler.removeListener();
 
     const that = this;
 
