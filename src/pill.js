@@ -262,6 +262,8 @@ export default class Pill {
   }
 
   applyGravity() {
+    // console.log('apply gravity method');
+
     if (this.canDrop()) {
       let [currRow, currCol] = this.coordinates;
       let prevRow = currRow - 1;
@@ -280,11 +282,14 @@ export default class Pill {
       }
 
       this.board.recordPill(this);
+      return true;
     }
+    return false;
   }
 
   speedDrop() {
     this.drop();
+    // this.lastDrop = new Date().getTime();
   }
 
   freeze() {
@@ -295,14 +300,27 @@ export default class Pill {
     this.board.recordPill(this);
     this.board.clearFours();
 
-    if (this.game.viruses.length === 0) {
-      alert('you win!');
-    } else if (!this.board.boardFull()) {
-      this.game.loadNextPill();
-      console.log(this.board);
-    } else {
-      alert('game over');
-    }
+    // console.log(this.board.applyGravity());
+
+    this.board.applyGravity()
+      .then(() => {
+        this.board.clearFours();
+        return this.board.applyGravity()
+      }).then(() => {
+        this.board.clearFours();
+        return this.board.applyGravity()
+      }).then(() => {
+        console.log('did we get here?');
+        if (this.game.viruses.length === 0) {
+          alert('you win!');
+        } else if (!this.board.boardFull()) {
+          this.game.loadNextPill();
+          console.log(this.board);
+        } else {
+          alert('game over');
+        }
+
+      })
   }
 
   deleteFromGame() {

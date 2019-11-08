@@ -43,7 +43,6 @@ export default class Dose {
     // console.log(singleDoseIndex);
     // console.log(gameObjectsIndex);
   }
-
   
   canDrop() {
     if (!this.single) {
@@ -76,7 +75,10 @@ export default class Dose {
 
       this.game.board.grid[currRow][currCol] = null;
       this.game.board.grid[nextRow][currCol] = this;
+
+      return true;
     }
+    return false;
   }
 
   // display for single doses only

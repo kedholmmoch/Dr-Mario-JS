@@ -59,7 +59,7 @@ export default class Game {
       that.currentHandler = new InputHandler(that.currentPill);
 
       that.nextPill = that.generatePill();
-    }, 500);
+    }, 100);
   }
 
   update(timestamp) {

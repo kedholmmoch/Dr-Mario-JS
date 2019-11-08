@@ -316,6 +316,42 @@ export default class Board {
   }
 
   applyGravity() {
+    return new Promise((resolve, reject) => {
+      console.log('apply gravity method');
+      var canFall = false;
+  
+      for (let row = 14; row >= 0; row--) {
+        for (let col = 0; col <= 7; col++) {
+          let currItem = this.grid[row][col];
+          var applied;
+  
+          if (currItem instanceof Dose && currItem.pill) {
+            let pill = currItem.pill;
+            applied = pill.applyGravity();
+            if (applied) canFall = true;
+          } else if (currItem instanceof Dose && currItem.single) {
+            applied = currItem.applyGravity();
+            if (applied) canFall = true;
+          }
+        }
+      }
+  
+      if (canFall) {
+        window.setTimeout(() => {
+          this.applyGravity().then(() => {
+            resolve(true);
+          })
+        }, 250);
+      } else {
+        window.setTimeout(() => {
+          resolve(true);
+        }, 100);
+      }
+
+    })
+
+      // return;
+    // }
 
   }
 
