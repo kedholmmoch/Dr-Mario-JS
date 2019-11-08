@@ -44,10 +44,11 @@ export default class Dose {
     // console.log(gameObjectsIndex);
   }
 
+  
   canDrop() {
     if (!this.single) {
       console.log('this method is not for pills!!!!');
-      break;
+      return null;
     }
 
     let [currRow, currCol] = this.coordinates;
@@ -60,7 +61,13 @@ export default class Dose {
     }
   }
 
-  drop() {
+  
+  applyGravity() {
+    if (!this.single) {
+      console.log('this method is not for pills!!!!');
+      return null;
+    }
+    
     if (this.canDrop()) {
       let [currRow, currCol] = this.coordinates;
       let nextRow = currRow + 1;
@@ -70,11 +77,9 @@ export default class Dose {
 
       this.game.board.grid[currRow][currCol] = null;
       this.game.board.grid[nextRow][currCol] = this;
-    } 
-    /*   else {
-      this.freeze();
-    }  */
+    }
   }
+  
 
   // display for single doses only
 

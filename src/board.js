@@ -84,7 +84,7 @@ export default class Board {
   }
 
   boardFull() {
-    if (this.grid[0][3] && this.grid[0][4]) return true;
+    if (this.grid[0][3] || this.grid[0][4]) return true;
     return false;
   }
 
@@ -170,7 +170,7 @@ export default class Board {
       }
     }
 
-    this.clearFours();
+    // this.clearFours();
   }
 
   // methods for detecting 4+ of one color in a row (vert. or horiz.)

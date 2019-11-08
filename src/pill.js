@@ -259,7 +259,28 @@ export default class Pill {
     } else {
       this.freeze();
     }
+  }
 
+  applyGravity() {
+    if (this.canDrop()) {
+      let [currRow, currCol] = this.coordinates;
+      let prevRow = currRow - 1;
+      // let nextRow = currRow + 1;
+      let nextCol = currCol + 1;
+
+      this.coordinates[0] += 1;
+      this.position = this.board.getPosition(this.coordinates);
+
+      if (this.orientation === "horizontal") {
+        this.board.grid[currRow][currCol] = null;
+        this.board.grid[currRow][nextCol] = null;
+      } else if (this.orientation === "vertical") {
+        this.board.grid[prevRow][currCol] = null;
+        this.board.grid[currRow][currCol] = null;
+      }
+
+      this.board.recordPill(this);
+    }
   }
 
   speedDrop() {
@@ -272,6 +293,7 @@ export default class Pill {
     this.game.currentHandler.removeListener();
 
     this.board.recordPill(this);
+    this.board.clearFours();
 
     if (this.game.viruses.length === 0) {
       alert('you win!');
