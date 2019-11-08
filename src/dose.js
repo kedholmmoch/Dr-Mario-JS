@@ -60,7 +60,6 @@ export default class Dose {
       return false;
     }
   }
-
   
   applyGravity() {
     if (!this.single) {
@@ -79,7 +78,6 @@ export default class Dose {
       this.game.board.grid[nextRow][currCol] = this;
     }
   }
-  
 
   // display for single doses only
 
