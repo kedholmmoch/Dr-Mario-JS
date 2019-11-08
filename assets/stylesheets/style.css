@@ -1,5 +1,17 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-  background-color: blanchedalmond;
+  /* background-color: blanchedalmond; */
+  /* height: 100%; */
+  width: 100%;
+  background: url('../images/wallpaper_black-purple-checkered-squares-3840x2160.png');
+  background-repeat: repeat;
+  background-attachment: scroll;
+  background-size: 600px;
+  /* background-size: cover; */
   display: flex;
 }
 
@@ -7,9 +19,14 @@ body {
   background-color: black;
   margin: 0 px auto;
   margin-top: 150px;
-  border: 1px solid darkslateblue;
+  /* border: 1px solid darkslateblue; */
 }
 
 img {
   display: none;
+}
+
+#background {
+  height: 100%;
+  width: 100%;
 }

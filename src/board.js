@@ -62,10 +62,12 @@ export default class Board {
 
   getPosition(coords) {
     let margin = this.margin;
+    let bottleSide = 24;
+    let bottleTop = 115;
     let [yCoord, xCoord] = coords;
 
-    let xPos = margin + (xCoord * (this.squareWidth + margin));
-    let yPos = margin + (yCoord * (this.squareHeight + margin));
+    let xPos = margin + bottleSide + (xCoord * (this.squareWidth + margin));
+    let yPos = margin + bottleTop + (yCoord * (this.squareHeight + margin));
 
     return { x: xPos, y: yPos };
   }

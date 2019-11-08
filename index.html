@@ -10,13 +10,20 @@
   <link rel="stylesheet" href="./assets/stylesheets/style.css">
 </head>
 <body>
-  <h1>Dr. Mario JS * - * - * - * </h1>
+  <header>
+    <h1>Dr. Mario JS * - * - * - * </h1>
+  </header>
+  
+  <main>
+    
 
   <!-- like original dr mario, blocks wider than tall:
-    trying for a 2 px margin on each side plus 2px between viruses:
-    each square is 23 wide x 20 tall, with 2 px between each block and between
-    the sides. This gives 202 x 354 for total dimensions. -->
+    Each game square is 23 wide x 20 tall, with 3px margin on sides/bottom.
+    The canvas also allows for the bottle to be displayed; total 250x492 px-->
+  <canvas id="gameScreen" width="250" height="492"></canvas>
+  </main>
+
+  <img id="miscellaneous" src="./assets/images/dr-mario-misc-5.png">
   <img id="spritesheet" src="./assets/images/dr-mario-sprites.png">
-  <canvas id="gameScreen" width="203" height="355"></canvas>
 </body>
 </html>
