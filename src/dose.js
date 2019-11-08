@@ -31,29 +31,17 @@ export default class Dose {
   addToGame() {
     this.game.singleDoses.push(this);
     this.game.gameObjects.push(this);
-    console.log("dose added?");
-    console.log(this);
-    console.log(this.game.singleDoses);
   }
 
   deleteFromGame() {
-    // let that = this;
-    // let currDoses = this.game.singleDoses;
-
     let singleDoseIndex = this.game.singleDoses.indexOf(this);
     let gameObjectsIndex = this.game.gameObjects.indexOf(this);
 
     this.game.singleDoses.splice(singleDoseIndex, 1);
     this.game.gameObjects.splice(gameObjectsIndex, 1);
 
-    // currDoses.forEach((dose, idx) => {
-    //   if (dose = that) {
-    //     that.game.singleDoses.splice(idx, 1);
-    //   }
-    // });
-
-    console.log(singleDoseIndex);
-    console.log(gameObjectsIndex);
+    // console.log(singleDoseIndex);
+    // console.log(gameObjectsIndex);
   }
 
   getSprite() {

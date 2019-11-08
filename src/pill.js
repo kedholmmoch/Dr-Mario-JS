@@ -273,7 +273,9 @@ export default class Pill {
 
     this.board.recordPill(this);
 
-    if (!this.board.boardFull()) {
+    if (this.game.viruses.length === 0) {
+      alert('you win!');
+    } else if (!this.board.boardFull()) {
       this.game.loadNextPill();
       console.log(this.board);
     } else {
@@ -282,25 +284,15 @@ export default class Pill {
   }
 
   deleteFromGame() {
-    // let that = this;
-    // let currPills = this.game.fallenPills;
-
     let fallenPillsIndex = this.game.fallenPills.indexOf(this);
     let gameObjectsIndex = this.game.gameObjects.indexOf(this);
 
     this.game.fallenPills.splice(fallenPillsIndex, 1);
     this.game.gameObjects.splice(gameObjectsIndex, 1);
 
-    // currPills.forEach((pill, idx) => {
-    //   if (pill = that) {
-    //     that.game.fallenPills.splice(idx, 1);
-    //   }
-    // });
-
-    console.log(fallenPillsIndex);
-    console.log(gameObjectsIndex);
+    // console.log(fallenPillsIndex);
+    // console.log(gameObjectsIndex);
   }
-
 
   // methods involved in displaying/drawing the pills
 

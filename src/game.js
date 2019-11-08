@@ -2,7 +2,6 @@ import InputHandler from './input';
 import Board from './board';
 import Pill from './pill';
 
-
 const COLORS = ["red", "yellow", "blue"];
 
 export default class Game {
@@ -52,9 +51,6 @@ export default class Game {
   }
 
   loadNextPill() {
-    // this.fallenPills.push(this.currentPill);
-    // this.currentHandler.removeListener();
-
     const that = this;
 
     window.setTimeout(function(){

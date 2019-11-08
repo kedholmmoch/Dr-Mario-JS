@@ -1,5 +1,4 @@
 import Virus from './virus';
-import Pill from './pill';
 import Dose from './dose';
 
 const COLORS = ["red", "yellow", "blue"];
@@ -292,8 +291,7 @@ export default class Board {
       let [row, column] = coord;
       let item = that.grid[row][column];
 
-      if (item instanceof Dose && item.pill /* && 
-        !that.coordInArray(item.otherHalf, coordArray) */) {
+      if (item instanceof Dose && item.pill) {
           let pill = item.pill;
           let otherHalfCoord = item.otherHalf;
 
@@ -308,31 +306,20 @@ export default class Board {
           // add dose to game to display
           dose.single = true;
           dose.addToGame();
-      } else if (item instanceof Virus) {
-        item.deleteFromGame();
-      } else if (item instanceof Dose && item.single === true) {
-        item.deleteFromGame();
       } else {
-        // item.deleteFromGame();
+        item.deleteFromGame();
       }
 
       that.grid[row][column] = null;
     });
 
-    console.log('Success!');
-    console.log(coordArray);
   }
 
   clearFours() {
     let toClear = this.findFours();
 
     if (toClear) {
-      // console.log(toClear);
-
-      console.log(this.deleteFromBoard(toClear));
-
-      // this.deleteFromBoard(toClear);
-
+      this.deleteFromBoard(toClear);
       console.log('cleared!');
     } else {
       console.log('nothing to clear!');

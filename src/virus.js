@@ -38,9 +38,6 @@ export default class Virus {
   }
 
   deleteFromGame() {
-    // let that = this;
-    // let currViruses = this.game.viruses;
-
     let gameVirusesIndex = this.game.viruses.indexOf(this);
     let gameObjectsIndex = this.game.gameObjects.indexOf(this);
 
@@ -50,21 +47,6 @@ export default class Virus {
     console.log(gameVirusesIndex);
     console.log(gameObjectsIndex);
   }
-
-  /*
-  getPosition() {
-    let coords = this.coordinates;
-    let margin = this.margin;
-
-    let xCoord = coords[1];
-    let yCoord = coords[0];
-
-    let xPos = margin + (xCoord * (this.width + margin));
-    let yPos = margin + (yCoord * (this.height + margin));
-
-    return { x: xPos, y: yPos };
-  }
-  */
 
   getSprite() {
     const frame = this.frame;
