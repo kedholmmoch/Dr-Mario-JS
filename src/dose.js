@@ -44,6 +44,40 @@ export default class Dose {
     // console.log(gameObjectsIndex);
   }
 
+  canDrop() {
+    if (!this.single) {
+      console.log('this method is not for pills!!!!');
+      break;
+    }
+
+    let [currRow, currCol] = this.coordinates;
+    let nextRow = currRow + 1;
+
+    if (this.game.board.isEmpty([nextRow, currCol])) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  drop() {
+    if (this.canDrop()) {
+      let [currRow, currCol] = this.coordinates;
+      let nextRow = currRow + 1;
+
+      this.coordinates[0] += 1;
+      this.position = this.game.board.getPosition(this.coordinates);
+
+      this.game.board.grid[currRow][currCol] = null;
+      this.game.board.grid[nextRow][currCol] = this;
+    } 
+    /*   else {
+      this.freeze();
+    }  */
+  }
+
+  // display for single doses only
+
   getSprite() {
     let color = this.color;
     return DOSE_SPRITES.single[color];

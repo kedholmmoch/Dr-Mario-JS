@@ -315,15 +315,24 @@ export default class Board {
 
   }
 
+  applyGravity() {
+
+  }
+
   clearFours() {
     let toClear = this.findFours();
 
     if (toClear) {
       this.deleteFromBoard(toClear);
       console.log('cleared!');
+
+      // this.applyGravity();
+
     } else {
       console.log('nothing to clear!');
     }
   }
+
+
 
 }
