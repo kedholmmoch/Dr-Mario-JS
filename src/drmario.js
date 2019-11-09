@@ -13,8 +13,12 @@ const SQR_HEIGHT = 22 - MARGIN;
 const BOTTLE = [153, 290, 78, 174];
 
 document.addEventListener('DOMContentLoaded', () => {
-  // let background = document.getElementById("background");
-  // document.body.style.backgroundImage = url('../assets');
+
+  const jsLogo = document.getElementById("logo-js");
+
+  window.setTimeout(()=> {
+    jsLogo.style.color = "black";
+  }, 100);
 
   const canvas = document.getElementById("gameScreen");
   const ctx = canvas.getContext("2d");
