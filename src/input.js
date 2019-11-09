@@ -34,10 +34,21 @@ export default class InputHandler {
       case 74:
         this.pill.moveLeft();
         break;
+      case 37:
+        event.preventDefault();
+        this.pill.moveLeft();
+        break;
       case 76:
         this.pill.moveRight();
         break;
+      case 39:
+        event.preventDefault();
+        this.pill.moveRight();
+        break;
       case 75:
+        this.pill.speedDrop();
+        break;
+      case 40:
         this.pill.speedDrop();
         break;
       case 83:

@@ -1,6 +1,6 @@
 html {
   /* height: 100%; */
-  width: 100%;
+  width: 100vw;
   color: white;
 }
 
@@ -64,10 +64,9 @@ header {
 
 main {
   width: 100%;
-  background: url('../images/wallpaper_black-purple-checkered-squares-3840x2160.png');
+  /* background: url('../images/wallpaper_black-purple-checkered-squares-3840x2160.png');
   background-repeat: repeat;
-  background-attachment: scroll;
-  background-size: 400px;
+  background-size: 400px; */
   display: flex;
   flex-direction: row;
   text-align: center;
@@ -75,12 +74,12 @@ main {
 
 #menu-sidebar {
   min-width: 399px;
-  flex: 2;
+  flex: 1;
 }
 
 #game-area {
-  min-width: 301px;
-  width: 350px;
+  min-width: 350px;
+  width: 400px;
   background-color: black;
   display: flex;
   flex-direction: column;
@@ -103,7 +102,12 @@ main {
 }
 
 #mario-sidebar {
-  flex: 2;
+  flex: 1;
+}
+
+#stage-info {
+  font-family: 'Press Start 2P';
+  font-size: 20px;
 }
 
 #spritesheet {

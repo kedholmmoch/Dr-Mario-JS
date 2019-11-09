@@ -15,6 +15,7 @@ export default class Game {
     this.squareHeight = squareHeight;
     this.spritesheet = spritesheet;
     this.level = level ? level : 0;
+    this.score = 0;
 
     this.board = new Board(this);
     this.viruses = this.board.populateViruses();
@@ -62,8 +63,9 @@ export default class Game {
     }, 100);
   }
 
-  update(timestamp) {
+  update(timestamp, virusDisplay) {
     this.gameObjects.forEach(object => object.update(timestamp));
+    virusDisplay.innerText = this.viruses.length;
   }
 
   draw(ctx) {

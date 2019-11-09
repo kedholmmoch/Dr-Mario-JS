@@ -14,8 +14,8 @@ const BOTTLE = [153, 290, 78, 174];
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  // fade in JS logo while waiting for font to load
   const jsLogo = document.getElementById("logo-js");
-
   window.setTimeout(()=> {
     jsLogo.style.color = "black";
   }, 100);
@@ -37,8 +37,23 @@ document.addEventListener('DOMContentLoaded', () => {
       SQR_WIDTH, 
       SQR_HEIGHT, 
       spritesheet,
-      3
+      15
     );
+
+    // this can all probably go in the game.start function ... ?
+    let levelDisplay = document.getElementById('stage-level-display');
+    levelDisplay.innerText = game.level;
+
+    let virusDisplay = document.getElementById('stage-viruses-display');
+    virusDisplay.innerText = game.viruses.length;
+
+    let scoreDisplay = document.getElementById('stage-score-display');
+    scoreDisplay.innerText = game.score;
+
+
+    let stageInfo = document.getElementById('stage-info');
+    stageInfo.classList.toggle('hidden');
+
     game.start();
 
     function gameLoop(timestamp) {
@@ -47,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         BOTTLE[0], BOTTLE[1], BOTTLE[2], BOTTLE[3], 
         0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-      game.update(timestamp);
+      game.update(timestamp, virusDisplay);
       game.draw(ctx);
 
       requestAnimationFrame(gameLoop);

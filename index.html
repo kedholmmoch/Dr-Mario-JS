@@ -7,14 +7,22 @@
   <title>Dr. Mario JS</title>
 
   <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/stylesheets/style.css">
   <script src="bundle.js"></script>
-  
 </head>
 <body>
-  <header>
-    <div id="logo"></div>
-    <h1 id="logo-js">JS</h1>
+  <header class="main-header">
+    <nav class="header-left-nav">
+
+    </nav>
+    <div class="header-logo-name">
+      <div id="logo"></div>
+      <h1 id="logo-js">JS</h1>
+    </div>
+    <nav class="header-right-nav">
+
+    </nav>
   </header>
   
   <main>
@@ -23,7 +31,7 @@
     </section>
 
     <section id="game-area">
-      <h1> Game Area</h1>
+      <h1> </h1>
       <!-- like original dr mario, blocks wider than tall:
         Each game square is 23 wide x 20 tall, with 3px margin on sides/bottom.
         The canvas also allows for the bottle to be displayed; total 250x492 px-->
@@ -31,7 +39,22 @@
     </section>
 
     <section id="mario-sidebar">
-      Mario Sidebar
+      <div>Dr. Mario Sidebar</div>
+      <canvas id="dr-mario-canvas"></canvas>
+      <div id="stage-info" class="hidden">
+        <div id="stage-level-div">
+          <h5>LEVEL</h5>
+          <h5 id="stage-level-display"></h5>
+        </div>
+        <div id="stage-viruses-div">
+          <h5>VIRUSES</h5>
+          <h5 id="stage-viruses-display"></h5>
+        </div>
+        <div id="stage-score-div">
+          <h5>SCORE</h5>
+          <h5 id="stage-score-display"></h5>
+        </div>
+      </div>
     </section>
   </main>
 
