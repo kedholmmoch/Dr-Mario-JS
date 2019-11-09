@@ -1,32 +1,82 @@
 html {
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
+  color: white;
 }
 
 body {
-  /* background-color: blanchedalmond; */
   /* height: 100%; */
+  width: 100%;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  width: 100%;
+  height: 120px;
+  /* background-color: #888282; */
+  background-color: black;
+  color: white;
+}
+
+#logo {
+  width: 276px;
+  height: 99px;
+  background: url('../images/dr-mario-misc-5.png');
+  background-position: -2px -6px;
+  background-size: 134%;
+  border-radius: 50px;
+}
+
+main {
   width: 100%;
   background: url('../images/wallpaper_black-purple-checkered-squares-3840x2160.png');
   background-repeat: repeat;
   background-attachment: scroll;
-  background-size: 600px;
-  /* background-size: cover; */
+  background-size: 400px;
   display: flex;
+  flex-direction: row;
+}
+
+#menu-sidebar {
+  min-width: 399px;
+  flex: 2;
+}
+
+#game-area {
+  min-width: 301px;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  /* justify-content: space-between; */
 }
 
 #gameScreen {
   background-color: black;
+  width: 250px;
+  height: 492px;
   margin: 0 px auto;
-  margin-top: 150px;
+  /* margin-top: 150px; */
   /* border: 1px solid darkslateblue; */
 }
 
-img {
+#mario-sidebar {
+  flex: 2;
+}
+
+#spritesheet {
+  display: none;
+  /* image-rendering: pixelated; */
+}
+
+#miscellaneous {
   display: none;
 }
 
-#background {
+/* #background {
   height: 100%;
   width: 100%;
-}
+} */
