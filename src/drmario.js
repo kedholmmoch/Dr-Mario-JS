@@ -1,8 +1,6 @@
 import Game from './game';
 import Mario from './mario';
 
-// const GAME_WIDTH = 203;
-// const GAME_HEIGHT = 355;
 const GAME_WIDTH = 250;
 const GAME_HEIGHT = 492;
 const MARGIN = 3;
@@ -26,6 +24,17 @@ const printName = function(input) {
   }, 1000);
 }
 
+const getLevel = function(num) {
+  switch (num) {
+    case 1:
+      return "Slow";
+    case 2:
+      return "Medium";
+    case 3:
+      return "Fast";
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // fade in JS logo while waiting for font to load
@@ -39,12 +48,20 @@ document.addEventListener('DOMContentLoaded', () => {
     printName(myName);
   }, 500);
 
-  const slider = document.getElementById("level-slide");
-  const output = document.getElementById("curr-level");
-  output.innerHTML = slider.value;
+  const levelSlide = document.getElementById("level-slide");
+  const levelOutput = document.getElementById("curr-level");
+  levelOutput.innerHTML = levelSlide.value;
 
-  slider.oninput = function () {
-    output.innerHTML = this.value;
+  levelSlide.oninput = function () {
+    levelOutput.innerHTML = this.value;
+  };
+
+  const speedSlide = document.getElementById("speed-slide");
+  const speedOutput = document.getElementById("curr-speed");
+  speedOutput.innerHTML = getLevel(parseInt(speedSlide.value));
+
+  speedSlide.oninput = function () {
+    speedOutput.innerHTML = getLevel(parseInt(this.value));
   }
 
   const canvas = document.getElementById("gameScreen");

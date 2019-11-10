@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Dr. Mario JS</title>
 
+  <title>Dr. Mario JS</title>
   <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/stylesheets/style.css">
@@ -38,22 +38,55 @@
   
   <main>
     <section id="menu-sidebar">
-      <h1>Menu Sidebar</h1>
       <div id="game-options">
-        <div class="slide-container">
-          <input type="range" min="0" max="20" value="2" class="slider" id="level-slide">
-          <div>Level: &nbsp;&nbsp;<span id="curr-level"> 2 </span></div>
+        <div id="level-container">
+          <h1>LEVEL</h1>
+          <input type="range" min="0" max="20" value="0" class="slider" id="level-slide">
+          <div><span id="curr-level"> 0 </span></div>
+        </div>
+        <div id="speed-container">
+          <h1>SPEED</h1>
+          <input type="range" min="1" max="3" value="2" class="slider" id="speed-slide">
+          <div><span id="curr-speed"> Slow </span></div>
+        </div>
+        <div id="buttons-container">
+          <button class="button" id="start-button" value="START">START</button>
+          <button class="button" id ="pause-button" value="PAUSE">PAUSE</button>
         </div>
       </div>
       <div id="game-instructions">
-        These are the game instructions.
+        <h5>INSTRUCTIONS</h5>
+        <div id="instructions-text">
+          <div>
+            <span class="bold">ELIMINATE</span> viruses by making rows or columns 
+            of <span class="bold">FOUR</span> or more of the same color.</div>
+          <div>
+            <span class="bold">MOVE LEFT</span> by pressing
+            <span class="keystroke">J</span> or <span class="keystroke">&#8592;</span></div>
+          <div>
+            <span class="bold">MOVE RIGHT</span> by pressing
+            <span class="keystroke">L</span> or <span class="keystroke">&#8594;</span></div>
+          <div>
+            <span class="bold">SPEED DROP</span> by pressing
+            <span class="keystroke">K</span> or <span class="keystroke">&#8595;</span></div>
+          <div>
+            <span class="bold">FLIP RIGHT</span> by pressing
+            <span class="keystroke">F</span> or <span class="keystroke">&#8593;</span></div>
+          <div>
+            <span class="bold">FLIP LEFT</span> by pressing
+            <span class="keystroke">S</span></div>
+        </div>
+        <div id="nintendo">Dr. Mario and the related characters, artwork, and game
+          design are the exclusive trademark and copyright of
+          <a href="http://https://www.nintendo.com/" style="font-weight: 700">
+            Nintendo</a>.
+        </div>
       </div>
     </section>
 
     <section id="game-area">
-      <h1> </h1>
-      <!-- like original dr mario, blocks wider than tall:
-        Each game square is 23 wide x 20 tall, with 3px margin on sides/bottom.
+      <h1></h1>
+      <!-- Each game square is 23 wide x 20 tall, with 3px margin on sides/bottom.
         The canvas also allows for the bottle to be displayed; total 250x492 px-->
       <canvas id="gameScreen" width="250" height="492"></canvas>
     </section>
