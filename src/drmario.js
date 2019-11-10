@@ -12,13 +12,32 @@ const SQR_HEIGHT = 22 - MARGIN;
 
 const BOTTLE = [153, 290, 78, 174];
 
+const printName = function(input) {
+  const name = "KEVIN MOCH";
+  const timing = 100;
+  setTimeout(function() {
+    for (let i = 1; i <= name.length; i++) {
+      (function(i) {
+        setTimeout(function() {
+          input.innerText = name.slice(0, i)
+        }, timing * i)
+      })(i);
+    }
+  }, 1000);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // fade in JS logo while waiting for font to load
   const jsLogo = document.getElementById("logo-js");
+  const createdBy = document.getElementById('created-by');
+  const myName = document.getElementById('kevin-moch');
+
   window.setTimeout(()=> {
     jsLogo.style.color = "black";
-  }, 100);
+    createdBy.style.opacity = 1;
+    printName(myName);
+  }, 500);
 
   const canvas = document.getElementById("gameScreen");
   const ctx = canvas.getContext("2d");

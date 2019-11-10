@@ -87,6 +87,16 @@ header {
   margin-bottom: 20px;
 }
 
+#created-by {
+  opacity: 0;
+  transition: opacity 1s;
+
+}
+
+#kevin-moch {
+  height: 18px;
+}
+
 #logo {
   margin-top: 25px;
   width: 276px;
@@ -111,8 +121,8 @@ header {
   padding: 8px;
   left: 246px;
   top: -23px;
-  transition: color 1s;
-  -webkit-transition: color 1s;
+  transition: color 500ms;
+  -webkit-transition: color 500ms;
   transition-timing-function: ease-in;
   transition-delay: 500ms;
 }
@@ -123,6 +133,14 @@ header {
   background: gray url('../images/links-spritesheet.png');
   background-position: -7.5px -7.5px;
   border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#github:hover {
+  border: 1px solid lightskyblue;
+  color: white;
+  border-radius: 3px;
+  background-position: -8.5px -8.5px;
 }
 
 #linked-in {
@@ -130,6 +148,14 @@ header {
   height: 25px;
   background: url('../images/links-spritesheet.png');
   background-position: -7.5px -47.5px;
+  box-sizing: border-box;
+}
+
+#linked-in:hover {
+  border: 1px solid lightskyblue;
+  border-radius: 3px;
+  color: white;
+  background-position: -8.5px -48.5px;
 }
 
 #email {
@@ -137,6 +163,14 @@ header {
   height: 25px;
   background: url('../images/links-spritesheet.png');
   background-position: -47.5px -9px;
+  box-sizing: border-box;
+}
+
+#email:hover {
+  border: 1px solid lightskyblue;
+  border-radius: 3px;
+  color: white;
+  background-position: -48.5px -10px;
 }
 
 
@@ -184,6 +218,22 @@ main {
   flex: 1;
 }
 
+#dr-mario-div {
+  width: 190px;
+  height: 190px;
+  background-color: pink;
+  background: url('../images/dr-mario-misc-5.png');
+  background-position: -227.5px -844px;
+  background-size: 478%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12.5px;
+  padding-right: 8px;
+  /* padding-top: 12.5px; */
+}
+
 #stage-info {
   width: 222.5px;
   height: 340px;
@@ -193,7 +243,7 @@ main {
   padding-left: 35px;
   padding-right: 45px;
   background: url('../images/dr-mario-misc-5.png');
-  background-position: -270px -1055px;
+  background-position: -269.5px -1055px;
   background-size: 435%;
   font-family: 'Press Start 2P';
   color: black;
