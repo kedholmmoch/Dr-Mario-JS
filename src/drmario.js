@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
       SQR_WIDTH, 
       SQR_HEIGHT, 
       spritesheet,
-      15
+      2
     );
 
     // this can all probably go in the game.start function ... ?

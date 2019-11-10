@@ -49,6 +49,7 @@ export default class InputHandler {
         this.pill.speedDrop();
         break;
       case 40:
+        event.preventDefault();
         this.pill.speedDrop();
         break;
       case 83:
@@ -57,6 +58,9 @@ export default class InputHandler {
       case 70:
         this.pill.flipRight();
         break;
+      case 38:
+        event.preventDefault();
+        this.pill.flipRight();
     }
   }
 

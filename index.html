@@ -11,17 +11,28 @@
   <link rel="stylesheet" href="./assets/stylesheets/style.css">
   <script src="bundle.js"></script>
 </head>
+
 <body>
   <header class="main-header">
     <nav class="header-left-nav">
-
+      <h5> CREATED BY </h5>
+      <a href="mailto:kevin.edholm.moch@gmail.com">KEVIN MOCH</a>
     </nav>
     <div class="header-logo-name">
-      <div id="logo"></div>
-      <h1 id="logo-js">JS</h1>
+      <div id="logo">
+        <h1 id="logo-js">JS</h1>   
+      </div>
     </div>
     <nav class="header-right-nav">
-
+      <a href="https://github.com/kedholmmoch">
+        <div id='github'></div>
+      </a>
+      <a href="https://www.linkedin.com/in/kevin-edholm-moch/">
+        <div id='linked-in'></div>
+      </a>
+      <a href="mailto:kevin.edholm.moch@gmail.com">
+        <div id="email"></div>
+      </a>
     </nav>
   </header>
   
@@ -39,24 +50,28 @@
     </section>
 
     <section id="mario-sidebar">
-      <div>Dr. Mario Sidebar</div>
+      <!-- <div>Dr. Mario Sidebar</div> -->
       <canvas id="dr-mario-canvas"></canvas>
       <div id="stage-info" class="hidden">
         <div id="stage-level-div">
-          <h5>LEVEL</h5>
-          <h5 id="stage-level-display"></h5>
+          <div>LEVEL</div>
+          <div id="stage-level-display"></div>
         </div>
         <div id="stage-viruses-div">
-          <h5>VIRUSES</h5>
-          <h5 id="stage-viruses-display"></h5>
+          <div>VIRUS</div>
+          <div id="stage-viruses-display"></div>
         </div>
         <div id="stage-score-div">
-          <h5>SCORE</h5>
-          <h5 id="stage-score-display"></h5>
+          <div>SCORE</div>
+          <div id="stage-score-display"></div>
         </div>
       </div>
     </section>
   </main>
+
+  <footer>
+
+  </footer>
 
   <img id="miscellaneous" src="./assets/images/dr-mario-misc-5.png">
   <img id="spritesheet" src="./assets/images/dr-mario-sprites.png">

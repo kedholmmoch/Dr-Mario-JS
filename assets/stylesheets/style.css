@@ -1,46 +1,101 @@
 html {
-  /* height: 100%; */
+  height: 100vh;
   width: 100vw;
   color: white;
 }
 
 body {
-  /* height: 100%; */
+  height: 100vh;
   width: 100%;
   background-color: black;
   display: flex;
   flex-direction: column;
 }
 
-header {
-  width: 100%;
-  height: 120px;
-  /* background-color: #888282; */
-  background-color: black;
+a {
+  text-decoration: none;
   color: white;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  box-sizing: border-box;
-  border-bottom: 8px ridge slategray;
-  margin-bottom: 8px;
+}
+
+/* h5 {
+  margin: 0;
+} */
+
+a:hover {
+  color: blue;
 }
 
 .hidden {
   display: none;
 }
 
-.black {
-  color: black;
+/* Header and logo styling */
+header {
+  width: 100%;
+  height: 150px;
+  background-image: linear-gradient(black, darkslateblue);
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-sizing: border-box;
+  border-bottom: 8px ridge slategray;
+}
+
+.header-left-nav {
+  margin-left: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex: 1;
+  color: white;
+  font-family: 'Press Start 2P';
+}
+
+.header-logo-name {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* position: relative; */
+  flex: 2;
+}
+
+.header-right-nav {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-right: 40px;
+}
+
+.header-left-nav h5 {
+  font-size: 12px;
+}
+
+.header-left-nav a {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.header-right-nav a {
+  margin-left: 25px;
+  margin-bottom: 20px;
 }
 
 #logo {
+  margin-top: 25px;
   width: 276px;
   height: 99px;
   background: url('../images/dr-mario-misc-5.png');
   background-position: -2px -6px;
   background-size: 134%;
   border-radius: 50px;
+  position: relative;
 }
 
 #logo-js {
@@ -54,32 +109,55 @@ header {
   height: 31px;
   border-radius: 5px;
   padding: 8px;
-  left: 247px;
-  top: -18px;
+  left: 246px;
+  top: -23px;
   transition: color 1s;
   -webkit-transition: color 1s;
   transition-timing-function: ease-in;
   transition-delay: 500ms;
 }
 
+#github {
+  width: 25px;
+  height: 25px;
+  background: gray url('../images/links-spritesheet.png');
+  background-position: -7.5px -7.5px;
+  border-radius: 4px;
+}
+
+#linked-in {
+  width: 25px;
+  height: 25px;
+  background: url('../images/links-spritesheet.png');
+  background-position: -7.5px -47.5px;
+}
+
+#email {
+  width: 25px;
+  height: 25px;
+  background: url('../images/links-spritesheet.png');
+  background-position: -47.5px -9px;
+}
+
+
+/* Main Content CSS and styling */
+
 main {
   width: 100%;
-  /* background: url('../images/wallpaper_black-purple-checkered-squares-3840x2160.png');
-  background-repeat: repeat;
-  background-size: 400px; */
+  /* height: 100%; */
   display: flex;
   flex-direction: row;
   text-align: center;
 }
 
 #menu-sidebar {
-  min-width: 399px;
+  height: 100%;
+  min-width: 300px;
   flex: 1;
 }
 
 #game-area {
-  min-width: 350px;
-  width: 400px;
+  min-width: 300px;
   background-color: black;
   display: flex;
   flex-direction: column;
@@ -87,9 +165,8 @@ main {
   flex: 1;
   border-left: 8px ridge slategray;
   border-right: 8px ridge slategray;
-  /* margin-left: 8px;
-  margin-right: 8px; */
-  /* justify-content: space-between; */
+  padding-top: 32px;
+  padding-bottom: 15px;
 }
 
 #gameScreen {
@@ -97,29 +174,67 @@ main {
   width: 250px;
   height: 492px;
   margin: 0 px auto;
-  /* margin-top: 150px; */
-  /* border: 1px solid darkslateblue; */
 }
 
 #mario-sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   flex: 1;
 }
 
 #stage-info {
+  width: 222.5px;
+  height: 340px;
+  box-sizing: border-box;
+  padding-top: 65px;
+  padding-bottom: 40px;
+  padding-left: 35px;
+  padding-right: 45px;
+  background: url('../images/dr-mario-misc-5.png');
+  background-position: -270px -1055px;
+  background-size: 435%;
   font-family: 'Press Start 2P';
-  font-size: 20px;
+  color: black;
+  font-size: 21.5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
 }
+
+/* .stage-info > div > div {
+  padding: 10px;
+} */
+
+#stage-score-div, #stage-level-div, #stage-viruses-div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+#stage-score-display, #stage-level-display, #stage-viruses-display {
+  width: 100%;
+  align-self: flex-end;
+  text-align: right;
+  padding-top: 10px;
+}
+
+/* .stage-info h5 {
+  margin: 0;
+} */
 
 #spritesheet {
   display: none;
-  /* image-rendering: pixelated; */
 }
 
 #miscellaneous {
   display: none;
 }
 
-/* #background {
-  height: 100%;
-  width: 100%;
-} */
+footer {
+  border-top: 8px ridge slategray;
+}
