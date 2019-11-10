@@ -8,6 +8,7 @@ export default class Mario {
   constructor(options) {
     this.spritesheet = options.spritesheet
     this.stance = "armUp";
+    this.game = options.game;
   }
 
   getSprite() {
@@ -28,6 +29,7 @@ export default class Mario {
   draw(ctx) {
     let sprite = this.getSprite();
     let offset = this.getXOffset() * 3;
+    let nextPill = this.game.nextPill;
     ctx.drawImage(
       spritesheet,
       sprite[0],
@@ -38,6 +40,7 @@ export default class Mario {
       15,
       90 - offset,
       116
-    )
+    );
+    nextPill.drawNextPill(ctx);
   }
 }

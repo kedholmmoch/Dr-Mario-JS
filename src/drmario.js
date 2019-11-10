@@ -63,7 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     let mario = new Mario({
-      spritesheet: miscellaneous
+      spritesheet: miscellaneous,
+      game: game
     });
 
     // this can all probably go in the game.start function ... ?

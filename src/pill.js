@@ -412,6 +412,32 @@ export default class Pill {
     );
   }
 
+  drawNextPill(ctx) {
+    let sprites = this.getSprites();
+    ctx.drawImage(
+      spritesheet,
+      sprites.left[0],
+      sprites.left[1],
+      sprites.left[2],
+      sprites.left[3],
+      27,
+      2,
+      this.width,
+      this.height
+    );
+    ctx.drawImage(
+      spritesheet,
+      sprites.right[0],
+      sprites.right[1],
+      sprites.right[2],
+      sprites.right[3],
+      27 + 25,
+      2,
+      this.width,
+      this.height
+    );
+  }
+
   draw(ctx) {
     if (this.orientation === "horizontal") {
       this.drawHorizontal(ctx);
