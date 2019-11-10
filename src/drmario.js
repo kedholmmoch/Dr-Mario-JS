@@ -39,6 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
     printName(myName);
   }, 500);
 
+  const slider = document.getElementById("level-slide");
+  const output = document.getElementById("curr-level");
+  output.innerHTML = slider.value;
+
+  slider.oninput = function () {
+    output.innerHTML = this.value;
+  }
+
   const canvas = document.getElementById("gameScreen");
   const ctx = canvas.getContext("2d");
 
