@@ -1,5 +1,5 @@
 import Game from './game';
-import Board from './board';
+import Mario from './mario';
 
 // const GAME_WIDTH = 203;
 // const GAME_HEIGHT = 355;
@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById("gameScreen");
   const ctx = canvas.getContext("2d");
 
+  const marioCanvas = document.getElementById("dr-mario-canvas");
+  const marioCtx = marioCanvas.getContext('2d');
+
   ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
   let miscellaneous = document.getElementById("miscellaneous");
@@ -58,6 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
       spritesheet,
       2
     );
+
+    let mario = new Mario({
+      spritesheet: miscellaneous
+    });
 
     // this can all probably go in the game.start function ... ?
     let levelDisplay = document.getElementById('stage-level-display');
@@ -83,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       game.update(timestamp, virusDisplay);
       game.draw(ctx);
+      mario.draw(marioCtx);
 
       requestAnimationFrame(gameLoop);
     }
