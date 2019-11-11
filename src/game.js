@@ -17,6 +17,7 @@ export default class Game {
     this.level = level ? level : 0;
     this.speed = speed ? speed : 1;
     this.paused = false;
+    this.pillFalling = false;
     this.score = 0;
 
     this.board = new Board(this);
@@ -79,7 +80,13 @@ export default class Game {
       that.currentHandler = new InputHandler(that.currentPill);
 
       that.nextPill = that.generatePill();
+      that.pillFalling = false;  // only for passive falling i.e. gravity
     }, 100);
+  }
+
+  pause() {
+    if (this.pillFalling) return;
+    game.paused = !game.paused;
   }
 
   newGame(modalId) {

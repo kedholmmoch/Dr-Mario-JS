@@ -65,8 +65,8 @@ export default class InputHandler {
         break;
       case 32:
         event.preventDefault();
-        let game = this.pill.game;
-        game.paused = !game.paused;
+        this.pill.game.pause();
+        break;
     }
   }
 

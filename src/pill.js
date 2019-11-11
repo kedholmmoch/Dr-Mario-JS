@@ -303,6 +303,7 @@ export default class Pill {
 
   freeze() {
     this.stationary = true;
+    this.game.pillFalling = true;
     this.game.fallenPills.push(this);
     this.game.currentHandler.removeListener();
 
@@ -348,9 +349,6 @@ export default class Pill {
 
     this.game.fallenPills.splice(fallenPillsIndex, 1);
     this.game.gameObjects.splice(gameObjectsIndex, 1);
-
-    // console.log(fallenPillsIndex);
-    // console.log(gameObjectsIndex);
   }
 
   // methods involved in displaying/drawing the pills

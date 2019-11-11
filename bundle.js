@@ -884,6 +884,7 @@ function () {
     this.level = level ? level : 0;
     this.speed = speed ? speed : 1;
     this.paused = false;
+    this.pillFalling = false;
     this.score = 0;
     this.board = new _board__WEBPACK_IMPORTED_MODULE_1__["default"](this);
     this.viruses = this.board.populateViruses(); // console.log(this.board);
@@ -934,7 +935,14 @@ function () {
         that.gameObjects.push(that.currentPill);
         that.currentHandler = new _input__WEBPACK_IMPORTED_MODULE_0__["default"](that.currentPill);
         that.nextPill = that.generatePill();
+        that.pillFalling = false; // only for passive falling i.e. gravity
       }, 100);
+    }
+  }, {
+    key: "pause",
+    value: function pause() {
+      if (this.pillFalling) return;
+      game.paused = !game.paused;
     }
   }, {
     key: "newGame",
@@ -1065,8 +1073,8 @@ function () {
 
         case 32:
           event.preventDefault();
-          var game = this.pill.game;
-          game.paused = !game.paused;
+          this.pill.game.pause();
+          break;
       }
     }
   }, {
@@ -1499,6 +1507,7 @@ function () {
       var _this = this;
 
       this.stationary = true;
+      this.game.pillFalling = true;
       this.game.fallenPills.push(this);
       this.game.currentHandler.removeListener();
       this.board.recordPill(this);
@@ -1538,8 +1547,7 @@ function () {
       var fallenPillsIndex = this.game.fallenPills.indexOf(this);
       var gameObjectsIndex = this.game.gameObjects.indexOf(this);
       this.game.fallenPills.splice(fallenPillsIndex, 1);
-      this.game.gameObjects.splice(gameObjectsIndex, 1); // console.log(fallenPillsIndex);
-      // console.log(gameObjectsIndex);
+      this.game.gameObjects.splice(gameObjectsIndex, 1);
     } // methods involved in displaying/drawing the pills
 
   }, {
