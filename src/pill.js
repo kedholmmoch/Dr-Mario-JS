@@ -319,12 +319,11 @@ export default class Pill {
         this.board.clearFours();
         return this.board.applyGravity()
       }).then(() => {
-        console.log('did we get here?');
         if (this.game.viruses.length === 0) {
           alert('you win!');
         } else if (!this.board.boardFull()) {
           this.game.loadNextPill();
-          console.log(this.board);
+          // console.log(this.board);
         } else {
           alert('game over');
         }

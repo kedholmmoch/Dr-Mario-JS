@@ -43,9 +43,6 @@ export default class Virus {
 
     this.game.viruses.splice(gameVirusesIndex, 1);
     this.game.gameObjects.splice(gameObjectsIndex, 1);
-
-    console.log(gameVirusesIndex);
-    console.log(gameObjectsIndex);
   }
 
   getSprite() {
