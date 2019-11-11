@@ -942,7 +942,7 @@ function () {
     key: "pause",
     value: function pause() {
       if (this.pillFalling) return;
-      game.paused = !game.paused;
+      this.paused = !this.paused;
     }
   }, {
     key: "newGame",

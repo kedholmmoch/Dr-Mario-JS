@@ -86,7 +86,7 @@ export default class Game {
 
   pause() {
     if (this.pillFalling) return;
-    game.paused = !game.paused;
+    this.paused = !this.paused;
   }
 
   newGame(modalId) {
