@@ -171,8 +171,6 @@ export default class Board {
         });
       }
     }
-
-    // this.clearFours();
   }
 
   // methods for detecting 4+ of one color in a row (vert. or horiz.)
@@ -319,7 +317,7 @@ export default class Board {
 
   applyGravity() {
     return new Promise((resolve, reject) => {
-      console.log('apply gravity method');
+      // console.log('apply gravity method');
       var canFall = false;
   
       for (let row = 14; row >= 0; row--) {
@@ -362,12 +360,9 @@ export default class Board {
 
     if (toClear) {
       this.deleteFromBoard(toClear);
-      console.log('cleared!');
-
-      // this.applyGravity();
-
+      // console.log('cleared!');
     } else {
-      console.log('nothing to clear!');
+      // console.log('nothing to clear!');
     }
   }
 

@@ -32,6 +32,7 @@ export default class InputHandler {
   handleInput(event) {
     switch (event.keyCode) {
       case 74:
+        event.preventDefault();
         this.pill.moveLeft();
         break;
       case 37:
@@ -39,6 +40,7 @@ export default class InputHandler {
         this.pill.moveLeft();
         break;
       case 76:
+        event.preventDefault();
         this.pill.moveRight();
         break;
       case 39:
@@ -46,6 +48,7 @@ export default class InputHandler {
         this.pill.moveRight();
         break;
       case 75:
+        event.preventDefault();
         this.pill.speedDrop();
         break;
       case 40:
@@ -53,14 +56,17 @@ export default class InputHandler {
         this.pill.speedDrop();
         break;
       case 83:
+        event.preventDefault();
         this.pill.flipLeft();
         break;
       case 70:
-        this.pill.flipRight();
-        break;
-      case 38:
         event.preventDefault();
         this.pill.flipRight();
+        break;
+      case 32:
+        event.preventDefault();
+        let game = this.pill.game;
+        game.paused = !game.paused;
     }
   }
 

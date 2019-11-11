@@ -37,17 +37,22 @@ const getLevel = function(num) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // fade in JS logo while waiting for font to load
+  // fade in elements while waiting for font to load
   const jsLogo = document.getElementById("logo-js");
   const createdBy = document.getElementById('created-by');
   const myName = document.getElementById('kevin-moch');
+  const menuSidebar = document.getElementById('menu-sidebar');
 
   window.setTimeout(()=> {
     jsLogo.style.color = "black";
     createdBy.style.opacity = 1;
     printName(myName);
-  }, 500);
+    window.setTimeout(() => {
+      menuSidebar.style.opacity = 1;
+    }, 1000);
+  }, 100);
 
+  // listener to adjust the displayed level
   const levelSlide = document.getElementById("level-slide");
   const levelOutput = document.getElementById("curr-level");
   levelOutput.innerHTML = levelSlide.value;
@@ -56,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     levelOutput.innerHTML = this.value;
   };
 
+  // listener to adjust the displayed speed
   const speedSlide = document.getElementById("speed-slide");
   const speedOutput = document.getElementById("curr-speed");
   speedOutput.innerHTML = getLevel(parseInt(speedSlide.value));
@@ -64,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     speedOutput.innerHTML = getLevel(parseInt(this.value));
   }
 
+  // grabbing canvases and canvas contexts
   const canvas = document.getElementById("gameScreen");
   const ctx = canvas.getContext("2d");
 
@@ -72,55 +79,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
   ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
+  // grabbing spritesheets
   let miscellaneous = document.getElementById("miscellaneous");
   let spritesheet = document.getElementById("spritesheet");
 
   spritesheet.addEventListener("load", () => {
-    
-    let game = new Game(
-      GAME_WIDTH, 
-      GAME_HEIGHT,
-      MARGIN, 
-      SQR_WIDTH, 
-      SQR_HEIGHT, 
-      spritesheet,
-      2
-    );
 
-    let mario = new Mario({
-      spritesheet: miscellaneous,
-      game: game
-    });
+    ctx.drawImage(miscellaneous,
+      BOTTLE[0], BOTTLE[1], BOTTLE[2], BOTTLE[3],
+      0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-    // this can all probably go in the game.start function ... ?
-    let levelDisplay = document.getElementById('stage-level-display');
-    levelDisplay.innerText = game.level;
+    let gameOptions = document.getElementById('to-mute');
+    let startButton = document.getElementById('start-button');
 
-    let virusDisplay = document.getElementById('stage-viruses-display');
-    virusDisplay.innerText = game.viruses.length;
+    // event listener on start button to start game;
+    startButton.addEventListener('click', () => {
+      let stageLevel = parseInt(levelSlide.value);
+      let stageSpeed = parseInt(speedSlide.value);
 
-    let scoreDisplay = document.getElementById('stage-score-display');
-    scoreDisplay.innerText = game.score;
+      // levelSlide.classList += "readonly";
+      // speedSlide.classList += "readonly";
+      // console.log(levelSlide.classList);
+      // console.log(speedSlide.classList);
 
+      let game = new Game(
+        GAME_WIDTH, 
+        GAME_HEIGHT,
+        MARGIN, 
+        SQR_WIDTH, 
+        SQR_HEIGHT, 
+        spritesheet,
+        stageLevel,
+        stageSpeed
+      );
+  
+      let mario = new Mario({
+        spritesheet: miscellaneous,
+        game: game
+      });
 
-    let stageInfo = document.getElementById('stage-info');
-    stageInfo.classList.toggle('hidden');
+      gameOptions.classList.add('muted');
+      startButton.innerText = "RESTART";
+      // pauseButton.style.opacity = 1;
+  
+      game.start();
 
-    game.start();
-
-    function gameLoop(timestamp) {
-      ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
-      ctx.drawImage(miscellaneous, 
-        BOTTLE[0], BOTTLE[1], BOTTLE[2], BOTTLE[3], 
-        0, 0, GAME_WIDTH, GAME_HEIGHT);
-
-      game.update(timestamp, virusDisplay);
-      game.draw(ctx);
-      mario.draw(marioCtx);
-
+      function gameLoop(timestamp) {
+        ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        ctx.drawImage(miscellaneous, 
+          BOTTLE[0], BOTTLE[1], BOTTLE[2], BOTTLE[3], 
+          0, 0, GAME_WIDTH, GAME_HEIGHT);
+  
+        game.update(timestamp);
+        game.draw(ctx);
+        mario.draw(marioCtx);
+  
+        requestAnimationFrame(gameLoop);
+      }
+      
       requestAnimationFrame(gameLoop);
-    }
+    });
     
-    requestAnimationFrame(gameLoop);
   });
 });

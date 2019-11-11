@@ -35,6 +35,10 @@ footer {
   display: none;
 }
 
+.muted {
+  opacity: 0.45;
+}
+
 #spritesheet {
   display: none;
 }
@@ -204,6 +208,9 @@ main {
   margin-top: 5px;
   flex: 1;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  opacity: 0;
+  transition: opacity 500ms;
+  -webkit-transition: opacity 500ms;
 }
 
 #game-options h1 {
@@ -233,15 +240,7 @@ main {
 #buttons-container {
   width: 100%;
   padding-bottom: 5px;
-}
-
-.slider {
-  margin-bottom: 9px;
-  opacity: .75;
-}
-
-.slider:hover {
-  opacity: 1;
+  position: relative;
 }
 
 .button {
@@ -254,6 +253,10 @@ main {
   margin: 14px;
 }
 
+#pause-button {
+  opacity: 1;
+}
+
 .button:hover {
   color: red;
   background-color: darkslateblue;
@@ -262,14 +265,34 @@ main {
 
 #level-slide {
   width: 70%;
+  margin-bottom: 9px;
+  opacity: .75;
 }
 
 #speed-slide {
   width: 70%;
+  margin-bottom: 9px;
+  opacity: .75;
+}
+
+#level-slide:hover {
+  opacity: 1;
+}
+
+#speed-slide:hover {
+  opacity: 1;
+}
+
+#pause-comment {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 10px;
+  position: absolute;
+  right: 35px;
+  bottom: 1px;
 }
 
 #game-instructions {
-  font-size: 14.5px;
+  font-size: 14px;
   color: darkgray;
   padding-top: 10px;
   padding-left: 20px;
@@ -291,7 +314,7 @@ main {
 
 #game-instructions h5 {
   font-family: 'Press Start 2P';
-  font-size: 13.5px;
+  font-size: 14.5px;
   margin: 0px auto;
   padding-top: 15px;
   border-top: 1px solid lightgray;
@@ -301,7 +324,7 @@ main {
 
 #game-instruction > div {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-size: 12.5px;
+  font-size: 12px;
   color: darkgray;
   word-wrap: break-word;
   padding-top: 5px;
@@ -365,7 +388,6 @@ main {
 #dr-mario-div {
   width: 190px;
   height: 190px;
-  background-color: pink;
   background: url('../images/dr-mario-misc-5.png');
   background-position: -227.5px -844px;
   background-size: 478%;

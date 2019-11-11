@@ -7,7 +7,7 @@ const COLORS = ["red", "yellow", "blue"];
 export default class Game {
 
   constructor(gameWidth, gameHeight, margin, squareWidth, squareHeight, 
-      spritesheet, level) {
+      spritesheet, level, speed) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
     this.margin = margin;
@@ -15,11 +15,13 @@ export default class Game {
     this.squareHeight = squareHeight;
     this.spritesheet = spritesheet;
     this.level = level ? level : 0;
+    this.speed = speed ? speed : 1;
+    this.paused = false;
     this.score = 0;
 
     this.board = new Board(this);
     this.viruses = this.board.populateViruses();
-    console.log(this.board);
+    // console.log(this.board);
 
     this.fallenPills = [];
     this.singleDoses = [];
@@ -29,6 +31,23 @@ export default class Game {
   }
 
   start() {
+    let levelDisplay = document.getElementById('stage-level-display');
+    levelDisplay.innerText = this.level;
+
+    this.virusDisplay = document.getElementById('stage-viruses-display');
+    this.virusDisplay.innerText = this.viruses.length;
+
+    let scoreDisplay = document.getElementById('stage-score-display');
+    scoreDisplay.innerText = this.score;
+
+    let stageInfo = document.getElementById('stage-info');
+    stageInfo.classList.toggle('hidden');
+
+    let pauseButton = document.getElementById('pause-button');
+    pauseButton.addEventListener('click', () => {
+      this.paused = !this.paused;
+    });
+
     this.gameObjects = [
       ...this.viruses,
       ...this.fallenPills,
@@ -63,9 +82,10 @@ export default class Game {
     }, 100);
   }
 
-  update(timestamp, virusDisplay) {
+  update(timestamp) {
+    if (this.paused) return;
     this.gameObjects.forEach(object => object.update(timestamp));
-    virusDisplay.innerText = this.viruses.length;
+    this.virusDisplay.innerText = this.viruses.length;
   }
 
   draw(ctx) {

@@ -61,7 +61,7 @@ export default class Pill {
     this.rotation = 0;
     this.orientation = this.getOrientation();
     this.lastDrop = null;
-    this.dropSpeed = 1;
+    this.dropSpeed = options.game.speed;
 
     this.stationary = false;
     this.connected = true;
@@ -126,6 +126,8 @@ export default class Pill {
   }
 
   moveLeft() {
+    if (this.game.paused) return;
+
     if (!this.stationary && this.canMoveLeft()) {
       this.coordinates[1] -= 1;
       this.position = this.board.getPosition(this.coordinates);
@@ -133,6 +135,8 @@ export default class Pill {
   }
 
   moveRight() {
+    if (this.game.paused) return;
+
     if (!this.stationary && this.canMoveRight()) {
       if ((this.orientation === "horizontal" && this.coordinates[1] < 6) ||
         (this.orientation === "vertical" && this.coordinates[1] < 7)) {
@@ -211,6 +215,8 @@ export default class Pill {
   }
 
   flipLeft() {
+    if (this.game.paused) return;
+
     if (!this.stationary && this.canFlip()) {
       let newRotation = this.rotation - 90;
       this.rotation = (newRotation >= 0) ? 
@@ -223,6 +229,8 @@ export default class Pill {
   }
 
   flipRight() {
+    if (this.game.paused) return;
+
     if (!this.stationary && this.canFlip()) {
       this.rotation = (this.rotation + 90) % 360;
       this.orientation = this.getOrientation();
@@ -288,6 +296,7 @@ export default class Pill {
   }
 
   speedDrop() {
+    if (this.game.paused) return;
     this.drop();
     // this.lastDrop = new Date().getTime();
   }
