@@ -35,6 +35,57 @@ const getLevel = function(num) {
   }
 }
 
+/*
+const startGameLoop = function(levelSlide, speedSlide, gameWidth, gameHeight,
+  margin, sqrWidth, sqrHeight, gameSpritesheet, marioSpritesheet, bottle, ctx, 
+  marioCtx) {
+    let stageLevel = parseInt(levelSlide.value);
+    let stageSpeed = parseInt(speedSlide.value);
+  
+    let game = new Game(
+      gameWidth,
+      gameHeight,
+      margin,
+      sqrWidth,
+      sqrHeight,
+      gameSpritesheet,
+      stageLevel,
+      stageSpeed
+    );
+  
+    let mario = new Mario({
+      spritesheet: marioSpritesheet,
+      game: game
+    });
+
+    let gameOptions = document.getElementById('to-mute');
+    let startButton = document.getElementById('start-button');
+  
+    gameOptions.classList.add('muted');
+    startButton.innerText = "RESTART";
+  
+    const ctx2 = ctx;
+    const marioCtx2 = marioCtx;
+
+    game.start();
+  
+    function gameLoop(timestamp) {
+      ctx2.clearRect(0, 0, gameWidth, gameHeight);
+      ctx2.drawImage(marioSpritesheet,
+        bottle[0], bottle[1], bottle[2], bottle[3],
+        0, 0, gameWidth, gameHeight);
+  
+      game.update(timestamp);
+      game.draw(ctx2);
+      mario.draw(marioCtx2);
+  
+      requestAnimationFrame(gameLoop);
+    }
+  
+  requestAnimationFrame(gameLoop);
+}
+*/
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // fade in elements while waiting for font to load
@@ -93,14 +144,19 @@ document.addEventListener('DOMContentLoaded', () => {
     let startButton = document.getElementById('start-button');
 
     // event listener on start button to start game;
+
+    // startGameLoop(levelSlide, speedSlide, GAME_WIDTH, GAME_HEIGHT, MARGIN,
+    //   SQR_WIDTH, SQR_HEIGHT, spritesheet, miscellaneous, BOTTLE, gameOptions,
+    //   startButton, ctx, marioCtx);
+
+    // startButton.addEventListener('click', startGameLoop.bind(null, event, 
+    //   levelSlide, speedSlide, GAME_WIDTH, GAME_HEIGHT, MARGIN, SQR_WIDTH, 
+    //   SQR_HEIGHT, spritesheet, miscellaneous, BOTTLE, ctx, marioCtx));
+
+    
     startButton.addEventListener('click', () => {
       let stageLevel = parseInt(levelSlide.value);
       let stageSpeed = parseInt(speedSlide.value);
-
-      // levelSlide.classList += "readonly";
-      // speedSlide.classList += "readonly";
-      // console.log(levelSlide.classList);
-      // console.log(speedSlide.classList);
 
       let game = new Game(
         GAME_WIDTH, 
@@ -120,7 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       gameOptions.classList.add('muted');
       startButton.innerText = "RESTART";
-      // pauseButton.style.opacity = 1;
   
       game.start();
 

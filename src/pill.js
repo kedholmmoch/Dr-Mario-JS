@@ -320,14 +320,25 @@ export default class Pill {
         return this.board.applyGravity()
       }).then(() => {
         if (this.game.viruses.length === 0) {
-          alert('you win!');
+          let wonGame = document.getElementById('won-game');
+          wonGame.classList.remove('hidden');
+
+          let newStage = document.getElementById('new-stage');
+          newStage.addEventListener('click', () => {
+            this.game.newGame('won-game');
+          })
+
         } else if (!this.board.boardFull()) {
           this.game.loadNextPill();
-          // console.log(this.board);
         } else {
-          alert('game over');
-        }
+          let lostGame = document.getElementById('lost-game');
+          lostGame.classList.remove('hidden');
 
+          let newGame = document.getElementById('new-game');
+          newGame.addEventListener('click', () => {
+            this.game.newGame('lost-game');
+          })
+        }
       })
   }
 

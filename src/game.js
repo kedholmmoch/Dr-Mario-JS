@@ -82,6 +82,16 @@ export default class Game {
     }, 100);
   }
 
+  newGame(modalId) {
+    let modal = document.getElementById(modalId);
+    let gameOptions = document.getElementById('to-mute');
+    let startButton = document.getElementById('start-button');
+    
+    modal.classList.add('hidden');
+    gameOptions.classList.remove('muted');
+    startButton.innerText = "START";
+  }
+
   update(timestamp) {
     if (this.paused) return;
     this.gameObjects.forEach(object => object.update(timestamp));
