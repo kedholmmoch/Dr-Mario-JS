@@ -93,9 +93,10 @@ export default class Game {
   }
 
   update(timestamp) {
+    this.virusDisplay.innerText = this.viruses.length;
     if (this.paused) return;
     this.gameObjects.forEach(object => object.update(timestamp));
-    this.virusDisplay.innerText = this.viruses.length;
+    // this.virusDisplay.innerText = this.viruses.length;
   }
 
   draw(ctx) {

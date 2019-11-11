@@ -949,11 +949,11 @@ function () {
   }, {
     key: "update",
     value: function update(timestamp) {
+      this.virusDisplay.innerText = this.viruses.length;
       if (this.paused) return;
       this.gameObjects.forEach(function (object) {
         return object.update(timestamp);
-      });
-      this.virusDisplay.innerText = this.viruses.length;
+      }); // this.virusDisplay.innerText = this.viruses.length;
     }
   }, {
     key: "draw",
