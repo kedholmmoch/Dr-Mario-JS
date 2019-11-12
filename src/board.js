@@ -288,7 +288,7 @@ export default class Board {
 
   }
 
-  deleteFromBoard(coordArray, scoreMultiplier = 1) {
+  deleteFromBoard(coordArray, scoreMultiplier = 0) {
     let that = this;
 
     var virusCount = 0;
@@ -322,7 +322,8 @@ export default class Board {
     });
 
     if (virusCount > 0) {
-      let points = Math.pow(3, virusCount) * 100 * scoreMultiplier;
+      let points = Math.pow(3, virusCount) * 100 + scoreMultiplier;
+      if (points > 5000) points = 5000;
       this.game.score += points;
     }
   }
@@ -362,7 +363,7 @@ export default class Board {
 
   }
 
-  clearFours(scoreMultiplier = 1) {
+  clearFours(scoreMultiplier = 0) {
     let toClear = this.findFours();
 
     if (toClear) {

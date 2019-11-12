@@ -435,7 +435,7 @@ function () {
   }, {
     key: "deleteFromBoard",
     value: function deleteFromBoard(coordArray) {
-      var scoreMultiplier = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var scoreMultiplier = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
       var that = this;
       var virusCount = 0;
       coordArray.forEach(function (coord) {
@@ -470,7 +470,8 @@ function () {
       });
 
       if (virusCount > 0) {
-        var points = Math.pow(3, virusCount) * 100 * scoreMultiplier;
+        var points = Math.pow(3, virusCount) * 100 + scoreMultiplier;
+        if (points > 5000) points = 5000;
         this.game.score += points;
       }
     }
@@ -514,7 +515,7 @@ function () {
   }, {
     key: "clearFours",
     value: function clearFours() {
-      var scoreMultiplier = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var scoreMultiplier = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
       var toClear = this.findFours();
 
       if (toClear) {
@@ -1610,11 +1611,11 @@ function () {
       this.board.clearFours(); // console.log(this.board.applyGravity());
 
       this.board.applyGravity().then(function () {
-        _this.board.clearFours(2);
+        _this.board.clearFours(500);
 
         return _this.board.applyGravity();
       }).then(function () {
-        _this.board.clearFours(3);
+        _this.board.clearFours(1000);
 
         return _this.board.applyGravity();
       }).then(function () {

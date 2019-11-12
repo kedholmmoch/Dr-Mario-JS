@@ -314,10 +314,10 @@ export default class Pill {
 
     this.board.applyGravity()
       .then(() => {
-        this.board.clearFours(2);
+        this.board.clearFours(500);
         return this.board.applyGravity()
       }).then(() => {
-        this.board.clearFours(3);
+        this.board.clearFours(1000);
         return this.board.applyGravity()
       }).then(() => {
         if (this.game.viruses.length === 0) {
