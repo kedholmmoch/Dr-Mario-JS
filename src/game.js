@@ -43,10 +43,10 @@ export default class Game {
     let stageInfo = document.getElementById('stage-info');
     stageInfo.classList.toggle('hidden');
 
-    let pauseButton = document.getElementById('pause-button');
-    pauseButton.addEventListener('click', () => {
-      this.paused = !this.paused;
-    });
+    // let pauseButton = document.getElementById('pause-button');
+    // pauseButton.addEventListener('click', () => {
+    //   this.paused = !this.paused;
+    // });
 
     this.gameObjects = [
       ...this.viruses,
@@ -86,14 +86,15 @@ export default class Game {
 
   // game utility fxx
 
-  pause() {
-    if (this.pillFalling) return;
-    this.paused = !this.paused;
-  }
+  // pause() {
+  //   if (!this.pillFalling) {
+  //     this.paused = !this.paused;
+  //   }
+  // }
 
   newGame(modalId) {
     let modal = document.getElementById(modalId);
-    let gameOptions = document.getElementById('to-mute');
+    let gameOptions = document.getElementById('game-options');
     let startButton = document.getElementById('start-button');
     
     modal.classList.add('hidden');
@@ -136,7 +137,7 @@ export default class Game {
 
   update(timestamp) {
     this.virusDisplay.innerText = this.viruses.length;
-    if (this.paused) return;
+    // if (this.paused) return;
     this.gameObjects.forEach(object => object.update(timestamp));
   }
 

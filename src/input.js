@@ -65,8 +65,10 @@ export default class InputHandler {
         break;
       case 32:
         event.preventDefault();
-        this.pill.game.pause();
-        break;
+      //   if (!this.pill.game.pillFalling) {
+      //     this.pill.game.pause();
+      //   }
+      //   break;
     }
   }
 

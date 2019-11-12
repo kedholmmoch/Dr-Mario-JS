@@ -729,8 +729,7 @@ var playTheme = function playTheme(url, musicIsMuted) {
   document.addEventListener('click', play);
   var muteButton = document.getElementById('mute-music');
   muteButton.addEventListener('click', function () {
-    audio.muted = !audio.muted;
-    console.log('paused?');
+    audio.muted = !audio.muted; // console.log('paused?');
   });
   var startButton = document.getElementById('start-button');
   startButton.addEventListener('click', function () {
@@ -809,8 +808,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var muteButton = document.getElementById('mute-music');
   muteButton.addEventListener('click', function () {
     musicIsMuted = !musicIsMuted;
-    muteButton.classList.toggle('sound-off');
-    console.log(musicIsMuted);
+    muteButton.classList.toggle('sound-off'); // console.log(musicIsMuted);
   }); // listener to adjust the displayed level
 
   var levelSlide = document.getElementById("level-slide");
@@ -841,7 +839,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var spritesheet = document.getElementById("spritesheet");
   spritesheet.addEventListener("load", function () {
     ctx.drawImage(miscellaneous, BOTTLE[0], BOTTLE[1], BOTTLE[2], BOTTLE[3], 0, 0, GAME_WIDTH, GAME_HEIGHT);
-    var gameOptions = document.getElementById('to-mute');
+    var gameOptions = document.getElementById('game-options');
     var startButton = document.getElementById('start-button'); // start music and associated event listeners
 
     playTheme('./assets/sounds/Dr_Mario_Theme.mp3', musicIsMuted);
@@ -948,8 +946,6 @@ function () {
   _createClass(Game, [{
     key: "start",
     value: function start(musicIsMuted) {
-      var _this = this;
-
       var levelDisplay = document.getElementById('stage-level-display');
       levelDisplay.innerText = this.level;
       this.virusDisplay = document.getElementById('stage-viruses-display');
@@ -957,11 +953,11 @@ function () {
       var scoreDisplay = document.getElementById('stage-score-display');
       scoreDisplay.innerText = this.score;
       var stageInfo = document.getElementById('stage-info');
-      stageInfo.classList.toggle('hidden');
-      var pauseButton = document.getElementById('pause-button');
-      pauseButton.addEventListener('click', function () {
-        _this.paused = !_this.paused;
-      });
+      stageInfo.classList.toggle('hidden'); // let pauseButton = document.getElementById('pause-button');
+      // pauseButton.addEventListener('click', () => {
+      //   this.paused = !this.paused;
+      // });
+
       this.gameObjects = [].concat(_toConsumableArray(this.viruses), _toConsumableArray(this.fallenPills), _toConsumableArray(this.singleDoses), [this.currentPill]);
       this.currentHandler = new _input__WEBPACK_IMPORTED_MODULE_0__["default"](this.currentPill);
       this.playMusic('./assets/sounds/Fever_music.mp3', musicIsMuted);
@@ -989,18 +985,17 @@ function () {
         that.pillFalling = false; // only for passive falling i.e. gravity
       }, 100);
     } // game utility fxx
+    // pause() {
+    //   if (!this.pillFalling) {
+    //     this.paused = !this.paused;
+    //   }
+    // }
 
-  }, {
-    key: "pause",
-    value: function pause() {
-      if (this.pillFalling) return;
-      this.paused = !this.paused;
-    }
   }, {
     key: "newGame",
     value: function newGame(modalId) {
       var modal = document.getElementById(modalId);
-      var gameOptions = document.getElementById('to-mute');
+      var gameOptions = document.getElementById('game-options');
       var startButton = document.getElementById('start-button');
       modal.classList.add('hidden');
       gameOptions.classList.remove('muted');
@@ -1040,8 +1035,8 @@ function () {
   }, {
     key: "update",
     value: function update(timestamp) {
-      this.virusDisplay.innerText = this.viruses.length;
-      if (this.paused) return;
+      this.virusDisplay.innerText = this.viruses.length; // if (this.paused) return;
+
       this.gameObjects.forEach(function (object) {
         return object.update(timestamp);
       });
@@ -1156,8 +1151,10 @@ function () {
 
         case 32:
           event.preventDefault();
-          this.pill.game.pause();
-          break;
+        //   if (!this.pill.game.pillFalling) {
+        //     this.pill.game.pause();
+        //   }
+        //   break;
       }
     }
   }, {

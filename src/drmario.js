@@ -58,7 +58,7 @@ const playTheme = function (url, musicIsMuted) {
   let muteButton = document.getElementById('mute-music');
   muteButton.addEventListener('click', () => {
     audio.muted = !audio.muted;
-    console.log('paused?');
+    // console.log('paused?');
   });
 
   let startButton = document.getElementById('start-button');
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
   muteButton.addEventListener('click', () => {
     musicIsMuted = !musicIsMuted;
     muteButton.classList.toggle('sound-off');
-    console.log(musicIsMuted);
+    // console.log(musicIsMuted);
   })
 
   // listener to adjust the displayed level
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
       BOTTLE[0], BOTTLE[1], BOTTLE[2], BOTTLE[3],
       0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-    let gameOptions = document.getElementById('to-mute');
+    let gameOptions = document.getElementById('game-options');
     let startButton = document.getElementById('start-button');
 
 
