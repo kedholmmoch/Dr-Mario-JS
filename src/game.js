@@ -37,8 +37,8 @@ export default class Game {
     this.virusDisplay = document.getElementById('stage-viruses-display');
     this.virusDisplay.innerText = this.viruses.length;
 
-    let scoreDisplay = document.getElementById('stage-score-display');
-    scoreDisplay.innerText = this.score;
+    this.scoreDisplay = document.getElementById('stage-score-display');
+    this.scoreDisplay.innerText = this.score;
 
     let stageInfo = document.getElementById('stage-info');
     stageInfo.classList.toggle('hidden');
@@ -137,6 +137,7 @@ export default class Game {
 
   update(timestamp) {
     this.virusDisplay.innerText = this.viruses.length;
+    this.scoreDisplay.innerText = this.score;
     // if (this.paused) return;
     this.gameObjects.forEach(object => object.update(timestamp));
   }

@@ -430,15 +430,21 @@ function () {
       return result;
     }
   }, {
+    key: "isVirus",
+    value: function isVirus(coord) {}
+  }, {
     key: "deleteFromBoard",
     value: function deleteFromBoard(coordArray) {
+      var scoreMultiplier = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var that = this;
+      var virusCount = 0;
       coordArray.forEach(function (coord) {
         var _coord = _slicedToArray(coord, 2),
             row = _coord[0],
             column = _coord[1];
 
         var item = that.grid[row][column];
+        if (item instanceof _virus__WEBPACK_IMPORTED_MODULE_0__["default"]) virusCount += 1;
 
         if (item instanceof _dose__WEBPACK_IMPORTED_MODULE_1__["default"] && item.pill) {
           var pill = item.pill;
@@ -462,6 +468,11 @@ function () {
 
         that.grid[row][column] = null;
       });
+
+      if (virusCount > 0) {
+        var points = Math.pow(3, virusCount) * 100 * scoreMultiplier;
+        this.game.score += points;
+      }
     }
   }, {
     key: "applyGravity",
@@ -469,7 +480,6 @@ function () {
       var _this3 = this;
 
       return new Promise(function (resolve, reject) {
-        // console.log('apply gravity method');
         var canFall = false;
 
         for (var row = 14; row >= 0; row--) {
@@ -499,18 +509,17 @@ function () {
             resolve(true);
           }, 100);
         }
-      }); // return;
-      // }
+      });
     }
   }, {
     key: "clearFours",
     value: function clearFours() {
+      var scoreMultiplier = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       var toClear = this.findFours();
 
       if (toClear) {
-        this.deleteFromBoard(toClear); // console.log('cleared!');
-      } else {// console.log('nothing to clear!');
-        }
+        this.deleteFromBoard(toClear, scoreMultiplier);
+      }
     }
   }]);
 
@@ -950,8 +959,8 @@ function () {
       levelDisplay.innerText = this.level;
       this.virusDisplay = document.getElementById('stage-viruses-display');
       this.virusDisplay.innerText = this.viruses.length;
-      var scoreDisplay = document.getElementById('stage-score-display');
-      scoreDisplay.innerText = this.score;
+      this.scoreDisplay = document.getElementById('stage-score-display');
+      this.scoreDisplay.innerText = this.score;
       var stageInfo = document.getElementById('stage-info');
       stageInfo.classList.toggle('hidden'); // let pauseButton = document.getElementById('pause-button');
       // pauseButton.addEventListener('click', () => {
@@ -1035,7 +1044,8 @@ function () {
   }, {
     key: "update",
     value: function update(timestamp) {
-      this.virusDisplay.innerText = this.viruses.length; // if (this.paused) return;
+      this.virusDisplay.innerText = this.viruses.length;
+      this.scoreDisplay.innerText = this.score; // if (this.paused) return;
 
       this.gameObjects.forEach(function (object) {
         return object.update(timestamp);
@@ -1594,11 +1604,11 @@ function () {
       this.board.clearFours(); // console.log(this.board.applyGravity());
 
       this.board.applyGravity().then(function () {
-        _this.board.clearFours();
+        _this.board.clearFours(2);
 
         return _this.board.applyGravity();
       }).then(function () {
-        _this.board.clearFours();
+        _this.board.clearFours(3);
 
         return _this.board.applyGravity();
       }).then(function () {

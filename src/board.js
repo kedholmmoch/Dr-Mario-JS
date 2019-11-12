@@ -284,12 +284,20 @@ export default class Board {
     return result;
   }
 
-  deleteFromBoard(coordArray) {
+  isVirus(coord) {
+
+  }
+
+  deleteFromBoard(coordArray, scoreMultiplier = 1) {
     let that = this;
+
+    var virusCount = 0;
 
     coordArray.forEach(coord => {
       let [row, column] = coord;
       let item = that.grid[row][column];
+
+      if (item instanceof Virus) virusCount += 1;
 
       if (item instanceof Dose && item.pill) {
           let pill = item.pill;
@@ -313,11 +321,14 @@ export default class Board {
       that.grid[row][column] = null;
     });
 
+    if (virusCount > 0) {
+      let points = Math.pow(3, virusCount) * 100 * scoreMultiplier;
+      this.game.score += points;
+    }
   }
 
   applyGravity() {
     return new Promise((resolve, reject) => {
-      // console.log('apply gravity method');
       var canFall = false;
   
       for (let row = 14; row >= 0; row--) {
@@ -347,25 +358,16 @@ export default class Board {
           resolve(true);
         }, 100);
       }
-
     })
-
-      // return;
-    // }
 
   }
 
-  clearFours() {
+  clearFours(scoreMultiplier = 1) {
     let toClear = this.findFours();
 
     if (toClear) {
-      this.deleteFromBoard(toClear);
-      // console.log('cleared!');
-    } else {
-      // console.log('nothing to clear!');
-    }
+      this.deleteFromBoard(toClear, scoreMultiplier);
+    } 
   }
-
-
 
 }
