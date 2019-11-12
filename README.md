@@ -16,12 +16,18 @@ In order to start the game, the user must choose a level (between 0 and 20) and 
 
 After the bottle has generated with colored viruses inside, the game will drop one pill
 at a time, each pill made up of two different (or similarly) colored doses. The player
-may navigate the pill around the board by:     
-... moving left (`J` key or left arrow key)     
-... moving right (`L` key or right arrow key)     
-... flipping pill to left (`S` key)     
-... flipping pill to right (`F` key)     
-... speeding the pill's drop (`K` key or down arrow key)     
+may navigate the pill around the board by:
+
+... moving left (`J` key or left arrow key)
+
+... moving right (`L` key or right arrow key)
+
+... flipping pill to left (`S` key)
+
+... flipping pill to right (`F` key)
+
+... speeding the pill's drop (`K` key or down arrow key)
+
 
 The pill will drop one space on the board at a regular interval, depending on the
 speed. 
@@ -57,5 +63,7 @@ and HTML5 canvas. No additional libraries were used.
 #### LEGAL
 
 Art and music assets used in this project are for educational purposes only. Art and Music assets are property of Nintendo.
+
 The Dr. Mario sprites were ripped courtesy of Black Squirrel and Dr. Nitro via mariouniverse.com.
+
 The Dr. Mario theme and 'Fever' audio files were ripped courtesy of Indogutsu, Slick Mandela, and nensondubois via zophar.net.
