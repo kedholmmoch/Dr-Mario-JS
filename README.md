@@ -4,7 +4,7 @@
 
 [live link](https://kedholmmoch.github.io/Dr-Mario-JS/)
 
-Dr. Mario JS is a falling-block puzzle game, a clone of the classic Nintendo game, Dr. Mario.
+Dr. Mario JS is a falling-block puzzle game, a clone of the classic Nintendo game, Dr. Mario.     
 The goal of the game is to eliminate all of the colored viruses in any given level
 by dropping colored blocks to form a series of four or more pills/viruses of the same color.
 
@@ -16,17 +16,19 @@ In order to start the game, the user must choose a level (between 0 and 20) and 
 
 After the bottle has generated with colored viruses inside, the game will drop one pill
 at a time, each pill made up of two different (or similarly) colored doses. The player
-may navigate the pill around the board by:
-... moving left (`J` key or left arrow key)
-... moving right (`L` key or right arrow key)
-... flipping pill to left (`S` key)
-... flipping pill to right (`F` key)
-... speeding the pill's drop (`K` key or down arrow key)
+may navigate the pill around the board by:     
+... moving left (`J` key or left arrow key)     
+... moving right (`L` key or right arrow key)     
+... flipping pill to left (`S` key)     
+... flipping pill to right (`F` key)     
+... speeding the pill's drop (`K` key or down arrow key)     
 
 The pill will drop one space on the board at a regular interval, depending on the
-speed. If the pill hits a virus, another pill, or the bottom of the board, if it
+speed. 
+If the pill hits a virus, another pill, or the bottom of the board, if it
 is not moved before the end of the regular drop interval, the pill is frozen in
-place. When the board has settled, the board introduces a new falling pill.
+place. 
+When the board has settled, the board introduces a new falling pill.
 
 
 ### TECHNOLOGIES
@@ -39,3 +41,21 @@ place. When the board has settled, the board introduces a new falling pill.
 
 All features in this game were implemented using native JavaScript DOM manipulation 
 and HTML5 canvas. No additional libraries were used.
+
+
+
+
+### FUTURE FEATURES
+
+1. Find and add appropriate sounds for flipping pills, dropping pills, disappearing viruses, and point combinations
+2. Adjust Board.populateBoard function to put no more than 2 of the same color in a row when populating
+3. Have speed of stage automatically increase as time goes on (every 30 sec. or 1 min.)
+4. Upon doses and viruses disappearing, display empty pill-square with audio before applyGravity function
+5. Implement local and global high scores
+
+
+#### LEGAL
+
+Art and music assets used in this project are for educational purposes only. Art and Music assets are property of Nintendo.
+The Dr. Mario sprites were ripped courtesy of Black Squirrel and Dr. Nitro via mariouniverse.com.
+The Dr. Mario theme and 'Fever' audio files were ripped courtesy of Indogutsu, Slick Mandela, and nensondubois via zophar.net.
