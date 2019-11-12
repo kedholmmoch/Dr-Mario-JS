@@ -712,6 +712,12 @@ var getLevel = function getLevel(num) {
 
     case 3:
       return "Fast";
+
+    case 4:
+      return "Faster";
+
+    case 5:
+      return "Fastest";
   }
 };
 
