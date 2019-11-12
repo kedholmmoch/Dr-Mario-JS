@@ -1,0 +1,41 @@
+# DR. MARIO JS
+
+![Screenshot 2019-11-12 13 23 25](https://user-images.githubusercontent.com/52052943/68712487-af03b600-0550-11ea-8b34-9feb57a93bc0.png)
+
+[live link](https://kedholmmoch.github.io/Dr-Mario-JS/)
+
+Dr. Mario JS is a falling-block puzzle game, a clone of the classic Nintendo game, Dr. Mario.
+The goal of the game is to eliminate all of the colored viruses in any given level
+by dropping colored blocks to form a series of four or more pills/viruses of the same color.
+
+
+### INSTRUCTIONS
+
+In order to start the game, the user must choose a level (between 0 and 20) and a speed
+(between 0 and 5), and then click the "START" button.
+
+After the bottle has generated with colored viruses inside, the game will drop one pill
+at a time, each pill made up of two different (or similarly) colored doses. The player
+may navigate the pill around the board by:
+... moving left (`J` key or left arrow key)
+... moving right (`L` key or right arrow key)
+... flipping pill to left (`S` key)
+... flipping pill to right (`F` key)
+... speeding the pill's drop (`K` key or down arrow key)
+
+The pill will drop one space on the board at a regular interval, depending on the
+speed. If the pill hits a virus, another pill, or the bottom of the board, if it
+is not moved before the end of the regular drop interval, the pill is frozen in
+place. When the board has settled, the board introduces a new falling pill.
+
+
+### TECHNOLOGIES
+
+- JavaScript
+- HTML5 Canvas
+
+
+### FEATURES AND IMPLEMENTATION
+
+All features in this game were implemented using native JavaScript DOM manipulation 
+and HTML5 canvas. No additional libraries were used.
