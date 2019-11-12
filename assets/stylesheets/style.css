@@ -434,6 +434,8 @@ main {
   padding-top: 10px;
 }
 
+/* Game Over and Game Won modal styling */
+
 #modal-ancestor {
   position: relative;
 }
@@ -479,6 +481,8 @@ main {
   border-color: blue;
   color: darkgoldenrod;
 }
+
+/* Mute Music div styling */
 
 #mute-music {
   position: absolute;
