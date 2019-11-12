@@ -479,3 +479,25 @@ main {
   border-color: blue;
   color: darkgoldenrod;
 }
+
+#mute-music {
+  position: absolute;
+  height: 30px;
+  width: 85px;
+  left: -172px;
+  top: -65px;
+  opacity: .96;
+  border: 1px solid goldenrod;
+  border-radius: 5px;
+  font-family: 'Press Start 2P';
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sound-off {
+  text-decoration: line-through;
+  color: red;
+}

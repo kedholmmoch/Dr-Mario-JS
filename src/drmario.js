@@ -10,6 +10,7 @@ const SQR_HEIGHT = 22 - MARGIN;
 
 const BOTTLE = [153, 290, 78, 174];
 
+
 const printName = function(input) {
   const name = "KEVIN MOCH";
   const timing = 100;
@@ -33,6 +34,38 @@ const getLevel = function(num) {
     case 3:
       return "Fast";
   }
+}
+
+const playTheme = function (url, musicIsMuted) {
+  let audio = document.createElement('audio');
+
+  if (musicIsMuted) {
+    audio.muted = true;
+  }
+
+  audio.src = url;
+  audio.style.display = "none";
+  audio.onended = function () {
+    audio.remove();
+  };
+  document.body.appendChild(audio);
+
+  const play = function() {
+    audio.play();
+  }
+  document.addEventListener('click', play);
+
+  let muteButton = document.getElementById('mute-music');
+  muteButton.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    console.log('paused?');
+  });
+
+  let startButton = document.getElementById('start-button');
+  startButton.addEventListener('click', () => {
+    document.removeEventListener('click', play);
+    audio.remove();
+  });
 }
 
 /*
@@ -103,6 +136,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   }, 100);
 
+
+  // set up mute button
+  var musicIsMuted = false;
+  let muteButton = document.getElementById('mute-music');
+  muteButton.addEventListener('click', () => {
+    musicIsMuted = !musicIsMuted;
+    muteButton.classList.toggle('sound-off');
+    console.log(musicIsMuted);
+  })
+
   // listener to adjust the displayed level
   const levelSlide = document.getElementById("level-slide");
   const levelOutput = document.getElementById("curr-level");
@@ -143,6 +186,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let gameOptions = document.getElementById('to-mute');
     let startButton = document.getElementById('start-button');
 
+
+    // start music and associated event listeners
+    playTheme('./assets/sounds/Dr_Mario_Theme.mp3', musicIsMuted);
+    
+    let lostButton = document.getElementById('lost-game');
+    let wonButton = document.getElementById('won-game');
+
+    lostButton.addEventListener('click', () => {
+      playTheme('./assets/sounds/Dr_Mario_Theme.mp3', musicIsMuted);
+    });
+    wonButton.addEventListener('click', () => {
+      playTheme('./assets/sounds/Dr_Mario_Theme.mp3', musicIsMuted);
+    });
+
     // event listener on start button to start game;
 
     // startGameLoop(levelSlide, speedSlide, GAME_WIDTH, GAME_HEIGHT, MARGIN,
@@ -177,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gameOptions.classList.add('muted');
       startButton.innerText = "RESTART";
   
-      game.start();
+      game.start(musicIsMuted);
 
       function gameLoop(timestamp) {
         ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);

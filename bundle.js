@@ -705,6 +705,39 @@ var getLevel = function getLevel(num) {
       return "Fast";
   }
 };
+
+var playTheme = function playTheme(url, musicIsMuted) {
+  var audio = document.createElement('audio');
+
+  if (musicIsMuted) {
+    audio.muted = true;
+  }
+
+  audio.src = url;
+  audio.style.display = "none";
+
+  audio.onended = function () {
+    audio.remove();
+  };
+
+  document.body.appendChild(audio);
+
+  var play = function play() {
+    audio.play();
+  };
+
+  document.addEventListener('click', play);
+  var muteButton = document.getElementById('mute-music');
+  muteButton.addEventListener('click', function () {
+    audio.muted = !audio.muted;
+    console.log('paused?');
+  });
+  var startButton = document.getElementById('start-button');
+  startButton.addEventListener('click', function () {
+    document.removeEventListener('click', play);
+    audio.remove();
+  });
+};
 /*
 const startGameLoop = function(levelSlide, speedSlide, gameWidth, gameHeight,
   margin, sqrWidth, sqrHeight, gameSpritesheet, marioSpritesheet, bottle, ctx, 
@@ -770,7 +803,15 @@ document.addEventListener('DOMContentLoaded', function () {
     window.setTimeout(function () {
       menuSidebar.style.opacity = 1;
     }, 1000);
-  }, 100); // listener to adjust the displayed level
+  }, 100); // set up mute button
+
+  var musicIsMuted = false;
+  var muteButton = document.getElementById('mute-music');
+  muteButton.addEventListener('click', function () {
+    musicIsMuted = !musicIsMuted;
+    muteButton.classList.toggle('sound-off');
+    console.log(musicIsMuted);
+  }); // listener to adjust the displayed level
 
   var levelSlide = document.getElementById("level-slide");
   var levelOutput = document.getElementById("curr-level");
@@ -801,7 +842,17 @@ document.addEventListener('DOMContentLoaded', function () {
   spritesheet.addEventListener("load", function () {
     ctx.drawImage(miscellaneous, BOTTLE[0], BOTTLE[1], BOTTLE[2], BOTTLE[3], 0, 0, GAME_WIDTH, GAME_HEIGHT);
     var gameOptions = document.getElementById('to-mute');
-    var startButton = document.getElementById('start-button'); // event listener on start button to start game;
+    var startButton = document.getElementById('start-button'); // start music and associated event listeners
+
+    playTheme('./assets/sounds/Dr_Mario_Theme.mp3', musicIsMuted);
+    var lostButton = document.getElementById('lost-game');
+    var wonButton = document.getElementById('won-game');
+    lostButton.addEventListener('click', function () {
+      playTheme('./assets/sounds/Dr_Mario_Theme.mp3', musicIsMuted);
+    });
+    wonButton.addEventListener('click', function () {
+      playTheme('./assets/sounds/Dr_Mario_Theme.mp3', musicIsMuted);
+    }); // event listener on start button to start game;
     // startGameLoop(levelSlide, speedSlide, GAME_WIDTH, GAME_HEIGHT, MARGIN,
     //   SQR_WIDTH, SQR_HEIGHT, spritesheet, miscellaneous, BOTTLE, gameOptions,
     //   startButton, ctx, marioCtx);
@@ -819,7 +870,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
       gameOptions.classList.add('muted');
       startButton.innerText = "RESTART";
-      game.start();
+      game.start(musicIsMuted);
 
       function gameLoop(timestamp) {
         ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
@@ -887,8 +938,7 @@ function () {
     this.pillFalling = false;
     this.score = 0;
     this.board = new _board__WEBPACK_IMPORTED_MODULE_1__["default"](this);
-    this.viruses = this.board.populateViruses(); // console.log(this.board);
-
+    this.viruses = this.board.populateViruses();
     this.fallenPills = [];
     this.singleDoses = [];
     this.currentPill = this.generatePill();
@@ -897,7 +947,7 @@ function () {
 
   _createClass(Game, [{
     key: "start",
-    value: function start() {
+    value: function start(musicIsMuted) {
       var _this = this;
 
       var levelDisplay = document.getElementById('stage-level-display');
@@ -914,6 +964,7 @@ function () {
       });
       this.gameObjects = [].concat(_toConsumableArray(this.viruses), _toConsumableArray(this.fallenPills), _toConsumableArray(this.singleDoses), [this.currentPill]);
       this.currentHandler = new _input__WEBPACK_IMPORTED_MODULE_0__["default"](this.currentPill);
+      this.playMusic('./assets/sounds/Fever_music.mp3', musicIsMuted);
     }
   }, {
     key: "generatePill",
@@ -937,7 +988,8 @@ function () {
         that.nextPill = that.generatePill();
         that.pillFalling = false; // only for passive falling i.e. gravity
       }, 100);
-    }
+    } // game utility fxx
+
   }, {
     key: "pause",
     value: function pause() {
@@ -955,13 +1007,44 @@ function () {
       startButton.innerText = "START";
     }
   }, {
+    key: "playMusic",
+    value: function playMusic(url, musicIsMuted) {
+      var audio = document.createElement('audio');
+
+      if (musicIsMuted) {
+        audio.muted = true;
+      }
+
+      audio.src = url;
+      audio.style.display = "none";
+      audio.loop = "true";
+      audio.autoplay = "true";
+      document.body.appendChild(audio);
+      var muteButton = document.getElementById('mute-music');
+      muteButton.addEventListener('click', function () {
+        audio.muted = !audio.muted;
+      });
+      var lostButton = document.getElementById('lost-game');
+      var wonButton = document.getElementById('won-game');
+      var startButton = document.getElementById('start-button');
+      lostButton.addEventListener('click', function () {
+        audio.remove();
+      });
+      wonButton.addEventListener('click', function () {
+        audio.remove();
+      });
+      startButton.addEventListener('click', function () {
+        audio.remove();
+      });
+    }
+  }, {
     key: "update",
     value: function update(timestamp) {
       this.virusDisplay.innerText = this.viruses.length;
       if (this.paused) return;
       this.gameObjects.forEach(function (object) {
         return object.update(timestamp);
-      }); // this.virusDisplay.innerText = this.viruses.length;
+      });
     }
   }, {
     key: "draw",
