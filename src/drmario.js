@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     musicIsMuted = !musicIsMuted;
     muteButton.classList.toggle('sound-off');
     // console.log(musicIsMuted);
-  })
+  });
 
   // listener to adjust the displayed level
   const levelSlide = document.getElementById("level-slide");

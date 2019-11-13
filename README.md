@@ -55,7 +55,7 @@ and HTML5 canvas. No additional libraries were used.
 
 1. Find and add appropriate sounds for flipping pills, dropping pills, disappearing viruses, and point combinations
 2. Adjust Board.populateBoard function to put no more than 2 of the same color in a row when populating
-3. Have speed of stage automatically increase as time goes on (every 30 sec. or 1 min.)
+3. Have speed of stage automatically increase as time goes on (every 30 sec./1 min. or so)
 4. Upon doses and viruses disappearing, display empty pill-square with audio before applyGravity function
 5. Implement local and global high scores
 
