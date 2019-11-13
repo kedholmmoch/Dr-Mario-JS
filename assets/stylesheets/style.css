@@ -195,6 +195,7 @@ header {
 
 main {
   width: 100%;
+  height: calc(100vh-140px);
   display: flex;
   flex-direction: row;
   text-align: center;
@@ -305,7 +306,7 @@ main {
 
 #instructions-text {
   height: 225px;
-  width: 325px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
