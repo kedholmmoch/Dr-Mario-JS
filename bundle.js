@@ -967,27 +967,6 @@ function () {
     this.pill = pill;
     this.handleInput = this.handleInput.bind(this);
     document.addEventListener("keydown", this.handleInput);
-    /*
-    document.addEventListener("keydown", (event) => {
-      switch (event.keyCode) {
-        case 74:
-          pill.moveLeft();
-          break;
-        case 76:
-          pill.moveRight();
-          break;
-        case 75:
-          pill.speedDrop();
-          break;
-        case 83:
-          pill.flipLeft();
-          break;
-        case 70:
-          pill.flipRight();
-          break;
-      }
-    });
-    */
   }
 
   _createClass(InputHandler, [{
