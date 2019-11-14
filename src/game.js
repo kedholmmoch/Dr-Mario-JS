@@ -16,6 +16,7 @@ export default class Game {
     this.spritesheet = spritesheet;
     this.level = level ? level : 0;
     this.speed = speed ? speed : 1;
+
     this.paused = false;
     this.pillFalling = false;
     this.score = 0;
@@ -30,7 +31,6 @@ export default class Game {
     this.nextPill = this.generatePill();
   }
 
-  // start(musicIsMuted) {
   start() {
     let levelDisplay = document.getElementById('stage-level-display');
     levelDisplay.innerText = this.level;
@@ -57,7 +57,6 @@ export default class Game {
     ];
 
     this.currentHandler = new InputHandler(this.currentPill);
-    // this.playMusic('./assets/sounds/Fever_music.mp3', musicIsMuted);
   }
 
   generatePill() {
@@ -81,7 +80,7 @@ export default class Game {
       that.currentHandler = new InputHandler(that.currentPill);
 
       that.nextPill = that.generatePill();
-      that.pillFalling = false;  // only for passive falling i.e. gravity
+      that.pillFalling = false;  // only for passive falling i.e. gravity (not using this currently)
     }, 100);
   }
 
@@ -93,6 +92,7 @@ export default class Game {
   //   }
   // }
 
+  // re-reveal game options area upon clicking won-game or lost-game modal (pill.js)
   newGame(modalId) {
     let modal = document.getElementById(modalId);
     let gameOptions = document.getElementById('game-options');
@@ -102,39 +102,6 @@ export default class Game {
     gameOptions.classList.remove('muted');
     startButton.innerText = "START";
   }
-
-  // playMusic(url, musicIsMuted) {
-  //   let audio = document.createElement('audio');
-
-  //   if (musicIsMuted) {
-  //     audio.muted = true;
-  //   }
-
-  //   audio.src = url;
-  //   audio.style.display = "none";
-  //   audio.loop = "true";
-  //   audio.autoplay = "true";
-  //   document.body.appendChild(audio);
-
-  //   let muteButton = document.getElementById('mute-music');
-  //   muteButton.addEventListener('click', () => {
-  //     audio.muted = !audio.muted;
-  //   });
-
-  //   let lostButton = document.getElementById('lost-game');
-  //   let wonButton = document.getElementById('won-game');
-  //   let startButton = document.getElementById('start-button');
-
-  //   lostButton.addEventListener('click', () => {
-  //     audio.remove();
-  //   });
-  //   wonButton.addEventListener('click', () => {
-  //     audio.remove();
-  //   });
-  //   startButton.addEventListener('click', () => {
-  //     audio.remove();
-  //   })
-  // }
 
   update(timestamp) {
     this.virusDisplay.innerText = this.viruses.length;

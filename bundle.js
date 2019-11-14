@@ -854,8 +854,7 @@ function () {
     this.singleDoses = [];
     this.currentPill = this.generatePill();
     this.nextPill = this.generatePill();
-  } // start(musicIsMuted) {
-
+  }
 
   _createClass(Game, [{
     key: "start",
@@ -873,7 +872,7 @@ function () {
       // });
 
       this.gameObjects = [].concat(_toConsumableArray(this.viruses), _toConsumableArray(this.fallenPills), _toConsumableArray(this.singleDoses), [this.currentPill]);
-      this.currentHandler = new _input__WEBPACK_IMPORTED_MODULE_0__["default"](this.currentPill); // this.playMusic('./assets/sounds/Fever_music.mp3', musicIsMuted);
+      this.currentHandler = new _input__WEBPACK_IMPORTED_MODULE_0__["default"](this.currentPill);
     }
   }, {
     key: "generatePill",
@@ -895,7 +894,7 @@ function () {
         that.gameObjects.push(that.currentPill);
         that.currentHandler = new _input__WEBPACK_IMPORTED_MODULE_0__["default"](that.currentPill);
         that.nextPill = that.generatePill();
-        that.pillFalling = false; // only for passive falling i.e. gravity
+        that.pillFalling = false; // only for passive falling i.e. gravity (not using this currently)
       }, 100);
     } // game utility fxx
     // pause() {
@@ -903,6 +902,7 @@ function () {
     //     this.paused = !this.paused;
     //   }
     // }
+    // re-reveal game options area upon clicking won-game or lost-game modal (pill.js)
 
   }, {
     key: "newGame",
@@ -913,34 +913,7 @@ function () {
       modal.classList.add('hidden');
       gameOptions.classList.remove('muted');
       startButton.innerText = "START";
-    } // playMusic(url, musicIsMuted) {
-    //   let audio = document.createElement('audio');
-    //   if (musicIsMuted) {
-    //     audio.muted = true;
-    //   }
-    //   audio.src = url;
-    //   audio.style.display = "none";
-    //   audio.loop = "true";
-    //   audio.autoplay = "true";
-    //   document.body.appendChild(audio);
-    //   let muteButton = document.getElementById('mute-music');
-    //   muteButton.addEventListener('click', () => {
-    //     audio.muted = !audio.muted;
-    //   });
-    //   let lostButton = document.getElementById('lost-game');
-    //   let wonButton = document.getElementById('won-game');
-    //   let startButton = document.getElementById('start-button');
-    //   lostButton.addEventListener('click', () => {
-    //     audio.remove();
-    //   });
-    //   wonButton.addEventListener('click', () => {
-    //     audio.remove();
-    //   });
-    //   startButton.addEventListener('click', () => {
-    //     audio.remove();
-    //   })
-    // }
-
+    }
   }, {
     key: "update",
     value: function update(timestamp) {

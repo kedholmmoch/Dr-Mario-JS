@@ -19,7 +19,7 @@ const printName = function(input) {
     for (let i = 1; i <= name.length; i++) {
       (function(i) {
         setTimeout(function() {
-          input.innerText = name.slice(0, i)
+          input.innerText = name.slice(0, i);
         }, timing * i)
       })(i);
     }
@@ -140,6 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
       
       requestAnimationFrame(gameLoop);
     });
-    
   });
+  
 });
