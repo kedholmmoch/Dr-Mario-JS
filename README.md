@@ -58,7 +58,7 @@ code has been separated into a number of classes, each keeping track of their ow
 - `Virus` (tracks each virus' color and position, and includes methods to update/animate, draw, and delete);
 - `Soundboard` (sounds and background music); `Mario` (Dr. Mario sprites and animation); `Input` (keyboard input);
 
-##### Populating the Board
+#### Populating the Board
 
 When the user clicks the start button to begin a new game, an event listener on the button triggers a
 function that creates a new game object which takes as its `level` and `speed` arguments the current
@@ -100,7 +100,7 @@ populateViruses() {
 }
 ```
 
-##### Deleting four or more in a row
+#### Deleting four or more in a row
 
 Part of the core functionality of the game is the board's ability to detect four or more in a row
 of the same color object each time the user places a new pill. This is achieved through the `Board`'s
@@ -148,7 +148,7 @@ Each time the `checkFourDown` and `checkFourAcross` return an array, they are co
 own result array, which is returned after duplicate coordinates are removed.
 
 
-##### 'Applying gravity' after viruses and pills are removed from board
+#### 'Applying gravity' after viruses and pills are removed from board
 
 In Nintendo's Dr. Mario, after a sequence of four or more of the same color is removed from the board,
 the loose doses subsequently fall as far down in the board as "gravity" will allow -- that is, until
@@ -171,14 +171,14 @@ applyGravity() {
     var canFall = false;
 
     for (let row = 14; row >= 0; row--) {
-      for (let col = 0; col <= 7; col++) {   // iterate through each square
+      for (let col = 0; col <= 7; col++) {   // iterate through each square from bottom
         let currItem = this.grid[row][col];
-        var applied;                
+        let applied;                
 
         if (currItem instanceof Dose && currItem.pill) {
           let pill = currItem.pill;
-          applied = pill.applyGravity();     // if gravity was applied, then
-          if (applied) canFall = true;       // set canFall to true
+          applied = pill.applyGravity();     // if gravity was applied -- pill.applyGravity returns true/false -- 
+          if (applied) canFall = true;       // then set canFall to true..
         } else if (currItem instanceof Dose && currItem.single) {
           applied = currItem.applyGravity();
           if (applied) canFall = true;
@@ -190,7 +190,7 @@ applyGravity() {
       window.setTimeout(() => {    // ... wait a quarter of a second before ...
         this.applyGravity().then(() => {   /// ...calling the method again;
           resolve(true);   // the method call in the Pill#freeze method will not
-        })                 // be resolved until the method is not longer called
+        })                 // be resolved until the method is no longer called
       }, 250);       
     } else {
       window.setTimeout(() => {   // if no more gravity is needed, resolve the promise
@@ -205,12 +205,12 @@ whether the game is lost, won, or whether a new pill is needed -- but the use of
 ensures that this determination is not made before the application of 'gravity' has finished.
 
 
-##### Displaying pills and doses onto the canvas
+#### Displaying pills and doses onto the canvas
 
 All elements on the game board -- `Virus`es, `Pill`s and `Dose`s -- have both a `coordinates` attribute
 (the [row, column] coordinates on the game `Board`) as well as a `position` attribute, which gives the 
 starting x- and y-coordinates of the element to be drawn on the HTML canvas. The position of all elements
-is recorded on the board, and, before being drawn, each element converts `coordinates` to `position`
+is recorded on the `Board`, and, before being drawn, each element converts `coordinates` to `position`
 by way of the `Board#getPosition` method:
 
 ```javascript
@@ -223,7 +223,7 @@ getPosition(coords) {
     let xPos = margin + bottleSide + (xCoord * (this.squareWidth + margin));
     let yPos = margin + bottleTop + (yCoord * (this.squareHeight + margin));
 
-    return { x: xPos, y: yPos };  // passed on POJO; works for all elements
+    return { x: xPos, y: yPos };  // passes on a POJO; works for all elements
   }
 ```
 
@@ -293,14 +293,14 @@ getSprites() {
 ### FUTURE FEATURES
 
 1. Find and add appropriate sounds for flipping pills, dropping pills, disappearing viruses, and point combinations
-2. Adjust Board.populateBoard function to put no more than 2 of the same color in a row when populating
-3. Have speed of stage automatically increase as time goes on (every 30 sec./1 min. or so)
+2. Adjust `Board#populateBoard` function to put no more than two of the same color in a row when populating
+3. Have speed of stage automatically increase as time goes on (every 30 sec./45 sec. or so)
 4. Upon doses and viruses disappearing, display empty pill-square with audio before applyGravity function
 5. Animate Dr. Mario to throw pill upon loading next pill into game area
 6. Implement local and global high scores
 
 
-#### LEGAL
+##### LEGAL
 
 Art and music assets used in this project are for educational purposes only. Art and Music assets are property of Nintendo.
 
