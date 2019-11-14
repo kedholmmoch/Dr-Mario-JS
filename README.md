@@ -66,8 +66,39 @@ The game constructor creates a new instance of `Board` (an 8 x 16 grid represent
 and then calls on it the `Board#populateViruses` method:
 
 ```javascript
+populateViruses() {
+  let total = this.numberViruses;  // calculated in constructor as 4 + (level * 4)
+  let added = 0;
 
+  // only want to add viruses to uppermost rows if the level is very high
+  let rowAdjustment = 4 - Math.floor(this.level / 5);  // level btwn 0 and 20
+
+  let lowestRow = 3 + rowAdjustment;
+  let rowRange = 16 - lowestRow;
+
+  while (added < total) {
+    let row = Math.floor(Math.random() * rowRange) + lowestRow;
+    let column = Math.floor(Math.random() * this.width);
+    // COLORS is a class constant, an array: ["red", "yellow", "blue"]
+    let color = COLORS[Math.floor(Math.random() * 3)];
+
+    if (this.grid[row][column] === null) {         // only fill empty spaces
+      let newVirus = new Virus({
+        game: this.game,
+        color: color,
+        coordinates: [row, column]
+      });
+
+      this.grid[row][column] = newVirus;
+      this.viruses.push(newVirus);
+      added += 1;
+    }
+  }
+  return this.viruses;
+}
 ```
+
+
 
 
 ### FUTURE FEATURES

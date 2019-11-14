@@ -40,9 +40,10 @@ export default class Board {
     while (added < total) {
       let row = Math.floor(Math.random() * rowRange) + lowestRow;
       let column = Math.floor(Math.random() * this.width);
+      // COLORS is a class constant, an array: ["red", "yellow", "blue"]
       let color = COLORS[Math.floor(Math.random() * 3)];
 
-      if (this.grid[row][column] === null) {
+      if (this.grid[row][column] === null) {         // only fill empty spaces
         let newVirus = new Virus({
           game: this.game,
           color: color,

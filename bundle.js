@@ -169,10 +169,12 @@ function () {
 
       while (added < total) {
         var row = Math.floor(Math.random() * rowRange) + lowestRow;
-        var column = Math.floor(Math.random() * this.width);
+        var column = Math.floor(Math.random() * this.width); // COLORS is a class constant, an array: ["red", "yellow", "blue"]
+
         var color = COLORS[Math.floor(Math.random() * 3)];
 
         if (this.grid[row][column] === null) {
+          // only fill empty spaces
           var newVirus = new _virus__WEBPACK_IMPORTED_MODULE_0__["default"]({
             game: this.game,
             color: color,
