@@ -1,5 +1,6 @@
 import Game from './game';
 import Mario from './mario';
+import Soundboard from './soundboard';
 
 const GAME_WIDTH = 250;
 const GAME_HEIGHT = 492;
@@ -40,6 +41,7 @@ const getLevel = function(num) {
   }
 }
 
+/*
 const playTheme = function (url, musicIsMuted) {
   let audio = document.createElement('audio');
 
@@ -71,6 +73,7 @@ const playTheme = function (url, musicIsMuted) {
     audio.remove();
   });
 }
+*/
 
 /*
 const startGameLoop = function(levelSlide, speedSlide, gameWidth, gameHeight,
@@ -142,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // set up mute button
+  /*
   var musicIsMuted = false;
   let muteButton = document.getElementById('mute-music');
   muteButton.addEventListener('click', () => {
@@ -149,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     muteButton.classList.toggle('sound-off');
     // console.log(musicIsMuted);
   });
+  */
 
   // listener to adjust the displayed level
   const levelSlide = document.getElementById("level-slide");
@@ -192,6 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // start music and associated event listeners
+
+    /*
     playTheme('./assets/sounds/Dr_Mario_Theme.mp3', musicIsMuted);
     
     let lostButton = document.getElementById('lost-game');
@@ -203,6 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wonButton.addEventListener('click', () => {
       playTheme('./assets/sounds/Dr_Mario_Theme.mp3', musicIsMuted);
     });
+    */
 
     // event listener on start button to start game;
 
@@ -214,6 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //   levelSlide, speedSlide, GAME_WIDTH, GAME_HEIGHT, MARGIN, SQR_WIDTH, 
     //   SQR_HEIGHT, spritesheet, miscellaneous, BOTTLE, ctx, marioCtx));
 
+    let soundboard = new Soundboard();
     
     startButton.addEventListener('click', () => {
       let stageLevel = parseInt(levelSlide.value);
@@ -238,7 +247,8 @@ document.addEventListener('DOMContentLoaded', () => {
       gameOptions.classList.add('muted');
       startButton.innerText = "RESTART";
   
-      game.start(musicIsMuted);
+      // game.start(musicIsMuted);
+      game.start();
 
       function gameLoop(timestamp) {
         ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);

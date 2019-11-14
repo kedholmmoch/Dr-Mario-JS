@@ -25,15 +25,15 @@ export default class Soundboard {
       this.audio.src = this.gameSRC;
     });
 
-    lostButton.addEventListener('click', () => {
+    this.lostButton.addEventListener('click', () => {
       this.audio.src = this.themeSRC;
     });
 
-    wonButton.addEventListener('click', () => {
+    this.wonButton.addEventListener('click', () => {
       this.audio.src = this.themeSRC;
     });
     
-    playMusic();
+    this.playMusic();
 
   }
 
@@ -57,5 +57,4 @@ export default class Soundboard {
   toggleMute() {
     this.audio.muted = !this.audio.muted;
   }
-
 }
