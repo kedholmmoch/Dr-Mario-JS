@@ -19,22 +19,20 @@ After the bottle has generated with colored viruses inside, the game will drop o
 at a time, each pill made up of two different (or similarly) colored doses. The player
 may navigate the pill around the board by:
 
-... moving left (`J` key or left arrow key)
+- moving left (`J` key or left arrow key);
 
-... moving right (`L` key or right arrow key)
+- moving right (`L` key or right arrow key);
 
-... flipping pill to left (`S` key)
+- flipping pill to left (`S` key);
 
-... flipping pill to right (`F` key)
+- flipping pill to right (`F` key);
 
-... speeding the pill's drop (`K` key or down arrow key)
+- speeding the pill's drop (`K` key or down arrow key);
 
 
-The pill will drop one space on the board at a regular interval, depending on the
-speed. 
-If the pill hits a virus, another pill, or the bottom of the board, if it
-is not moved before the end of the regular drop interval, the pill is frozen in
-place. 
+The pill will drop one space on the board at a regular interval, depending on the speed. 
+If the pill hits a virus, another pill, or the bottom of the board, if it is not moved before 
+the end of the regular drop interval, the pill is frozen in place. 
 When the board has settled, the board introduces a new falling pill.
 
 
@@ -52,10 +50,10 @@ and HTML5 canvas. No additional libraries were used.
 Dr. Mario JS has been written with an object-oriented approach in mind; to that end, the game's logic and
 code has been separated into a number of classes, each keeping track of their own slices of game logic:
 
-- `Game` (tracks Level, Speed, and Score, as well as individual game objects drawn to the game canvas);
-- `Board` (populates grid with `Virus`es and tracks game grid positions of all `Virus`es and `Dose`s (including `Pill`s));
+- `Game` (tracks level, speed, and score, as well as individual the game objects drawn to the game canvas);
+- `Board` (populates grid with `Virus`es; tracks grid positions of all `Virus`es and `Dose`s (including `Pill`s));
 - `Pill` (tracks individual pills, their colors and orientation, and has methods to move, drop, and delete `Pill`s);
-- `Dose` (methods to allow 'single' `Dose`s to drop; moreover, all `Pill`s are recorded on the `Board` as `Dose`s);
+- `Dose` (method to position and drop 'single' `Dose`s (NB: all `Pill`s are recorded on `Board`-grid as `Dose`s));
 - `Virus` (tracks each virus' color and position, and includes methods to update/animate, draw, and delete);
 - `Soundboard` (sounds and background music); `Mario` (Dr. Mario sprites and animation); `Input` (keyboard input);
 
