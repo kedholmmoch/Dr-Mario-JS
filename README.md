@@ -100,19 +100,23 @@ populateViruses() {
 }
 ```
 
+The array of `Virus`es returned by the function is then saved in the `Game` class as `this.viruses`.
+
+
 #### Deleting four or more in a row
 
 Part of the core functionality of the game is the board's ability to detect four or more in a row
 of the same color object each time the user places a new pill. This is achieved through the `Board`'s
 `findFours` function. Beginning from the top left corner, the function runs both the `Board#CheckFourDown`
-and `Board#CheckFourAcross` functions, which return an array of involved coordinates if found:
+and `Board#CheckFourAcross` functions, which return an array of continguous coordinates if found:
 
 ```javascript
 checkFourDown(coords) {
   let [row, column] = coords;
 
-  let sqNumber = 1;      // the current number of squares of same color in a row
-  let squares = [coords];    // an array to track the above-mentioned squares
+  let sqNumber = 1;             // the current number of squares of the same color in a row
+  let squares = [coords];       // an array of coordinates to track the above-mentioned squares
+
   // Both Viruses and Doses both have color attributes
   let color = this.grid[row][column].color;     
 
@@ -120,30 +124,31 @@ checkFourDown(coords) {
   let sameColor = true;
 
   while (sameColor && currRow <= 14) {
-    currRow += 1;
-    let currSquare = this.grid[currRow][column];   // get next square OR null
+    currRow += 1;                                  // get next row down
+    let currSquare = this.grid[currRow][column];   // returns next square's object, OR null
 
-    if (currSquare) {
-      let currColor = this.grid[currRow][column].color;   // color of next sqr
+    if (currSquare) {                                     // if next sqr down contains object
+      let currColor = this.grid[currRow][column].color;   // color of object in next sqr
 
-      if (currColor === color) {
-        sqNumber += 1;
-        squares.push([currRow, column]);  // push square into array and up count
+      if (currColor === color) {          // if color is same as starting sqr's color
+        sqNumber += 1;                        // increase the sqr count, and
+        squares.push([currRow, column]);      // push square into array
       } else {
-        sameColor = false;
+        sameColor = false;                // break out of loop
       }
     } else {
-      sameColor = false;
+      sameColor = false;                  // break out of loop
     }
   }
 
-  if (sqNumber >= 4) {
-    return squares;    // only return something if there are four or more in a row
+  if (sqNumber >= 4) {        // only return array of coords if there are four or more in a row
+    return squares;    
   } else {
     return false;
   }
 }
 ```
+
 Each time the `checkFourDown` and `checkFourAcross` return an array, they are concatenated to `findFours`'
 own result array, which is returned after duplicate coordinates are removed.
 
