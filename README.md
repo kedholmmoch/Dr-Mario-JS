@@ -7,6 +7,7 @@
 Dr. Mario JS is a falling-block puzzle game, a clone of the classic Nintendo game, Dr. Mario.     
 The goal of the game is to eliminate all of the colored viruses in any given level
 by dropping colored blocks to form a series of four or more pills/viruses of the same color.
+The player has beaten the stage once all the viruses have been eliminated.
 
 
 ### INSTRUCTIONS
