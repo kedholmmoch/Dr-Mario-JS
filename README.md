@@ -48,7 +48,11 @@ When the board has settled, the board introduces a new falling pill.
 All features in this game were implemented using native JavaScript DOM manipulation 
 and HTML5 canvas. No additional libraries were used.
 
+Dr. Mario JS has been written with an object-oriented approach in mind; to that end, the game's logic and
+code has been separated into a number of classes, each keeping track of their own slices of game logic:
 
+- Game (tracks Level, Speed, and Score, as well as individual game objects drawn to the game canvas)
+- Board ()
 
 
 ### FUTURE FEATURES
