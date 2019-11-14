@@ -11,7 +11,7 @@ export default class Board {
     this.margin = game.margin;
     this.squareWidth = game.squareWidth;
     this.squareHeight = game.squareHeight;
-    this.level = game.level;  // we'll do levels 0 through 10
+    this.level = game.level;  // we'll do levels 0 through 20
     this.numberViruses = 4 * (this.level + 1);
 
     this.grid = this.createEmptyGrid();
@@ -28,11 +28,11 @@ export default class Board {
   }
 
   populateViruses() {
-    let total = this.numberViruses;
+    let total = this.numberViruses;  // calculated in constructor as 4 + (level * 4)
     let added = 0;
 
     // only want to add viruses to uppermost rows if the level is very high
-    let rowAdjustment = 4 - Math.floor(this.level / 5);
+    let rowAdjustment = 4 - Math.floor(this.level / 5);  // level btwn 0 and 20
 
     let lowestRow = 3 + rowAdjustment;
     let rowRange = 16 - lowestRow;

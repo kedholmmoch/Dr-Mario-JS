@@ -51,8 +51,23 @@ and HTML5 canvas. No additional libraries were used.
 Dr. Mario JS has been written with an object-oriented approach in mind; to that end, the game's logic and
 code has been separated into a number of classes, each keeping track of their own slices of game logic:
 
-- Game (tracks Level, Speed, and Score, as well as individual game objects drawn to the game canvas)
-- Board ()
+- `Game` (tracks Level, Speed, and Score, as well as individual game objects drawn to the game canvas);
+- `Board` (populates grid with `Virus`es and tracks game grid positions of all `Virus`es and `Dose`s (including `Pill`s));
+
+- `Soundboard` (sounds and background music); `Mario` (Dr. Mario sprites and animation);
+
+##### Populating the Board
+
+When the user clicks the start button to begin a new game, an event listener on the button triggers a
+function that creates a new game object which takes as its `level` and `speed` arguments the current
+`value` displayed on the level-slide and speed-slide range slide elements. 
+
+The game constructor creates a new instance of `Board` (an 8 x 16 grid represented by a 2d array) 
+and then calls on it the `Board#populateViruses` method:
+
+```javascript
+
+```
 
 
 ### FUTURE FEATURES

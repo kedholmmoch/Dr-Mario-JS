@@ -136,7 +136,7 @@ function () {
     this.margin = game.margin;
     this.squareWidth = game.squareWidth;
     this.squareHeight = game.squareHeight;
-    this.level = game.level; // we'll do levels 0 through 10
+    this.level = game.level; // we'll do levels 0 through 20
 
     this.numberViruses = 4 * (this.level + 1);
     this.grid = this.createEmptyGrid();
@@ -158,10 +158,12 @@ function () {
   }, {
     key: "populateViruses",
     value: function populateViruses() {
-      var total = this.numberViruses;
+      var total = this.numberViruses; // calculated in constructor as 4 + (level * 4)
+
       var added = 0; // only want to add viruses to uppermost rows if the level is very high
 
-      var rowAdjustment = 4 - Math.floor(this.level / 5);
+      var rowAdjustment = 4 - Math.floor(this.level / 5); // level btwn 0 and 20
+
       var lowestRow = 3 + rowAdjustment;
       var rowRange = 16 - lowestRow;
 
