@@ -213,28 +213,28 @@ ensures that this determination is not made before the effects of 'gravity' have
 #### Displaying pills and doses onto the canvas
 
 All elements on the game board -- `Virus`es, `Pill`s and `Dose`s -- have both a `coordinates` attribute
-(the [row, column] coordinates on the game `Board`) as well as a `position` attribute, which gives the 
-starting x- and y-coordinates of the element to be drawn on the HTML canvas. The position of all elements
-is recorded on the `Board`, and, before being drawn, each element converts `coordinates` to `position`
-by way of the `Board#getPosition` method:
+(the [row, column] coordinates on the game `Board`'s grid) as well as a `position` attribute, which 
+gives the starting x- and y-coordinates of the element to be drawn on the HTML canvas. The position of 
+all elements is recorded on the `Board`, and, before being drawn, each element converts `coordinates` 
+to `position` by way of the `Board#getPosition` method:
 
 ```javascript
 getPosition(coords) {
-    let margin = this.margin;  // margin is originally set at a constant of 3 (pxx) in drmario.js
-    let bottleSide = 24;       // pixels in the wall of the virus' bottle on the canvas (x-adjustment)
-    let bottleTop = 115;       // pixels in the top of the virus bottle on the canvas (y-adjustment)
+    let margin = this.margin;     // margin is originally set at a constant of 3 (pxx) in drmario.js
+    let bottleSide = 24;          // pixels in the wall of the virus' bottle on the canvas (x-adjustment)
+    let bottleTop = 115;          // pixels in the top of the virus bottle on the canvas (y-adjustment)
     let [yCoord, xCoord] = coords;
 
     let xPos = margin + bottleSide + (xCoord * (this.squareWidth + margin));
     let yPos = margin + bottleTop + (yCoord * (this.squareHeight + margin));
 
-    return { x: xPos, y: yPos };  // passes on a POJO; works for all elements
+    return { x: xPos, y: yPos };      // passes on a POJO; works for all elements
   }
 ```
 
-The rendering of the pills onto the HTML canvas element involves the use of a spritesheet; a POJO class
+The rendering of the pills onto the HTML canvas element involves the use of a spritesheet; a class
 constant in the `Pill` class keeps track of the x-coord, y-coord, width, and height in pixels on the
-spritesheet:
+spritesheet in a large POJO:
 
 ```javascript
 const COLOR_SPRITES = {
@@ -272,8 +272,8 @@ The `Pill` class' `draw` function then makes use of the `COLOR_SPRITES` object i
 ```javascript
 getSprites() {
     let left, right, top, bottom;
-    let c0 = this.c0;   // first color on the pill (set in the constructor)
-    let c1 = this.c1;   // second color on the pill (set in the constructor)
+    let c0 = this.c0;           // first color on the pill (set in the constructor)
+    let c1 = this.c1;           // second color on the pill (set in the constructor)
 
     if (this.rotation === 0) {
       left = COLOR_SPRITES.left[c0];
@@ -295,6 +295,10 @@ getSprites() {
   }
 ```
 
+The sprites to be displayed are then passed on to the `Pill#drawHorizontal` and
+`Pill#drawVertical` functions.
+
+
 ### FUTURE FEATURES
 
 1. Find and add appropriate sounds for flipping pills, dropping pills, disappearing viruses, and point combinations
@@ -307,8 +311,8 @@ getSprites() {
 
 ##### LEGAL
 
-Art and music assets used in this project are for educational purposes only. Art and Music assets are property of Nintendo.
+Art and music assets used in this project are for educational purposes only. Art and music assets are property of Nintendo.
 
-The Dr. Mario sprites were ripped courtesy of Black Squirrel and Dr. Nitro via mariouniverse.com.
+The Dr. Mario sprites were retrieved courtesy of Black Squirrel and Dr. Nitro via mariouniverse.com.
 
-The Dr. Mario theme and 'Fever' audio files were ripped courtesy of Indogutsu, Slick Mandela, and nensondubois via zophar.net.
+The Dr. Mario theme and 'Fever' audio files were retrieved courtesy of Indogutsu, Slick Mandela, and nensondubois via zophar.net.
