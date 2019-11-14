@@ -59,19 +59,19 @@ code has been separated into a number of classes, each keeping track of their ow
 
 #### Populating the Board
 
-When the user clicks the start button to begin a new game, an event listener on the button triggers a
-function that creates a new game object which takes as its `level` and `speed` arguments the current
-`value` displayed on the level-slide and speed-slide range slide elements. 
+When the user clicks the start button to begin a new game, an event listener triggers the creation
+of a new game object which takes its `level` and `speed` arguments from the current `value` displayed 
+on the level- and speed- range-slide elements.
 
-The game constructor creates a new instance of `Board` (an 8 x 16 grid represented by a 2d array) 
+The game constructor creates a new instance of `Board` (an 8 x 16 grid represented by a 2D array) 
 and then calls on it the `Board#populateViruses` method:
 
 ```javascript
 populateViruses() {
-  let total = this.numberViruses;  // calculated in constructor as 4 + (level * 4)
+  let total = this.numberViruses;  // calculated in constructor as 4 + (level * 1)
   let added = 0;
 
-  // only want to add viruses to uppermost rows if the level is very high
+  // only add viruses to the uppermost rows if the level is very high
   let rowAdjustment = 4 - Math.floor(this.level / 5);  // level btwn 0 and 20
 
   let lowestRow = 3 + rowAdjustment;
@@ -80,6 +80,7 @@ populateViruses() {
   while (added < total) {
     let row = Math.floor(Math.random() * rowRange) + lowestRow;
     let column = Math.floor(Math.random() * this.width);
+
     // COLORS is a class constant, an array: ["red", "yellow", "blue"]
     let color = COLORS[Math.floor(Math.random() * 3)];
 
