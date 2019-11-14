@@ -150,25 +150,25 @@ checkFourDown(coords) {
 ```
 
 Each time the `checkFourDown` and `checkFourAcross` return an array, they are concatenated to `findFours`'
-own result array, which is returned after duplicate coordinates are removed.
+own result array, which is returned to a `clearFours` function after duplicate coordinates are removed.
 
 
 #### 'Applying gravity' after viruses and pills are removed from board
 
 In Nintendo's Dr. Mario, after a sequence of four or more of the same color is removed from the board,
 the loose doses subsequently fall as far down in the board as "gravity" will allow -- that is, until
-they hit another stationary object on the board, pill or virus. Additionally, the doses do not fall
-immediately, but drop one space at a time until they hit the bottom.
+they hit another stationary object on the board, whether pill or virus. Additionally, the doses do not 
+fall immediately, but drop one space at a time until they hit the bottom.
 
 This provided a challenge, then, in that a function was needed that would move the "falling" pieces
 one square at a time down the board until they could not fall any farther, while also *not* introducing
-the next pill into the game *until* this gravity-induced falling had been completed.
+the next pill into the game until this gravity-induced falling had been completed.
 
 The solution was to create an `applyGravity` method which returned a promise, in order that a chain of
 `.then`s and `applyGravity` methods could be executed until no more sequences of four-in-a-row were
-achieved, and there there would be no need for the `applyGravity` method to run again. The `applyGravity`
-method itself employs a while loop dependent on a variable `canFall`, which is only set to `false`
-when the similarly named `Pill#applyGravity` and `Dose#applyGravity` do not result in any object dropping.
+achieved, and there would be no need for the `applyGravity` method to run again. 
+The `applyGravity` method itself employs a while loop dependent on a variable `canFall`, which is only 
+set to `false` when the `Pill#applyGravity` and `Dose#applyGravity` do not result in any object dropping.
 
 ```javascript
 applyGravity() {
@@ -176,14 +176,14 @@ applyGravity() {
     var canFall = false;
 
     for (let row = 14; row >= 0; row--) {
-      for (let col = 0; col <= 7; col++) {   // iterate through each square from bottom
+      for (let col = 0; col <= 7; col++) {    // iterate through each square starting from bottom
         let currItem = this.grid[row][col];
         let applied;                
 
         if (currItem instanceof Dose && currItem.pill) {
           let pill = currItem.pill;
-          applied = pill.applyGravity();     // if gravity was applied -- pill.applyGravity returns true/false -- 
-          if (applied) canFall = true;       // then set canFall to true..
+          applied = pill.applyGravity();     // if gravity was applied -- Pill#applyGravity returns
+          if (applied) canFall = true;       // true/false -- then set canFall to true..
         } else if (currItem instanceof Dose && currItem.single) {
           applied = currItem.applyGravity();
           if (applied) canFall = true;
@@ -191,14 +191,14 @@ applyGravity() {
       }
     }
 
-    if (canFall) {   // if another round of falling is needed, then...
-      window.setTimeout(() => {    // ... wait a quarter of a second before ...
-        this.applyGravity().then(() => {   /// ...calling the method again;
-          resolve(true);   // the method call in the Pill#freeze method will not
-        })                 // be resolved until the method is no longer called
+    if (canFall) {                                // if another round of falling may be needed, then...
+      window.setTimeout(() => {                   // ... wait a quarter of a second before ...
+        this.applyGravity().then(() => {          // ...calling the method again;
+          resolve(true);                      // the fact that Board#applyGravity is a Promise means it
+        })                                    //  won't be resolved until the method has run enough times
       }, 250);       
     } else {
-      window.setTimeout(() => {   // if no more gravity is needed, resolve the promise
+      window.setTimeout(() => {               // if no more gravity is needed, resolve the promise
         resolve(true);
       }, 100);
     }
@@ -207,7 +207,7 @@ applyGravity() {
 ```
 When the chain of calls to `Board#applyGravity` are completed, the `Pill#freeze` method then determines
 whether the game is lost, won, or whether a new pill is needed -- but the use of the promise chain
-ensures that this determination is not made before the application of 'gravity' has finished.
+ensures that this determination is not made before the effects of 'gravity' have come to an end.
 
 
 #### Displaying pills and doses onto the canvas
