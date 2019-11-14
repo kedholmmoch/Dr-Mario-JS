@@ -284,9 +284,9 @@ export default class Board {
     return result;
   }
 
-  isVirus(coord) {
+  // isVirus(coord) {
 
-  }
+  // }
 
   deleteFromBoard(coordArray, scoreMultiplier = 0) {
     let that = this;

@@ -432,10 +432,9 @@ function () {
         }
       });
       return result;
-    }
-  }, {
-    key: "isVirus",
-    value: function isVirus(coord) {}
+    } // isVirus(coord) {
+    // }
+
   }, {
     key: "deleteFromBoard",
     value: function deleteFromBoard(coordArray) {
@@ -602,8 +601,7 @@ function () {
       var singleDoseIndex = this.game.singleDoses.indexOf(this);
       var gameObjectsIndex = this.game.gameObjects.indexOf(this);
       this.game.singleDoses.splice(singleDoseIndex, 1);
-      this.game.gameObjects.splice(gameObjectsIndex, 1); // console.log(singleDoseIndex);
-      // console.log(gameObjectsIndex);
+      this.game.gameObjects.splice(gameObjectsIndex, 1);
     }
   }, {
     key: "canDrop",
@@ -1436,14 +1434,12 @@ function () {
   }, {
     key: "applyGravity",
     value: function applyGravity() {
-      // console.log('apply gravity method');
       if (this.canDrop()) {
         var _this$coordinates6 = _slicedToArray(this.coordinates, 2),
             currRow = _this$coordinates6[0],
             currCol = _this$coordinates6[1];
 
-        var prevRow = currRow - 1; // let nextRow = currRow + 1;
-
+        var prevRow = currRow - 1;
         var nextCol = currCol + 1;
         this.coordinates[0] += 1;
         this.position = this.board.getPosition(this.coordinates);
@@ -1466,7 +1462,7 @@ function () {
     key: "speedDrop",
     value: function speedDrop() {
       if (this.game.paused) return;
-      this.drop(); // this.lastDrop = new Date().getTime();
+      this.drop();
     }
   }, {
     key: "freeze",

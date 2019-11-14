@@ -39,9 +39,6 @@ export default class Dose {
 
     this.game.singleDoses.splice(singleDoseIndex, 1);
     this.game.gameObjects.splice(gameObjectsIndex, 1);
-
-    // console.log(singleDoseIndex);
-    // console.log(gameObjectsIndex);
   }
   
   canDrop() {

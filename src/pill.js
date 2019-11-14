@@ -270,12 +270,10 @@ export default class Pill {
   }
 
   applyGravity() {
-    // console.log('apply gravity method');
 
     if (this.canDrop()) {
       let [currRow, currCol] = this.coordinates;
       let prevRow = currRow - 1;
-      // let nextRow = currRow + 1;
       let nextCol = currCol + 1;
 
       this.coordinates[0] += 1;
@@ -298,7 +296,6 @@ export default class Pill {
   speedDrop() {
     if (this.game.paused) return;
     this.drop();
-    // this.lastDrop = new Date().getTime();
   }
 
   freeze() {

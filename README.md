@@ -53,8 +53,10 @@ code has been separated into a number of classes, each keeping track of their ow
 
 - `Game` (tracks Level, Speed, and Score, as well as individual game objects drawn to the game canvas);
 - `Board` (populates grid with `Virus`es and tracks game grid positions of all `Virus`es and `Dose`s (including `Pill`s));
-
-- `Soundboard` (sounds and background music); `Mario` (Dr. Mario sprites and animation);
+- `Pill` (tracks individual pills, their colors and orientation, and has methods to move, drop, and delete `Pill`s);
+- `Dose` (methods to allow 'single' `Dose`s to drop; moreover, all `Pill`s are recorded on the `Board` as `Dose`s);
+- `Virus` (tracks each virus' color and position, and includes methods to update/animate, draw, and delete);
+- `Soundboard` (sounds and background music); `Mario` (Dr. Mario sprites and animation); `Input` (keyboard input);
 
 ##### Populating the Board
 
@@ -98,10 +100,11 @@ populateViruses() {
 }
 ```
 
-##### Deteting four or more in a row
+##### Deleting four or more in a row
+
 Part of the core functionality of the game is the board's ability to detect four or more in a row
 of the same color object each time the user places a new pill. This is achieved through the `Board`'s
-`checkFours` function. Beginning from the top left corner, the function runs both the `Board#CheckFourDown`
+`findFours` function. Beginning from the top left corner, the function runs both the `Board#CheckFourDown`
 and `Board#CheckFourAcross` functions, which return an array of involved coordinates if found:
 
 ```javascript
@@ -109,7 +112,7 @@ checkFourDown(coords) {
   let [row, column] = coords;
 
   let sqNumber = 1;      // the current number of squares of same color in a row
-  let squares = [coords];   // an array to track the above-mentioned squares
+  let squares = [coords];    // an array to track the above-mentioned squares
   // Both Viruses and Doses both have color attributes
   let color = this.grid[row][column].color;     
 
@@ -118,14 +121,14 @@ checkFourDown(coords) {
 
   while (sameColor && currRow <= 14) {
     currRow += 1;
-    let currSquare = this.grid[currRow][column];
+    let currSquare = this.grid[currRow][column];   // get next square OR null
 
     if (currSquare) {
-      let currColor = this.grid[currRow][column].color;
+      let currColor = this.grid[currRow][column].color;   // color of next sqr
 
       if (currColor === color) {
         sqNumber += 1;
-        squares.push([currRow, column]);
+        squares.push([currRow, column]);  // push square into array and up count
       } else {
         sameColor = false;
       }
@@ -135,13 +138,157 @@ checkFourDown(coords) {
   }
 
   if (sqNumber >= 4) {
-    return squares;
+    return squares;    // only return something if there are four or more in a row
   } else {
     return false;
   }
 }
 ```
+Each time the `checkFourDown` and `checkFourAcross` return an array, they are concatenated to `findFours`'
+own result array, which is returned after duplicate coordinates are removed.
 
+
+##### 'Applying gravity' after viruses and pills are removed from board
+
+In Nintendo's Dr. Mario, after a sequence of four or more of the same color is removed from the board,
+the loose doses subsequently fall as far down in the board as "gravity" will allow -- that is, until
+they hit another stationary object on the board, pill or virus. Additionally, the doses do not fall
+immediately, but drop one space at a time until they hit the bottom.
+
+This provided a challenge, then, in that a function was needed that would move the "falling" pieces
+one square at a time down the board until they could not fall any farther, while also *not* introducing
+the next pill into the game *until* this gravity-induced falling had been completed.
+
+The solution was to create an `applyGravity` method which returned a promise, in order that a chain of
+`.then`s and `applyGravity` methods could be executed until no more sequences of four-in-a-row were
+achieved, and there there would be no need for the `applyGravity` method to run again. The `applyGravity`
+method itself employs a while loop dependent on a variable `canFall`, which is only set to `false`
+when the similarly named `Pill#applyGravity` and `Dose#applyGravity` do not result in any object dropping.
+
+```javascript
+applyGravity() {
+  return new Promise((resolve, reject) => {
+    var canFall = false;
+
+    for (let row = 14; row >= 0; row--) {
+      for (let col = 0; col <= 7; col++) {   // iterate through each square
+        let currItem = this.grid[row][col];
+        var applied;                
+
+        if (currItem instanceof Dose && currItem.pill) {
+          let pill = currItem.pill;
+          applied = pill.applyGravity();     // if gravity was applied, then
+          if (applied) canFall = true;       // set canFall to true
+        } else if (currItem instanceof Dose && currItem.single) {
+          applied = currItem.applyGravity();
+          if (applied) canFall = true;
+        }
+      }
+    }
+
+    if (canFall) {   // if another round of falling is needed, then...
+      window.setTimeout(() => {    // ... wait a quarter of a second before ...
+        this.applyGravity().then(() => {   /// ...calling the method again;
+          resolve(true);   // the method call in the Pill#freeze method will not
+        })                 // be resolved until the method is not longer called
+      }, 250);       
+    } else {
+      window.setTimeout(() => {   // if no more gravity is needed, resolve the promise
+        resolve(true);
+      }, 100);
+    }
+  })
+}
+```
+When the chain of calls to `Board#applyGravity` are completed, the `Pill#freeze` method then determines
+whether the game is lost, won, or whether a new pill is needed -- but the use of the promise chain
+ensures that this determination is not made before the application of 'gravity' has finished.
+
+
+##### Displaying pills and doses onto the canvas
+
+All elements on the game board -- `Virus`es, `Pill`s and `Dose`s -- have both a `coordinates` attribute
+(the [row, column] coordinates on the game `Board`) as well as a `position` attribute, which gives the 
+starting x- and y-coordinates of the element to be drawn on the HTML canvas. The position of all elements
+is recorded on the board, and, before being drawn, each element converts `coordinates` to `position`
+by way of the `Board#getPosition` method:
+
+```javascript
+getPosition(coords) {
+    let margin = this.margin;  // margin is originally set at a constant of 3 (pxx) in drmario.js
+    let bottleSide = 24;       // pixels in the wall of the virus' bottle on the canvas (x-adjustment)
+    let bottleTop = 115;       // pixels in the top of the virus bottle on the canvas (y-adjustment)
+    let [yCoord, xCoord] = coords;
+
+    let xPos = margin + bottleSide + (xCoord * (this.squareWidth + margin));
+    let yPos = margin + bottleTop + (yCoord * (this.squareHeight + margin));
+
+    return { x: xPos, y: yPos };  // passed on POJO; works for all elements
+  }
+```
+
+The rendering of the pills onto the HTML canvas element involves the use of a spritesheet; a POJO class
+constant in the `Pill` class keeps track of the x-coord, y-coord, width, and height in pixels on the
+spritesheet:
+
+```javascript
+const COLOR_SPRITES = {
+  top: {
+    red: [0, 8, 7, 7],
+    yellow: [8, 8, 7, 7],
+    blue: [16, 8, 7, 7]
+  },
+  bottom: {
+    red: [0, 16, 7, 7],
+    yellow: [8, 16, 7, 7],
+    blue: [16, 16, 7, 7]
+  },
+  left: {
+    red: [0, 24, 7, 7],
+    yellow: [8, 24, 7, 7],
+    blue: [16, 24, 7, 7]
+  },
+  right: {
+    red: [0, 32, 7, 7],
+    yellow: [8, 32, 7, 7],
+    blue: [16, 32, 7, 7]
+  },
+  single: {
+    red: [0, 40, 7, 7],
+    yellow: [8, 40, 7, 7],
+    blue: [16, 40, 7, 7]
+  }
+}
+```
+
+The `Pill` class' `draw` function then makes use of the `COLOR_SPRITES` object in the
+`Pill#getSprites` function, which return the sprites to be displayed to the `draw` function:
+
+```javascript
+getSprites() {
+    let left, right, top, bottom;
+    let c0 = this.c0;   // first color on the pill (set in the constructor)
+    let c1 = this.c1;   // second color on the pill (set in the constructor)
+
+    if (this.rotation === 0) {
+      left = COLOR_SPRITES.left[c0];
+      right = COLOR_SPRITES.right[c1];
+      return { left: left, right: right };
+    } else if (this.rotation === 180) {
+      left = COLOR_SPRITES.left[c1];
+      right = COLOR_SPRITES.right[c0];
+      return { left: left, right: right };
+    } else if (this.rotation === 90) {
+      top = COLOR_SPRITES.top[c0];
+      bottom = COLOR_SPRITES.bottom[c1];
+      return { top: top, bottom: bottom };
+    } else if (this.rotation === 270) {
+      top = COLOR_SPRITES.top[c1];
+      bottom = COLOR_SPRITES.bottom[c0];
+      return { top: top, bottom: bottom};
+    }
+  }
+```
 
 ### FUTURE FEATURES
 
