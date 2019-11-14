@@ -209,7 +209,6 @@ export default class Board {
     } else {
       return false;
     }
-
   }
 
   checkFourAcross(coords) {

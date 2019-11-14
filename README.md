@@ -98,7 +98,49 @@ populateViruses() {
 }
 ```
 
+##### Deteting four or more in a row
+Part of the core functionality of the game is the board's ability to detect four or more in a row
+of the same color object each time the user places a new pill. This is achieved through the `Board`'s
+`checkFours` function. Beginning from the top left corner, the function runs both the `Board#CheckFourDown`
+and `Board#CheckFourAcross` functions, which return an array of involved coordinates if found:
 
+```javascript
+checkFourDown(coords) {
+  let [row, column] = coords;
+
+  let sqNumber = 1;      // the current number of squares of same color in a row
+  let squares = [coords];   // an array to track the above-mentioned squares
+  // Both Viruses and Doses both have color attributes
+  let color = this.grid[row][column].color;     
+
+  let currRow = row;
+  let sameColor = true;
+
+  while (sameColor && currRow <= 14) {
+    currRow += 1;
+    let currSquare = this.grid[currRow][column];
+
+    if (currSquare) {
+      let currColor = this.grid[currRow][column].color;
+
+      if (currColor === color) {
+        sqNumber += 1;
+        squares.push([currRow, column]);
+      } else {
+        sameColor = false;
+      }
+    } else {
+      sameColor = false;
+    }
+  }
+
+  if (sqNumber >= 4) {
+    return squares;
+  } else {
+    return false;
+  }
+}
+```
 
 
 ### FUTURE FEATURES
