@@ -689,7 +689,7 @@ var GAME_HEIGHT = 492;
 var MARGIN = 3;
 var SQR_WIDTH = 25 - MARGIN;
 var SQR_HEIGHT = 22 - MARGIN;
-var BOTTLE = [153, 290, 78, 174];
+var BOTTLE = [153, 290, 78, 174]; // utility for ghost typing name under 'created by' field
 
 var printName = function printName(input) {
   var name = "KEVIN MOCH";
@@ -703,7 +703,8 @@ var printName = function printName(input) {
       })(i);
     }
   }, 1000);
-};
+}; // utility for converting range slider number to a speed string
+
 
 var getLevel = function getLevel(num) {
   switch (num) {
@@ -723,94 +724,9 @@ var getLevel = function getLevel(num) {
       return "Fastest";
   }
 };
-/*
-const playTheme = function (url, musicIsMuted) {
-  let audio = document.createElement('audio');
-
-  if (musicIsMuted) {
-    audio.muted = true;
-  }
-
-  audio.src = url;
-  audio.style.display = "none";
-  audio.onended = function () {
-    audio.remove();
-  };
-  document.body.appendChild(audio);
-
-  const play = function() {
-    audio.play();
-  }
-  document.addEventListener('click', play);
-
-  let muteButton = document.getElementById('mute-music');
-  muteButton.addEventListener('click', () => {
-    audio.muted = !audio.muted;
-    // console.log('paused?');
-  });
-
-  let startButton = document.getElementById('start-button');
-  startButton.addEventListener('click', () => {
-    document.removeEventListener('click', play);
-    audio.remove();
-  });
-}
-*/
-
-/*
-const startGameLoop = function(levelSlide, speedSlide, gameWidth, gameHeight,
-  margin, sqrWidth, sqrHeight, gameSpritesheet, marioSpritesheet, bottle, ctx, 
-  marioCtx) {
-    let stageLevel = parseInt(levelSlide.value);
-    let stageSpeed = parseInt(speedSlide.value);
-  
-    let game = new Game(
-      gameWidth,
-      gameHeight,
-      margin,
-      sqrWidth,
-      sqrHeight,
-      gameSpritesheet,
-      stageLevel,
-      stageSpeed
-    );
-  
-    let mario = new Mario({
-      spritesheet: marioSpritesheet,
-      game: game
-    });
-
-    let gameOptions = document.getElementById('to-mute');
-    let startButton = document.getElementById('start-button');
-  
-    gameOptions.classList.add('muted');
-    startButton.innerText = "RESTART";
-  
-    const ctx2 = ctx;
-    const marioCtx2 = marioCtx;
-
-    game.start();
-  
-    function gameLoop(timestamp) {
-      ctx2.clearRect(0, 0, gameWidth, gameHeight);
-      ctx2.drawImage(marioSpritesheet,
-        bottle[0], bottle[1], bottle[2], bottle[3],
-        0, 0, gameWidth, gameHeight);
-  
-      game.update(timestamp);
-      game.draw(ctx2);
-      mario.draw(marioCtx2);
-  
-      requestAnimationFrame(gameLoop);
-    }
-  
-  requestAnimationFrame(gameLoop);
-}
-*/
-
 
 document.addEventListener('DOMContentLoaded', function () {
-  // fade in elements while waiting for font to load
+  // fade in elements while waiting for google font to load
   var jsLogo = document.getElementById("logo-js");
   var createdBy = document.getElementById('created-by');
   var myName = document.getElementById('kevin-moch');
@@ -822,18 +738,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.setTimeout(function () {
       menuSidebar.style.opacity = 1;
     }, 1000);
-  }, 100); // set up mute button
-
-  /*
-  var musicIsMuted = false;
-  let muteButton = document.getElementById('mute-music');
-  muteButton.addEventListener('click', () => {
-    musicIsMuted = !musicIsMuted;
-    muteButton.classList.toggle('sound-off');
-    // console.log(musicIsMuted);
-  });
-  */
-  // listener to adjust the displayed level
+  }, 100); // listener to adjust the displayed game level
 
   var levelSlide = document.getElementById("level-slide");
   var levelOutput = document.getElementById("curr-level");
@@ -841,7 +746,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   levelSlide.oninput = function () {
     levelOutput.innerHTML = this.value;
-  }; // listener to adjust the displayed speed
+  }; // listener to adjust the displayed game speed
 
 
   var speedSlide = document.getElementById("speed-slide");
@@ -864,28 +769,7 @@ document.addEventListener('DOMContentLoaded', function () {
   spritesheet.addEventListener("load", function () {
     ctx.drawImage(miscellaneous, BOTTLE[0], BOTTLE[1], BOTTLE[2], BOTTLE[3], 0, 0, GAME_WIDTH, GAME_HEIGHT);
     var gameOptions = document.getElementById('game-options');
-    var startButton = document.getElementById('start-button'); // start music and associated event listeners
-
-    /*
-    playTheme('./assets/sounds/Dr_Mario_Theme.mp3', musicIsMuted);
-    
-    let lostButton = document.getElementById('lost-game');
-    let wonButton = document.getElementById('won-game');
-     lostButton.addEventListener('click', () => {
-      playTheme('./assets/sounds/Dr_Mario_Theme.mp3', musicIsMuted);
-    });
-    wonButton.addEventListener('click', () => {
-      playTheme('./assets/sounds/Dr_Mario_Theme.mp3', musicIsMuted);
-    });
-    */
-    // event listener on start button to start game;
-    // startGameLoop(levelSlide, speedSlide, GAME_WIDTH, GAME_HEIGHT, MARGIN,
-    //   SQR_WIDTH, SQR_HEIGHT, spritesheet, miscellaneous, BOTTLE, gameOptions,
-    //   startButton, ctx, marioCtx);
-    // startButton.addEventListener('click', startGameLoop.bind(null, event, 
-    //   levelSlide, speedSlide, GAME_WIDTH, GAME_HEIGHT, MARGIN, SQR_WIDTH, 
-    //   SQR_HEIGHT, spritesheet, miscellaneous, BOTTLE, ctx, marioCtx));
-
+    var startButton = document.getElementById('start-button');
     var soundboard = new _soundboard__WEBPACK_IMPORTED_MODULE_2__["default"]();
     startButton.addEventListener('click', function () {
       var stageLevel = parseInt(levelSlide.value);
@@ -895,8 +779,7 @@ document.addEventListener('DOMContentLoaded', function () {
         spritesheet: miscellaneous,
         game: game
       });
-      gameOptions.classList.add('muted');
-      startButton.innerText = "RESTART"; // game.start(musicIsMuted);
+      gameOptions.classList.add('muted'); // startButton.innerText = "RESTART";
 
       game.start();
 
@@ -1774,18 +1657,13 @@ function () {
     this.themeSRC = './assets/sounds/Dr_Mario_Theme.mp3';
     this.gameSRC = './assets/sounds/Fever_music.mp3';
     this.src = this.themeSRC;
-    this.createAudio(); // this.audio = document.createElement('audio');
-    // this.isMuted = false;
-
-    this.muteButton = document.getElementById('mute-music'); // this.gameOptions = document.getElementById('game-options');
-
+    this.createAudio();
+    this.muteButton = document.getElementById('mute-music');
     this.startButton = document.getElementById('start-button');
     this.lostButton = document.getElementById('lost-game');
     this.wonButton = document.getElementById('won-game');
     this.muteButton.addEventListener('click', function () {
-      _this.toggleMute(); // this.audio.muted = !this.audio.muted;
-      // this.isMuted = !this.isMuted;
-
+      _this.toggleMute();
 
       _this.muteButton.classList.toggle('sound-off');
     });
@@ -1807,10 +1685,7 @@ function () {
       this.audio = document.createElement('audio');
       this.audio.src = this.src;
       this.audio.style.display = "none";
-      this.audio.loop = "true"; // this.audio.onended = function () {
-      //   audio.remove();
-      // };
-
+      this.audio.loop = "true";
       document.body.appendChild(this.audio);
     }
   }, {

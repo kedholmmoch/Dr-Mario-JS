@@ -5,19 +5,14 @@ export default class Soundboard {
     this.src = this.themeSRC;
     
     this.createAudio();
-    // this.audio = document.createElement('audio');
-    // this.isMuted = false;
 
     this.muteButton = document.getElementById('mute-music');
-    // this.gameOptions = document.getElementById('game-options');
     this.startButton = document.getElementById('start-button');
     this.lostButton = document.getElementById('lost-game');
     this.wonButton = document.getElementById('won-game');
 
     this.muteButton.addEventListener('click', () => {
       this.toggleMute();
-      // this.audio.muted = !this.audio.muted;
-      // this.isMuted = !this.isMuted;
       this.muteButton.classList.toggle('sound-off');
     });
 
@@ -34,7 +29,6 @@ export default class Soundboard {
     });
     
     this.playMusic();
-
   }
 
   createAudio() {
@@ -42,9 +36,6 @@ export default class Soundboard {
     this.audio.src = this.src;
     this.audio.style.display = "none";
     this.audio.loop = "true";
-    // this.audio.onended = function () {
-    //   audio.remove();
-    // };
     document.body.appendChild(this.audio);
   }
 
